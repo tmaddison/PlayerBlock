@@ -1,0 +1,97 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-module-flags: -target x86_64-apple-tvos12.4-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Tub
+import BitmovinAnalyticsCollector
+import BitmovinComScoreAnalytics
+import BitmovinPlayer
+import BitmovinYospaceModule
+import Foundation
+import Swift
+@_exported import Tub
+@frozen public struct CompanionAdConfiguration {
+  public let containers: [CompanionAdContainer]
+  public let clearOnAdFinished: Swift.Bool
+  public init(containers: [CompanionAdContainer], clearOnAdFinished: Swift.Bool = true)
+}
+@frozen public struct CompanionAdContainer {
+  internal let id: Swift.String
+  internal let view: UIKit.UIView
+  internal let active: Swift.Bool
+  public init(id: Swift.String, view: UIKit.UIView, active: Swift.Bool = false)
+}
+public protocol CompanionAdDelegate : AnyObject {
+  func didClickCompanionAd(clickThroughUrl: Swift.String)
+}
+public protocol DrmTokenDelegate : AnyObject {
+  func refreshDrmToken(drmRequest: TubDrmRequest, completionHandler: @escaping (Swift.String?) -> Swift.Void)
+}
+public class Tub : BitmovinYospacePlayer, PreprocessHttpRequestDelegate {
+  weak public var companionAdDelegate: CompanionAdDelegate? {
+    get
+    set
+  }
+  weak public var drmTokenDelegate: DrmTokenDelegate?
+  open var seekableRange: TimeRange {
+    get
+  }
+  @objc override dynamic open var currentTime: Foundation.TimeInterval {
+    @objc get
+  }
+  open var currentTimeBase: Foundation.TimeInterval {
+    get
+  }
+  open var absoluteTime: Foundation.TimeInterval {
+    get
+  }
+  public init(configuration: TubConfiguration, integrationConfiguration: IntegrationConfiguration? = nil)
+  @objc override dynamic public func destroy()
+  @objc deinit
+  @objc override dynamic open func add(listener: PlayerListener)
+  @objc override dynamic open func remove(listener: PlayerListener)
+  public func load(sourceConfiguration: SourceConfiguration, yospaceSourceConfiguration: YospaceSourceConfiguration? = nil, comScoreMetadata: ComScoreMetadata? = nil, comScoreConfiguration: ComScoreConfiguration? = nil, truexConfiguration: TruexConfiguration? = nil, tubAdPolicy: TubAdPolicy? = nil, companionAdConfiguration: CompanionAdConfiguration? = nil)
+  @objc override dynamic public func seek(time: Foundation.TimeInterval)
+  public func updateCompanionAdConfiguration(configuration: CompanionAdConfiguration)
+  public func suppressAnalytics(suppress: Swift.Bool)
+  @objc public func preprocessHttpRequest(_ type: Swift.String, httpRequest: HttpRequest, completionHandler: @escaping (HttpRequest) -> Swift.Void)
+  public static func startComScore(_ configuration: ComScoreConfiguration)
+  public func setComScoreLabel(label: Swift.String, value: Swift.String)
+  public func setComScoreLabels(labels: [Swift.String : Swift.String])
+  @available(*, deprecated, message: "Deprecated as of release 0.21.0. Use setComScoreLabel instead.")
+  public func comScoreConsentGranted()
+  @available(*, deprecated, message: "Deprecated as of release 0.21.0. Use setComScoreLabel instead.")
+  public func comScoreConsentDenied()
+  override public init(configuration: PlayerConfiguration, yospaceConfiguration: YospaceConfiguration? = super, integrationConfiguration: IntegrationConfiguration? = super)
+}
+public class TubAdPolicy {
+  public var trapDuration: Foundation.TimeInterval {
+    get
+  }
+  public var skipWatchedAds: Swift.Bool {
+    get
+  }
+  public init(trapDuration: Foundation.TimeInterval = 0, skipWatchedAds: Swift.Bool = true)
+  @objc deinit
+}
+public class TubConfiguration {
+  public init(playerConfiguration: PlayerConfiguration = PlayerConfiguration(), userAgent: Swift.String? = nil, timeout: Foundation.TimeInterval? = 5000, pollingInterval: Swift.Int? = nil, convivaKey: Swift.String? = nil, analyticsConfig: BitmovinAnalyticsConfig? = nil, isDebugEnabled: Swift.Bool = false)
+  @objc deinit
+}
+@frozen public struct TubDrmRequest {
+  public let data: DrmData
+}
+@objc @_hasMissingDesignatedInitializers public class TubYospacePlayerPolicy : ObjectiveC.NSObject, BitmovinYospacePlayerPolicy {
+  public func canSeek() -> Swift.Bool
+  public func canSeekTo(seekTarget: Foundation.TimeInterval) -> Foundation.TimeInterval
+  public func canSkip() -> Foundation.TimeInterval
+  public func canPause() -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension TubYospacePlayerPolicy : PlayerListener {
+  @objc dynamic public func onSourceLoaded(_ event: SourceLoadedEvent)
+  @objc dynamic public func onTimeChanged(_ event: TimeChangedEvent)
+  @objc dynamic public func onSeeked(_ event: SeekedEvent)
+  @objc dynamic public func onAdBreakFinished(_ event: AdBreakFinishedEvent)
+  @objc dynamic public func onError(_ event: ErrorEvent)
+  @objc dynamic public func onSourceUnloaded(_ event: SourceUnloadedEvent)
+}

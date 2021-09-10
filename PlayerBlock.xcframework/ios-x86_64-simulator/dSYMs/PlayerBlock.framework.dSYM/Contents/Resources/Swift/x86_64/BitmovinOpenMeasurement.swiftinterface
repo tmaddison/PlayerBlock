@@ -1,0 +1,46 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-module-flags: -target x86_64-apple-ios12.4-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BitmovinOpenMeasurement
+@_exported import BitmovinOpenMeasurement
+import BitmovinPlayer
+import BitmovinYospaceModule
+import Foundation
+import OMSDK_Turner
+import Swift
+import Yospace
+public class OMAnalytics {
+  public init(config: BitmovinOpenMeasurement.OMAnalyticsConfiguration)
+  public func start()
+  public func setReferenceData(data: Swift.String)
+  public func addFriendlyObstruction(friendlyObstruction: BitmovinOpenMeasurement.OMFriendlyObstruction)
+  public func addFriendlyObstructions(friendlyObstructions: [BitmovinOpenMeasurement.OMFriendlyObstruction])
+  public func removeFriendlyObstruction(friendlyObstruction: BitmovinOpenMeasurement.OMFriendlyObstruction)
+  public func removeFriendlyObstructions(friendlyObstructions: [BitmovinOpenMeasurement.OMFriendlyObstruction])
+  public func removeAllFriendlyObstructions()
+  @objc deinit
+}
+@frozen public struct OMAnalyticsConfiguration {
+  internal let player: BitmovinYospacePlayer
+  internal let playerView: PlayerView
+  internal let partner: Swift.String
+  internal let debug: Swift.Bool
+  public init(player: BitmovinYospacePlayer, playerView: PlayerView, partner: Swift.String, debug: Swift.Bool = false)
+}
+public class OMFriendlyObstruction : Swift.Equatable {
+  public init(view: UIKit.UIView, purpose: BitmovinOpenMeasurement.OMFriendlyObstructionPurpose = .other, detailedReason: Swift.String? = nil)
+  public static func == (lhs: BitmovinOpenMeasurement.OMFriendlyObstruction, rhs: BitmovinOpenMeasurement.OMFriendlyObstruction) -> Swift.Bool
+  @objc deinit
+}
+@frozen public enum OMFriendlyObstructionPurpose {
+  case mediaControls
+  case closeAd
+  case notVisible
+  case other
+  public static func == (a: BitmovinOpenMeasurement.OMFriendlyObstructionPurpose, b: BitmovinOpenMeasurement.OMFriendlyObstructionPurpose) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+extension BitmovinOpenMeasurement.OMFriendlyObstructionPurpose : Swift.Equatable {}
+extension BitmovinOpenMeasurement.OMFriendlyObstructionPurpose : Swift.Hashable {}

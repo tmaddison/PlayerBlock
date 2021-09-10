@@ -1,0 +1,776 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.2.2 (swiftlang-1103.0.32.6 clang-1103.0.32.51)
+// swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BitmovinPlayer
+import AVFoundation
+@_exported import BitmovinPlayer
+import Foundation
+import Swift
+import UIKit
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc(_BMPUIDeviceVersionHelper) @objcMembers public class _UIDeviceVersionHelper : ObjectiveC.NSObject {
+  @objc override convenience dynamic public init()
+  @objc public func isSystemVersionGreaterThanOrEqual(_ versionToCheck: Swift.Double) -> Swift.Bool
+  @objc public func isSystemVersionLessThan(_ versionToCheck: Swift.Double) -> Swift.Bool
+  @objc deinit
+}
+@objc(_BMPLogLevel) public enum _LogLevel : Swift.Int {
+  case verbose = 0
+  case info
+  case debug
+  case warning
+  case error
+  case none
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc(_BMPLogger) public protocol _Logger {
+  @objc func log(_ message: Swift.String, level: _LogLevel)
+}
+@_hasMissingDesignatedInitializers @objc(_BMPDefaultResourceLoaderService) @objcMembers final public class _DefaultResourceLoaderService : _DefaultService, _ResourceLoaderService {
+  @objc override final public var type: _ServiceType {
+    @objc get
+  }
+  @objc convenience public init(serviceLocator: _NamespacedServiceLocator)
+  @objc final public func setupResourceLoaders(with sourceItem: SourceItem, asset: AVFoundation.AVURLAsset)
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension _DefaultResourceLoaderService : AVFoundation.AVAssetResourceLoaderDelegate {
+  @objc final public func resourceLoader(_ resourceLoader: AVFoundation.AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVFoundation.AVAssetResourceLoadingRequest) -> Swift.Bool
+  @objc final public func resourceLoader(_ resourceLoader: AVFoundation.AVAssetResourceLoader, shouldWaitForRenewalOfRequestedResource renewalRequest: AVFoundation.AVAssetResourceRenewalRequest) -> Swift.Bool
+}
+extension _DefaultResourceLoaderService : _FairplayHandlerDelegate {
+  @objc final public func fairplayHandler(_ sender: _FairplayHandler, didFinishDRMLicenseRequestWith metadata: _RequestMetadata)
+  @objc final public func fairplayHandler(_ sender: _FairplayHandler, didFinishDRMCertificateRequestWith metadata: _RequestMetadata)
+  @objc final public func fairplayHandler(_ sender: _FairplayHandler, didFinishWithError error: Swift.Error)
+}
+extension _DefaultResourceLoaderService : _BitmovinResourceLoaderDelegate {
+  @objc final public func bitmovinResourceLoader(_ sender: _BitmovinResourceLoader, didFinishLoadingMasterPlaylistData masterData: Foundation.Data, requestMetadata: _RequestMetadata)
+  @objc final public func bitmovinResourceLoader(_ sender: _BitmovinResourceLoader, didFinishLoadingVariantPlaylistData variantData: Foundation.Data, requestMetadata: _RequestMetadata)
+  @objc final public func bitmovinResourceLoader(_ sender: _BitmovinResourceLoader, didFinishLoadingPlaylistWithError error: Swift.Error)
+  @objc final public func bitmovinResourceLoader(_ sender: _BitmovinResourceLoader, didFinishLoadingAesKeyData keyData: Foundation.Data, requestMetadata: _RequestMetadata)
+  @objc final public func bitmovinResourceLoader(_ sender: _BitmovinResourceLoader, didFinishLoadingAesKeyWithError error: Swift.Error)
+}
+@_inheritsConvenienceInitializers @objc(_BMPGoogleCastBufferService) public class _GoogleCastBufferService : _DefaultService {
+  @objc override dynamic public var type: _ServiceType {
+    @objc get
+  }
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension _GoogleCastBufferService : _BufferService {
+  @objc dynamic public func getLevel(_ type: BufferType) -> BufferLevel
+  @objc dynamic public func setTargetLevel(_ value: Foundation.TimeInterval)
+}
+@_inheritsConvenienceInitializers @objcMembers @objc(BMPSourceUnloadedEvent) final public class SourceUnloadedEvent : PlayerEvent {
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objcMembers @objc(_BMPDefaultPlaylistManipulator) public class _DefaultPlaylistManipulator : ObjectiveC.NSObject, _PlaylistManipulator {
+  @objc public func replace(decryptionKeyUrl keyUrl: Swift.String, with keyData: Foundation.Data, in playlist: Swift.String, decryptionKeyStoreStrategy keyStoreStrategy: _PlaylistDecryptionKeyStoreStrategy) -> Swift.String
+  @objc public func replace(manifestUrl url: Swift.String, with customUrl: Swift.String, in playlist: Swift.String) -> Swift.String
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objcMembers @objc(_BMPDefaultBufferService) public class _DefaultBufferService : _DefaultService {
+  @objc override dynamic public var type: _ServiceType {
+    @objc get
+  }
+  @objc public init(serviceLocator: _NamespacedServiceLocator, player: _BMPAVPlayer)
+  @objc override dynamic public func start()
+  @objc override dynamic public func stop()
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension _DefaultBufferService : _BufferService {
+  @objc dynamic public func getLevel(_ type: BufferType) -> BufferLevel
+  @objc dynamic public func setTargetLevel(_ value: Foundation.TimeInterval)
+}
+extension _DefaultBufferService : PlayerListener {
+  @objc dynamic public func onReady(_ event: ReadyEvent)
+  @objc dynamic public func onConfigurationUpdated(_ event: ConfigurationUpdatedEvent)
+  @objc dynamic public func onSourceUnloaded(_ event: SourceUnloadedEvent)
+}
+@objc(_BMPVariantPlaylistLoadedEvent) @objcMembers final public class _VariantPlaylistLoadedEvent : PlayerEvent {
+  @objc final public let data: Foundation.Data
+  @objc final public let url: Foundation.URL
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(data: Foundation.Data, requestUrl: Foundation.URL)
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc(_BMPCaptionHandler) public protocol _CaptionHandler {
+  @objc weak var delegate: _CaptionHandlerDelegate? { get set }
+  @objc var availableSubtitleTracks: [SubtitleTrack] { get }
+  @objc var activeSubtitleTrack: SubtitleTrack? { get }
+  @objc var defaultSubtitleTrack: SubtitleTrack? { get }
+  @objc(initializeSubtitleTracksWithSourceItem:) func initializeSubtitleTracks(with sourceItem: SourceItem)
+  @objc func enableSubtitleTrack(byId subtitleTrackId: Swift.String?)
+  @objc func disableActiveSubtitleTrack()
+  @objc(addSubtitleTrack:) func add(subtitleTrack: SubtitleTrack)
+  @objc func removeSubtitleTrack(byId subtitleTrackId: Swift.String)
+  @objc(containsSubtitleTrack:) func contains(subtitleTrack: SubtitleTrack) -> Swift.Bool
+  @objc func clearSubtitleTracks()
+  @objc func forcedSubtitleTrack(forLanguage language: Swift.String) -> SubtitleTrack?
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc(BMPPlayEvent) @objcMembers final public class PlayEvent : PlayerEvent {
+  @objc final public let time: Foundation.TimeInterval
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(time: Foundation.TimeInterval)
+  @objc override final public func toJsonData() -> [Swift.AnyHashable : Any]
+  @objc deinit
+}
+@objcMembers @objc public class _BMPAVPlayer : AVFoundation.AVPlayer {
+  @objc override dynamic public var currentItem: _BMPAVPlayerItem? {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc(addObserver:) public func add(observer: _AVPlayerObserver)
+  @objc(removeObserver:) public func remove(observer: _AVPlayerObserver)
+  @objc(seekToTime:toleranceBefore:toleranceAfter:suppressEvents:completionHandler:) public func seek(time: CoreMedia.CMTime, toleranceBefore: CoreMedia.CMTime, toleranceAfter: CoreMedia.CMTime, suppressEvents: Swift.Bool, completionHandler: @escaping (Swift.Bool) -> Swift.Void)
+  @objc override dynamic public func seek(to time: CoreMedia.CMTime, toleranceBefore: CoreMedia.CMTime, toleranceAfter: CoreMedia.CMTime, completionHandler: @escaping (Swift.Bool) -> Swift.Void)
+  @objc override dynamic public func seek(to time: CoreMedia.CMTime, completionHandler: @escaping (Swift.Bool) -> Swift.Void)
+  @objc override dynamic public func observeValue(forKeyPath keyPath: Swift.String?, of object: Any?, change: [Foundation.NSKeyValueChangeKey : Any]?, context: Swift.UnsafeMutableRawPointer?)
+  @objc deinit
+  @objc override dynamic public init(url URL: Foundation.URL)
+  @objc override dynamic public init(playerItem item: AVFoundation.AVPlayerItem?)
+}
+@_inheritsConvenienceInitializers @objcMembers @objc(_BMPStartOffsetCalculator) final public class _StartOffsetCalculator : ObjectiveC.NSObject {
+  @objc(calculateStartOffsetForVoDWithSourceOptions:totalDuration:) public static func calculateStartOffsetForVoD(with sourceOptions: SourceOptions, totalDuration: Foundation.TimeInterval) -> Foundation.TimeInterval
+  @objc(calculateStartOffsetForLiveWithSourceOptions:maxTimeShift:) public static func calculateStartOffsetForLive(with sourceOptions: SourceOptions, maxTimeShift: Foundation.TimeInterval) -> Foundation.TimeInterval
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc(_BMPBufferApiDelegate) public protocol _BufferApiDelegate {
+  @objc(bufferAPI_getLevel:) func bufferAPI_getLevel(type: BufferType) -> BufferLevel
+  @objc(bufferAPI_setTargetLevel:) func bufferAPI_setTargetLevel(value: Foundation.TimeInterval)
+}
+@_hasMissingDesignatedInitializers @objcMembers @objc(_BMPAVPlayerCaptionHandler) final public class _AVPlayerCaptionHandler : ObjectiveC.NSObject {
+  @objc weak final public var delegate: _CaptionHandlerDelegate?
+  @objc final public var activeSubtitleTrack: SubtitleTrack? {
+    get
+  }
+  @objc final public var availableSubtitleTracks: [SubtitleTrack] {
+    get
+  }
+  @objc convenience public init(configurationService: _ConfigurationService, player: _BMPAVPlayer)
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension _AVPlayerCaptionHandler : _CaptionHandler {
+  @objc final public var defaultSubtitleTrack: SubtitleTrack? {
+    @objc get
+  }
+  @objc final public func initializeSubtitleTracks(with sourceItem: SourceItem)
+  @objc final public func enableSubtitleTrack(byId subtitleTrackId: Swift.String?)
+  @objc final public func disableActiveSubtitleTrack()
+  @objc final public func add(subtitleTrack: SubtitleTrack)
+  @objc final public func removeSubtitleTrack(byId subtitleTrackId: Swift.String)
+  @objc final public func contains(subtitleTrack: SubtitleTrack) -> Swift.Bool
+  @objc final public func clearSubtitleTracks()
+  @objc final public func forcedSubtitleTrack(forLanguage language: Swift.String) -> SubtitleTrack?
+}
+extension _AVPlayerCaptionHandler : _AVPlayerObserver {
+  @objc final public func player(_ player: _BMPAVPlayer, didChangeCurrentItem oldItem: _BMPAVPlayerItem?, newItem: _BMPAVPlayerItem?)
+}
+extension _AVPlayerCaptionHandler : _AVPlayerItemListener {
+  @objc final public func playerItem(_ playerItem: _BMPAVPlayerItem, willChangeMediaOptionFrom from: AVFoundation.AVMediaSelectionOption?, to: AVFoundation.AVMediaSelectionOption?, in mediaSelectionGroup: AVFoundation.AVMediaSelectionGroup)
+  @objc final public func playerItem(_ playerItem: _BMPAVPlayerItem, didChangeMediaOptionFrom from: AVFoundation.AVMediaSelectionOption?, to: AVFoundation.AVMediaSelectionOption?, in mediaSelectionGroup: AVFoundation.AVMediaSelectionGroup)
+  @objc final public func playerItem(_ playerItem: _BMPAVPlayerItem, willSeekToTargetTime seekTarget: CoreMedia.CMTime)
+  @objc final public func playerItem(_ playerItem: _BMPAVPlayerItem, didSeekWithSuccess finished: Swift.Bool)
+}
+@objc(_BMPResourceLoaderService) public protocol _ResourceLoaderService {
+  @objc(setupResourceLoadersWithSourceItem:asset:) func setupResourceLoaders(with sourceItem: SourceItem, asset: AVFoundation.AVURLAsset)
+}
+@objc(_BMPInitializationService) public protocol _InitializationService : _Service {
+  @objc var selectedStreamType: BMPMediaSourceType { get }
+  @objc(setup:) func setup(playerConfig: PlayerConfiguration)
+  @objc(loadSourceItem:) func load(sourceItem: SourceItem)
+  @objc func unload()
+}
+@objc(_BMPVideoService) public protocol _VideoService {
+  @objc var availableVideoQualities: [VideoQuality] { get }
+  @objc var videoQuality: VideoQuality? { get }
+}
+@_inheritsConvenienceInitializers @objcMembers @objc(BMPSourceWillUnloadEvent) final public class SourceWillUnloadEvent : PlayerEvent {
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@objc(_BMPEventEmitter) public protocol _EventEmitter : PlayerEventHandler, _Service {
+  @objc(emitEvent:) func emit(event: PlayerEvent)
+}
+@objc(_BMPBufferService) public protocol _BufferService : BufferApi, _Service {
+}
+@objcMembers @objc(BMPSourceLoadedEvent) final public class SourceLoadedEvent : PlayerEvent {
+  @objc final public let sourceItem: SourceItem
+  @objc final public let streamType: BMPMediaSourceType
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(sourceItem: SourceItem, streamType: BMPMediaSourceType)
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc(_BMPDefaultUrlAssetValuesLoader) @objcMembers public class _DefaultUrlAssetValuesLoader : ObjectiveC.NSObject {
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension _DefaultUrlAssetValuesLoader {
+  @objc(loadValuesAsynchronouslyForAsset:onComplete:) dynamic public func loadValuesAsynchronously(for asset: AVFoundation.AVURLAsset, onComplete: ((AVFoundation.AVURLAsset, Swift.Bool, Swift.Bool) -> Swift.Void)?)
+  @objc(triggerContentKeyRequestForAsset:) dynamic public func triggerContentKeyRequest(for asset: AVFoundation.AVURLAsset)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc(BMPAudioAddedEvent) @objcMembers final public class AudioAddedEvent : PlayerEvent {
+  @objc final public let audioTrack: AudioTrack
+  @objc final public let time: Foundation.TimeInterval
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(audioTrack: AudioTrack, time: Foundation.TimeInterval)
+  @objc override final public func toJsonData() -> [Swift.AnyHashable : Any]
+  @objc deinit
+}
+@objcMembers @objc(_BMPInitialTimeShiftContext) final public class _InitialTimeShiftContext : ObjectiveC.NSObject {
+  @objc final public let initialTimestamp: Foundation.TimeInterval
+  @objc final public let initialLiveEdge: Foundation.TimeInterval
+  @objc public init(initialTimestamp: Foundation.TimeInterval, initialLiveEdge: Foundation.TimeInterval)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objcMembers @objc(_BMPPlayerBufferApi) public class _PlayerBufferApi : ObjectiveC.NSObject {
+  @objc public init(delegate: _BufferApiDelegate)
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension _PlayerBufferApi : BufferApi {
+  @objc dynamic public func getLevel(_ type: BufferType) -> BufferLevel
+  @objc dynamic public func setTargetLevel(_ value: Foundation.TimeInterval)
+}
+@_inheritsConvenienceInitializers @objcMembers @objc(BMPSeekedEvent) final public class SeekedEvent : PlayerEvent {
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@objc(_BMPDeficiencyService) public protocol _DeficiencyService {
+  @objc(throwError:) func throwError(code: Swift.Int)
+  @objc func throwError(code: Swift.Int, message: Swift.String)
+  @objc(throwError:replacements:) func throwError(code: Swift.Int, replacements: [Swift.String]?)
+  @objc func throwLicensingErrorNoKey()
+  @objc func throwLicensingErrorInvalidDomain()
+  @objc func throwManifestNotFoundError(withReason reason: Swift.String?)
+  @objc func throwSourceError()
+  @objc(throwSourceError:) func throwSourceError(reason: Swift.String?)
+  @objc(throwWarning:) func throwWarning(code: Swift.Int)
+  @objc(throwWarning:replacements:) func throwWarning(code: Swift.Int, replacements: [Swift.String]?)
+}
+@_inheritsConvenienceInitializers @objcMembers @objc(BMPStyleConfiguration) final public class StyleConfiguration : Configuration {
+  @objc final public var isUiEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc final public var uiEnabled: Swift.Bool
+  @objc final public var userInterfaceType: BMPUserInterfaceType
+  @objc @available(tvOS, unavailable)
+  final public var playerUiCss: Foundation.URL
+  @objc @available(tvOS, unavailable)
+  final public var supplementalPlayerUiCss: Foundation.URL?
+  @objc @available(tvOS, unavailable)
+  final public var playerUiJs: Foundation.URL
+  @objc final public var scalingMode: BMPScalingMode
+  @objc final public var userInterfaceConfiguration: UserInterfaceConfiguration?
+  @objc override dynamic public init()
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override final public func toJsonData() -> [Swift.AnyHashable : Any]
+  @objc deinit
+}
+public protocol _HexConvertible {
+  var hexadecimal: Foundation.Data? { get }
+  var normalizedHexString: Swift.String { get }
+}
+@_inheritsConvenienceInitializers @objc(BMPDestroyEvent) final public class DestroyEvent : PlayerEvent {
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@objc(_BMPCafDrmConfigConvertible) public protocol _CafDrmConfigConvertible {
+  @objc func toCafDrmConfig() -> _CafDrmConfig?
+}
+extension WidevineConfiguration : _CafDrmConfigConvertible {
+  @objc dynamic public func toCafDrmConfig() -> _CafDrmConfig?
+}
+extension ClearKeyConfiguration : _CafDrmConfigConvertible {
+  @objc dynamic public func toCafDrmConfig() -> _CafDrmConfig?
+}
+extension PlayReadyConfiguration : _CafDrmConfigConvertible {
+  @objc dynamic public func toCafDrmConfig() -> _CafDrmConfig?
+}
+@_hasMissingDesignatedInitializers @objcMembers @objc(BMPBufferLevel) public class BufferLevel : ObjectiveC.NSObject {
+  @objc final public let level: Foundation.TimeInterval
+  @objc final public let targetLevel: Foundation.TimeInterval
+  @objc final public let media: MediaType
+  @objc final public let type: BufferType
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objcMembers @objc(_BMPTimeShiftStatus) final public class _TimeShiftStatus : ObjectiveC.NSObject {
+  @objc final public let lastTimeShiftOffset: Foundation.TimeInterval
+  @objc final public let lastTimeShiftReachedTime: Foundation.TimeInterval
+  @objc final public let lastTimeShiftDate: Foundation.Date
+  @objc public init(lastTimeShiftOffset: Foundation.TimeInterval, lastTimeShiftReachedTime: Foundation.TimeInterval, lastTimeShiftDate: Foundation.Date)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objcMembers @objc(BMPLiveConfiguration) final public class LiveConfiguration : Configuration {
+  @objc final public var minTimeshiftBufferDepth: Foundation.TimeInterval
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@objc(_BMPMasterPlaylistLoadedEvent) @objcMembers final public class _MasterPlaylistLoadedEvent : PlayerEvent {
+  @objc final public let data: Foundation.Data
+  @objc final public let url: Foundation.URL
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(data: Foundation.Data, requestUrl: Foundation.URL)
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objcMembers @objc(BMPTimeShiftEvent) final public class TimeShiftEvent : PlayerEvent {
+  @objc final public let position: Foundation.TimeInterval
+  @objc final public let target: Foundation.TimeInterval
+  @objc final public let timeShift: Foundation.TimeInterval
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(position: Foundation.TimeInterval, target: Foundation.TimeInterval, timeShift: Foundation.TimeInterval)
+  @objc override final public func toJsonData() -> [Swift.AnyHashable : Any]
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objcMembers @objc(_BMPBitmovinLogger) public class _BitmovinLogger : ObjectiveC.NSObject, _Logger {
+  @objc public init(level: _LogLevel)
+  @objc override convenience dynamic public init()
+  @objc public func log(_ message: Swift.String, level: _LogLevel)
+  @objc deinit
+}
+@objcMembers @objc(BMPSeekEvent) final public class SeekEvent : PlayerEvent {
+  @objc final public let seekTarget: Foundation.TimeInterval
+  @objc final public let position: Foundation.TimeInterval
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(position: Foundation.TimeInterval, seekTarget: Foundation.TimeInterval)
+  @objc override final public func toJsonData() -> [Swift.AnyHashable : Any]
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@objcMembers @objc(_BMPInternalTimeShiftEvent) final public class _InternalTimeShiftEvent : PlayerEvent {
+  @objc final public let position: Foundation.TimeInterval
+  @objc final public let target: Foundation.TimeInterval
+  @objc final public let timeShift: Foundation.TimeInterval
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(position: Foundation.TimeInterval, target: Foundation.TimeInterval, timeShift: Foundation.TimeInterval)
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc(_BMPInlinePlaylistDecryptionKeyStoreStrategy) public class _InlinePlaylistDecryptionKeyStoreStrategy : ObjectiveC.NSObject, _PlaylistDecryptionKeyStoreStrategy {
+  @objc public func uri(for keyUrl: Swift.String, decryptionKeyData keyData: Foundation.Data) -> Swift.String?
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_inheritsConvenienceInitializers @objc(_BMPDefaultEventEmitter) public class _DefaultEventEmitter : _DefaultService, _EventEmitter {
+  @objc override dynamic public var type: _ServiceType {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc public func emit(event: PlayerEvent)
+  @objc deinit
+}
+extension _DefaultEventEmitter : PlayerEventHandler {
+  @objc dynamic public func add(listener: PlayerListener)
+  @objc dynamic public func remove(listener: PlayerListener)
+}
+@objc(_BMPDefaultAudioService) @objcMembers final public class _DefaultAudioService : _DefaultService {
+  @objc override final public var type: _ServiceType {
+    @objc get
+  }
+  @objc public init(serviceLocator: _NamespacedServiceLocator, player: _BMPAVPlayer)
+  @objc override final public func start()
+  @objc override final public func stop()
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension _DefaultAudioService : _AudioService {
+  @objc final public var availableAudio: [AudioTrack] {
+    @objc get
+  }
+  @objc final public var audio: AudioTrack? {
+    @objc get
+  }
+  @objc final public func setupAudioTracks()
+  @objc final public func setAudioWithIdentifier(_ audioTrackID: Swift.String)
+}
+extension _DefaultAudioService : PlayerListener {
+  @objc final public func onSourceUnloaded(_ event: SourceUnloadedEvent)
+}
+@_hasMissingDesignatedInitializers @objcMembers @objc(_BMPDefaultInitializationService) public class _DefaultInitializationService : _DefaultService, _InitializationService {
+  @objc public var selectedStreamType: BMPMediaSourceType {
+    get
+  }
+  @objc convenience public init(serviceLocator: _NamespacedServiceLocator, player: _BMPAVPlayer)
+  @objc public func setup(playerConfig: PlayerConfiguration)
+  @objc public func load(sourceItem: SourceItem)
+  @objc public func unload()
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension _DefaultInitializationService {
+  @objc override dynamic public var type: _ServiceType {
+    @objc get
+  }
+  @objc override dynamic public func start()
+  @objc override dynamic public func stop()
+}
+@_inheritsConvenienceInitializers @objc(BMPReadyEvent) final public class ReadyEvent : PlayerEvent {
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@objc(BMPPlaybackFinishedEvent) @objcMembers final public class PlaybackFinishedEvent : PlayerEvent {
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+}
+@objc(_BMPPlaylistManipulator) public protocol _PlaylistManipulator : AnyObject {
+  @objc func replace(decryptionKeyUrl keyUrl: Swift.String, with keyData: Foundation.Data, in playlist: Swift.String, decryptionKeyStoreStrategy keyStoreStrategy: _PlaylistDecryptionKeyStoreStrategy) -> Swift.String
+  @objc(replaceManifestUrl:withCustomUrl:in:) func replace(manifestUrl url: Swift.String, with customUrl: Swift.String, in playlist: Swift.String) -> Swift.String
+}
+@_inheritsConvenienceInitializers @objc(_BMPInternalTimeShiftedEvent) final public class _InternalTimeShiftedEvent : PlayerEvent {
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@objcMembers @objc(_BMPDefaultDeficiencyService) final public class _DefaultDeficiencyService : _DefaultService, _DeficiencyService {
+  @objc override final public var type: _ServiceType {
+    @objc get
+  }
+  @objc public init(serviceLocator: _NamespacedServiceLocator)
+  @objc override final public func start()
+  @objc override final public func stop()
+  @objc final public func throwError(code: Swift.Int)
+  @objc final public func throwError(code: Swift.Int, message: Swift.String)
+  @objc final public func throwError(code: Swift.Int, replacements: [Swift.String]?)
+  @objc final public func throwLicensingErrorNoKey()
+  @objc final public func throwLicensingErrorInvalidDomain()
+  @objc final public func throwManifestNotFoundError(withReason reason: Swift.String?)
+  @objc final public func throwSourceError()
+  @objc final public func throwSourceError(reason: Swift.String?)
+  @objc final public func throwWarning(code: Swift.Int)
+  @objc final public func throwWarning(code: Swift.Int, replacements: [Swift.String]?)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_hasMissingDesignatedInitializers @objcMembers @objc(_BMPExternalCaptionHandler) final public class _ExternalCaptionHandler : ObjectiveC.NSObject {
+  @objc weak final public var delegate: _CaptionHandlerDelegate?
+  @objc final public var activeSubtitleTrack: SubtitleTrack? {
+    get
+  }
+  @objc final public var availableSubtitleTracks: [SubtitleTrack] {
+    get
+  }
+  @objc convenience public init(configurationService: _ConfigurationService, deficiencyService: _DeficiencyService, eventEmitter: _EventEmitter)
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension _ExternalCaptionHandler : _CaptionHandler {
+  @objc final public var defaultSubtitleTrack: SubtitleTrack? {
+    @objc get
+  }
+  @objc final public func initializeSubtitleTracks(with sourceItem: SourceItem)
+  @objc final public func enableSubtitleTrack(byId subtitleTrackId: Swift.String?)
+  @objc final public func disableActiveSubtitleTrack()
+  @objc final public func add(subtitleTrack: SubtitleTrack)
+  @objc final public func removeSubtitleTrack(byId subtitleTrackId: Swift.String)
+  @objc final public func contains(subtitleTrack: SubtitleTrack) -> Swift.Bool
+  @objc final public func clearSubtitleTracks()
+  @objc final public func forcedSubtitleTrack(forLanguage language: Swift.String) -> SubtitleTrack?
+}
+@objc(_BMPCafDrmConfig) @objcMembers final public class _CafDrmConfig : ObjectiveC.NSObject {
+  public enum ProtectionSystem : Swift.String {
+    case widevine
+    case playReady
+    case clearKey
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public init(protectionSystem: _CafDrmConfig.ProtectionSystem, licenseUrl: Foundation.URL, headers: [Swift.String : Swift.String]?)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc(_BMPMediaInfoCustomData) @objcMembers final public class _MediaInfoCustomData : ObjectiveC.NSObject {
+  @objc public init(drm: _CafDrmConfig?, metadata: [Swift.String : Swift.String]?)
+  @objc final public func toJsonData() -> [Swift.AnyHashable : Any]
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension String : _HexConvertible {
+  public var hexadecimal: Foundation.Data? {
+    get
+  }
+  public var normalizedHexString: Swift.String {
+    get
+  }
+}
+extension NSString : _HexConvertible {
+  public var hexadecimal: Foundation.Data? {
+    get
+  }
+  public var normalizedHexString: Swift.String {
+    get
+  }
+}
+@objc(_BMPMetadataMessage) @objcMembers final public class _MetadataMessage : ObjectiveC.NSObject {
+  @objc public init(receiverVersion: GoogleCastReceiverVersion, data: [Swift.AnyHashable : Any])
+  @objc final public func toJsonData() -> [Swift.AnyHashable : Any]
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_hasMissingDesignatedInitializers @objc(BMPDrmDataParsedEvent) @objcMembers final public class DrmDataParsedEvent : PlayerEvent {
+  @objc final public let data: DrmData
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(data: DrmData)
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+}
+@objc(BMPDrmData) @objcMembers final public class DrmData : ObjectiveC.NSObject {
+  @objc(BMPDrmDataType) public enum DrmDataType : Swift.Int {
+    case skdUri
+    public typealias RawValue = Swift.Int
+    public init?(rawValue: Swift.Int)
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc final public let data: Foundation.Data
+  @objc final public let type: DrmData.DrmDataType
+  @objc public init(data: Foundation.Data, type: DrmData.DrmDataType)
+  @objc convenience public init?(skdUri: Swift.String)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_hasMissingDesignatedInitializers @objc(BMPDrmRequest) @objcMembers final public class DrmRequest : HttpRequest {
+  @objc final public let drmData: DrmData
+  @objc deinit
+  @objc override dynamic public init(url: Foundation.URL, method: Swift.String)
+}
+@objc extension NSURLRequest {
+  @objc dynamic public func _toBitmovinHttpRequest() -> HttpRequest?
+  @objc dynamic public func _toBitmovinDrmRequest(skdUri: Swift.String) -> DrmRequest?
+}
+@_hasMissingDesignatedInitializers @objc(BMPDurationChangedEvent) @objcMembers final public class DurationChangedEvent : PlayerEvent {
+  @objc final public let duration: Foundation.TimeInterval
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(duration: Foundation.TimeInterval)
+  @objc override final public func toJsonData() -> [Swift.AnyHashable : Any]
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc(_BMPConfigurationService) public protocol _ConfigurationService {
+  @objc var licenseKey: Swift.String? { get }
+  @objc var sdkVersion: Swift.String? { get }
+  @objc var packageName: Swift.String? { get }
+  @objc var playerConfiguration: PlayerConfiguration { get }
+  @objc var isCurrentSourceRestrictedToCache: Swift.Bool { get }
+  @objc var suppressDefaultCaptionRendering: Swift.Bool { get }
+  @objc(updatePlayerConfiguration:) func update(playerConfiguration: PlayerConfiguration)
+  @available(*, deprecated)
+  @objc(updateSourceConfiguration:) func update(sourceConfiguration: SourceConfiguration)
+}
+@objc(_BMPDefaultConfigurationService) final public class _DefaultConfigurationService : _DefaultService, _ConfigurationService, PlayerListener {
+  @objc final public var licenseKey: Swift.String? {
+    get
+  }
+  @objc final public var sdkVersion: Swift.String? {
+    get
+  }
+  @objc final public var packageName: Swift.String? {
+    get
+  }
+  @objc final public var playerConfiguration: PlayerConfiguration {
+    get
+  }
+  @objc override final public var type: _ServiceType {
+    @objc get
+  }
+  @objc final public var isCurrentSourceRestrictedToCache: Swift.Bool {
+    @objc get
+  }
+  @objc final public var suppressDefaultCaptionRendering: Swift.Bool {
+    @objc get
+  }
+  public init(serviceLocator: _NamespacedServiceLocator, appBundle: Foundation.Bundle, sdkBundle: Foundation.Bundle)
+  @objc(initWithServiceLocator:) convenience public init(serviceLocator: _NamespacedServiceLocator)
+  @objc override final public func start()
+  @objc override final public func stop()
+  @objc final public func update(playerConfiguration: PlayerConfiguration)
+  @available(*, deprecated)
+  @objc final public func update(sourceConfiguration: SourceConfiguration)
+  @objc final public func onSourceLoaded(_ event: SourceLoadedEvent)
+  @objc final public func onSourceUnloaded(_ event: SourceUnloadedEvent)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc(_BMPPlaylistDecryptionKeyStoreStrategy) public protocol _PlaylistDecryptionKeyStoreStrategy : ObjectiveC.NSObjectProtocol {
+  @objc func uri(for keyUrl: Swift.String, decryptionKeyData keyData: Foundation.Data) -> Swift.String?
+}
+@objcMembers @objc(_BMPImaAdLogEvent) public class _ImaAdLogEvent : ObjectiveC.NSObject {
+  @objc final public let errorCode: Swift.Int
+  @objc final public let errorMessage: Swift.String
+  @objc final public let type: Swift.String
+  @objc public init(errorCode: Swift.Int, errorMessage: Swift.String, type: Swift.String)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc(_BMPRequestMetadata) @objcMembers final public class _RequestMetadata : ObjectiveC.NSObject {
+  @objc final public var downloadType: Swift.String
+  @objc final public let url: Foundation.URL
+  @objc final public var redirectUrl: Foundation.URL?
+  @objc final public var downloadTime: Foundation.TimeInterval
+  @objc final public var httpStatus: Swift.Int
+  @objc final public var size: Swift.Int
+  @objc final public var wasSuccessful: Swift.Bool
+  @objc final public var isLocalResource: Swift.Bool {
+    @objc get
+  }
+  @objc public init(downloadType: Swift.String, url: Foundation.URL)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc extension DownloadFinishedEvent {
+  @objc convenience dynamic public init(requestMetadata: _RequestMetadata)
+}
+@_inheritsConvenienceInitializers @objcMembers @objc(BMPTimeShiftedEvent) final public class TimeShiftedEvent : PlayerEvent {
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+}
+@objc(BMPDownloadFinishedEvent) @objcMembers final public class DownloadFinishedEvent : PlayerEvent {
+  @objc final public let downloadType: Swift.String
+  @objc final public let url: Foundation.URL
+  @objc final public let lastRedirectLocation: Foundation.URL?
+  @objc final public let downloadTime: Foundation.TimeInterval
+  @objc final public let httpStatus: Swift.UInt
+  @objc final public let size: Swift.UInt
+  @objc final public var successful: Swift.Bool {
+    @objc get
+  }
+  @objc final public let wasSuccessful: Swift.Bool
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(type: Swift.String, url: Foundation.URL, downloadTime: Foundation.TimeInterval, httpStatus: Swift.UInt, size: Swift.UInt, success: Swift.Bool, lastRedirectLocation: Foundation.URL?)
+  @objc override dynamic public init(jsonData: [Swift.AnyHashable : Any]) throws
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc(_BMPDefaultVideoService) @objcMembers public class _DefaultVideoService : _DefaultService, _VideoService {
+  @objc public var availableVideoQualities: [VideoQuality] {
+    get
+  }
+  @objc public var videoQuality: VideoQuality? {
+    @objc get
+  }
+  @objc override dynamic public var type: _ServiceType {
+    @objc get
+  }
+  @objc public init(serviceLocator: _NamespacedServiceLocator, player: _BMPAVPlayer)
+  @objc override dynamic public func start()
+  @objc override dynamic public func stop()
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension _DefaultVideoService : PlayerListener, _PlayerListenerInternal {
+  @objc dynamic public func onSourceLoaded(_ event: SourceLoadedEvent)
+  @objc dynamic public func onSourceUnloaded(_ event: SourceUnloadedEvent)
+  @objc dynamic open func onMasterPlaylistLoaded(_ event: _MasterPlaylistLoadedEvent)
+}
+extension _DefaultVideoService : _AVPlayerObserver {
+  @objc dynamic public func player(_ player: _BMPAVPlayer, didChangeCurrentItem oldItem: _BMPAVPlayerItem?, newItem: _BMPAVPlayerItem?)
+}
+extension _DefaultVideoService : _AVPlayerItemListener {
+  @objc dynamic public func playerItemDidReceiveNewAccessLogEntry(_ playerItem: _BMPAVPlayerItem)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc(_BMPBackgroundPlaybackLifecycleHandler) @objcMembers public class _BackgroundPlaybackLifecycleHandler : ObjectiveC.NSObject {
+  @objc weak public var delegate: _BackgroundPlaybackLifecycleHandlerDelegate?
+  @objc override convenience dynamic public init()
+  @objc deinit
+}
+@objc(_BMPBackgroundPlaybackLifecycleHandlerDelegate) public protocol _BackgroundPlaybackLifecycleHandlerDelegate {
+  @objc func enteringBackground()
+  @objc func exitingBackground()
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc(_BMPInternalPlayEvent) @objcMembers final public class _InternalPlayEvent : PlayerEvent {
+  @objc final public let time: Foundation.TimeInterval
+  @objc override final public var name: Swift.String {
+    @objc get
+  }
+  @objc public init(time: Foundation.TimeInterval)
+  @objc override final public func toJsonData() -> [Swift.AnyHashable : Any]
+  @objc deinit
+}
+extension _LogLevel : Swift.Equatable {}
+extension _LogLevel : Swift.Hashable {}
+extension _LogLevel : Swift.RawRepresentable {}
+extension _CafDrmConfig.ProtectionSystem : Swift.Equatable {}
+extension _CafDrmConfig.ProtectionSystem : Swift.Hashable {}
+extension _CafDrmConfig.ProtectionSystem : Swift.RawRepresentable {}
+extension DrmData.DrmDataType : Swift.Equatable {}
+extension DrmData.DrmDataType : Swift.Hashable {}
+extension DrmData.DrmDataType : Swift.RawRepresentable {}

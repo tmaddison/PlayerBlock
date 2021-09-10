@@ -1,0 +1,96 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-module-flags: -target arm64-apple-ios12.4 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BitmovinComScoreAnalytics
+@_exported import BitmovinComScoreAnalytics
+import BitmovinPlayer
+import ComScore
+import Foundation
+import Swift
+@_hasMissingDesignatedInitializers final public class ComScoreAnalytics {
+  public static func start(configuration: ComScoreConfiguration)
+  public static func setPersistentLabel(label: Swift.String, value: Swift.String)
+  public static func setPersistentLabels(labels: [Swift.String : Swift.String])
+  public static func createComScoreStreamingAnalytics(bitmovinPlayer: Player, metadata: ComScoreMetadata) throws -> ComScoreStreamingAnalytics?
+  public static func isActive() -> Swift.Bool
+  @objc deinit
+}
+@frozen public enum ComScoreError : Swift.Error {
+  case notStarted
+  public static func == (a: ComScoreError, b: ComScoreError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public class ComScoreConfiguration {
+  final public let publisherId: Swift.String
+  final public let applicationName: Swift.String
+  public var userConsent: ComScoreUserConsent
+  final public let childDirectedAppMode: Swift.Bool
+  public var debug: Swift.Bool
+  public init(publisherId: Swift.String, applicationName: Swift.String, userConsent: ComScoreUserConsent = .unknown, childDirectedAppMode: Swift.Bool = false, debug: Swift.Bool = false)
+  @objc deinit
+}
+@frozen public enum ComScoreMediaType : Swift.String {
+  case longFormOnDemand
+  case shortFormOnDemand
+  case live
+  case userGeneratedLongFormOnDemand
+  case userGeneratedShortFormOnDemand
+  case userGeneratedLive
+  case bumper
+  case other
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public struct ComScoreMetadata {
+  internal let mediaType: ComScoreMediaType
+  internal let uniqueContentId: Swift.String?
+  internal let publisherBrandName: Swift.String?
+  internal let programTitle: Swift.String?
+  internal let programId: Swift.String?
+  internal let episodeTitle: Swift.String?
+  internal let episodeId: Swift.String?
+  internal let episodeSeasonNumber: Swift.String?
+  internal let episodeNumber: Swift.String?
+  internal let contentGenre: Swift.String?
+  internal let advertisementLoad: Swift.Bool?
+  internal let digitalAirdate: Swift.String?
+  internal let tvAirdate: Swift.String?
+  internal let stationTitle: Swift.String?
+  internal let c3: Swift.String?
+  internal let c4: Swift.String?
+  internal let c6: Swift.String?
+  internal let completeEpisode: Swift.Bool?
+  internal let feedType: Swift.String?
+  public init(mediaType: ComScoreMediaType, uniqueContentId: Swift.String? = nil, publisherBrandName: Swift.String? = nil, programTitle: Swift.String? = nil, programId: Swift.String? = nil, episodeTitle: Swift.String? = nil, episodeId: Swift.String? = nil, episodeSeasonNumber: Swift.String? = nil, episodeNumber: Swift.String? = nil, contentGenre: Swift.String? = nil, advertisementLoad: Swift.Bool? = nil, digitalAirdate: Swift.String? = nil, tvAirdate: Swift.String? = nil, stationTitle: Swift.String? = nil, c3: Swift.String? = nil, c4: Swift.String? = nil, c6: Swift.String? = nil, completeEpisode: Swift.Bool? = nil, feedType: Swift.String? = nil)
+}
+@_hasMissingDesignatedInitializers public class ComScoreStreamingAnalytics {
+  @objc deinit
+  public func destroy()
+  public func update(metadata: ComScoreMetadata)
+  public func setPersistentLabel(label: Swift.String, value: Swift.String)
+  public func setPersistentLabels(labels: [Swift.String : Swift.String])
+  public func suppressAdAnalytics(suppress: Swift.Bool)
+}
+@frozen public enum ComScoreUserConsent : Swift.String {
+  case denied
+  case granted
+  case unknown
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+extension ComScoreError : Swift.Equatable {}
+extension ComScoreError : Swift.Hashable {}
+extension ComScoreMediaType : Swift.Equatable {}
+extension ComScoreMediaType : Swift.Hashable {}
+extension ComScoreMediaType : Swift.RawRepresentable {}
+extension ComScoreUserConsent : Swift.Equatable {}
+extension ComScoreUserConsent : Swift.Hashable {}
+extension ComScoreUserConsent : Swift.RawRepresentable {}

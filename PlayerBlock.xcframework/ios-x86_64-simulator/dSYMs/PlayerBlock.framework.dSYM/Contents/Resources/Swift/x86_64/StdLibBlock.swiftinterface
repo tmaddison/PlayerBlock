@@ -1,0 +1,834 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name StdLibBlock
+import Foundation
+@_exported import StdLibBlock
+import Swift
+public class SimpleEventCollection<Event, Action> where Event : StdLibBlock.EventType, Event : Swift.Hashable, Action : StdLibBlock.EventActionable {
+  public init(events: StdLibBlock.SimpleEventCollection<Event, Action>.CollectionType)
+  @objc deinit
+}
+extension SimpleEventCollection : StdLibBlock.EventSignalCollection {
+  public var count: Swift.Int {
+    get
+  }
+  @discardableResult
+  public func forEach<EventSignal>(_ completion: @escaping StdLibBlock.SimpleEventCollection<Event, Action>.EventSignalCompletion<EventSignal>) -> Self where EventSignal : StdLibBlock.BaseEventSignal, EventSignal : StdLibBlock.Dispatchable
+  @discardableResult
+  public func listen(_ completion: @escaping StdLibBlock.SimpleEventCollection<Event, Action>.Completion<Event>) -> StdLibBlock.SignalBindable
+  @discardableResult
+  public func listen(for actions: [Action]) -> StdLibBlock.SignalBindable
+  @available(*, deprecated, message: "Use listen(for actions: _) instead")
+  @discardableResult
+  public func listen(for collection: [Event : StdLibBlock.SignalCompletion<StdLibBlock.EventResult>]) -> StdLibBlock.SignalBindable
+  @discardableResult
+  public func once(_ completion: @escaping StdLibBlock.SimpleEventCollection<Event, Action>.Completion<Event>) -> StdLibBlock.SignalBindable
+  @discardableResult
+  public func once(for actions: [Action]) -> StdLibBlock.SignalBindable
+  @available(*, deprecated, message: "Use once(for actions: _) instead")
+  @discardableResult
+  public func once(for collection: [Event : StdLibBlock.SignalCompletion<StdLibBlock.EventResult>]) -> StdLibBlock.SignalBindable
+  @discardableResult
+  public func unlisten(to binding: StdLibBlock.SignalBindable) -> Self
+  @discardableResult
+  public func unlistenAll() -> Self
+  @discardableResult
+  public func removeAllListeners() -> Self
+}
+@frozen public enum LogEventType : Swift.String, StdLibBlock.EventType {
+  public var stringValue: Swift.String {
+    get
+  }
+  case verbose
+  case debug
+  case info
+  case warning
+  case error
+  case configChanged
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public struct BlockCodableError : Swift.Error {
+  @frozen public enum Kind {
+    case decodingError
+    case encodingError
+    case fileNotFound
+    case invalidJSONFile
+    case unknown
+    public static func == (a: StdLibBlock.BlockCodableError.Kind, b: StdLibBlock.BlockCodableError.Kind) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  internal let kind: StdLibBlock.BlockCodableError.Kind
+  internal let description: Swift.String
+}
+public typealias BlockCodable = StdLibBlock.BlockDecodable & StdLibBlock.BlockEncodable
+public protocol BlockDecodable : Swift.Decodable {
+  static func decoded(from data: StdLibBlock.AnyCodable) throws -> Self
+  static func decodedFromJSON(file: Swift.String, in bundle: Foundation.Bundle) throws -> Self
+}
+public protocol BlockEncodable : Swift.Encodable {
+  func encoded() throws -> [Swift.String : Any?]?
+}
+extension BlockDecodable {
+  public static func decoded(from data: StdLibBlock.AnyCodable) throws -> Self
+  public static func decodedFromJSON(file: Swift.String, in bundle: Foundation.Bundle = Bundle.main) throws -> Self
+}
+extension BlockEncodable {
+  public func encoded() throws -> [Swift.String : Any?]?
+}
+extension URL : StdLibBlock.BlockCodable {
+}
+extension String : StdLibBlock.BlockCodable {
+}
+extension Dictionary : StdLibBlock.BlockCodable where Key : Swift.Decodable, Key : Swift.Encodable, Value : Swift.Decodable, Value : Swift.Encodable {
+}
+public typealias HookHandler<Value, Failure> = (Value, @escaping StdLibBlock.HookCompletion<Value, Failure>) -> Swift.Void where Value : StdLibBlock.HookEventResult, Failure : StdLibBlock.HookError
+public typealias HookHandlerId = Swift.String
+@frozen public enum HookHandlerType : Swift.String, StdLibBlock.BlockCodable {
+  case peripheral
+  case `default`
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public typealias HookResult<Value, Failure> = Swift.Result<Value, Failure> where Value : StdLibBlock.HookEventResult, Failure : StdLibBlock.HookError
+public typealias HookCompletion<Value, Failure> = (StdLibBlock.HookResult<Value, Failure>) -> Swift.Void where Value : StdLibBlock.HookEventResult, Failure : StdLibBlock.HookError
+public typealias SignalCompletion<T> = (T) -> Swift.Void
+public typealias Observer = Swift.AnyObject
+public protocol Listenable {
+  var count: Swift.Int { get }
+  func listen(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<StdLibBlock.EventResult>) -> StdLibBlock.SignalBindable
+  func listen<R>(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<R>) -> StdLibBlock.SignalBindable where R : StdLibBlock.EventResult
+  func once(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<StdLibBlock.EventResult>) -> StdLibBlock.SignalBindable
+  func once<R>(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<R>) -> StdLibBlock.SignalBindable where R : StdLibBlock.EventResult
+  func has(_ binding: StdLibBlock.SignalBindable) -> Swift.Bool
+  func unlisten(to binding: StdLibBlock.SignalBindable)
+  func unlistenAll()
+}
+public protocol Dispatchable {
+  associatedtype T : StdLibBlock.EventResult
+  func dispatch<R>(data: R) where R == Self.T
+}
+@frozen public struct LogEventTarget : StdLibBlock.LogTarget {
+  public let id: Swift.String = "com.wm.log.event.target"
+  public var serialQueue: Dispatch.DispatchQueue = DispatchQueue(label: "com.wm.logger.proxy.target.logEventTarget")
+  public let logEvents: StdLibBlock.LogEvents = LogEvents()
+  public func send(message: StdLibBlock.LogMessage)
+}
+public protocol HookDispatchable {
+  func dispatch<Name, Value, Failure>(hookEvent event: StdLibBlock.HookEvent<Name, Value, Failure>) where Name : StdLibBlock.HookName, Value : StdLibBlock.HookEventResult, Failure : StdLibBlock.HookError
+}
+public class ManagerConfig {
+  public var isEnabled: Swift.Bool
+  public var sources: [StdLibBlock.Source : StdLibBlock.LogConfig]
+  public static var defaultData: StdLibBlock.ManagerConfig {
+    get
+  }
+  public init(isEnabled: Swift.Bool, loggers: [StdLibBlock.DefaultLogger], sources: [StdLibBlock.Source : StdLibBlock.LogConfig])
+  @objc deinit
+}
+public protocol EventType : Swift.CustomStringConvertible {
+  var stringValue: Swift.String { get }
+}
+extension EventType where Self : Swift.Hashable, Self : Swift.RawRepresentable, Self.RawValue : Swift.Hashable {
+  public var stringValue: Self.RawValue {
+    get
+  }
+}
+extension EventType {
+  public var description: Swift.String {
+    get
+  }
+}
+public protocol HookEventResult : StdLibBlock.HookCodable {
+}
+open class BaseHook<Name, Value, Failure> where Name : StdLibBlock.HookName, Value : StdLibBlock.HookEventResult, Failure : StdLibBlock.HookError {
+  final public let name: Name
+  public init(name: Name, dispatcher: StdLibBlock.HookDispatchable)
+  open func handle(hookEvent event: StdLibBlock.HookEvent<Name, Value, Failure>)
+  @objc deinit
+}
+extension BaseHook : StdLibBlock.Hook {
+  @discardableResult
+  public func set(hookHandler handler: @escaping StdLibBlock.HookHandler<Value, Failure>, handlerType: StdLibBlock.HookHandlerType) -> StdLibBlock.HookHandlerId
+  public func clear(handlerId id: StdLibBlock.HookHandlerId)
+  public func clear(handlerType type: StdLibBlock.HookHandlerType)
+}
+public class DefaultLogManager : StdLibBlock.LogManager {
+  public var currentConfig: StdLibBlock.ManagerConfig {
+    get
+  }
+  public var globalConfig: StdLibBlock.LogConfig {
+    get
+  }
+  public static var shared: StdLibBlock.DefaultLogManager {
+    get
+  }
+  public init()
+  public static func reset()
+  @discardableResult
+  public func getLogger(for context: StdLibBlock.Context, options: StdLibBlock.LoggerOptions?) -> StdLibBlock.Logger
+  public func setEnabled(isEnabled: Swift.Bool)
+  public func updateConfig(for source: StdLibBlock.Source = .global, isEnabled: Swift.Bool? = nil, allowedLevels: StdLibBlock.LogLevels? = nil, categories: StdLibBlock.LogCategories? = nil)
+  public func set(isEnabled: Swift.Bool? = nil, sources: [StdLibBlock.Source : StdLibBlock.LogConfig]? = nil, targets: [StdLibBlock.LogTarget]? = nil)
+  public func register(filter: StdLibBlock.FilterCriteria, for source: StdLibBlock.Source = .global)
+  public func registerSource(with options: StdLibBlock.LoggerOptions)
+  public func sendSharedMessage(_ sharedMessage: StdLibBlock.SharedLogMessage)
+  public func config(for source: StdLibBlock.Source) -> StdLibBlock.LogConfig?
+  @objc deinit
+}
+extension DefaultLogManager : StdLibBlock.LogMessageListener {
+  public func logger(pushed message: StdLibBlock.LogMessage)
+}
+public enum BindingType {
+  case listen
+  case once
+  public static func == (a: StdLibBlock.BindingType, b: StdLibBlock.BindingType) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public protocol EventActionable {
+  func bind(with observer: StdLibBlock.Observer, eventSignal: StdLibBlock.BaseEventSignal, type: StdLibBlock.BindingType) -> StdLibBlock.SignalBindable?
+}
+public protocol BaseEventSignal : StdLibBlock.Listenable {
+  var eventType: StdLibBlock.EventType { get }
+  var before: StdLibBlock.BaseSignal { get }
+  var after: StdLibBlock.BaseSignal { get }
+  var around: StdLibBlock.BaseSignal { get }
+}
+public struct EventSignal<Event, ResultType> : StdLibBlock.BaseEventSignal where Event : StdLibBlock.EventType, ResultType : StdLibBlock.EventResult {
+  public typealias T = ResultType
+  public let before: StdLibBlock.BaseSignal
+  public let after: StdLibBlock.BaseSignal
+  public let around: StdLibBlock.BaseSignal
+  public let eventType: StdLibBlock.EventType
+  public init(eventType: Event)
+}
+extension EventSignal : StdLibBlock.Listenable {
+  public var count: Swift.Int {
+    get
+  }
+  @discardableResult
+  public func listen<R>(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<R>) -> StdLibBlock.SignalBindable where R : StdLibBlock.EventResult
+  @discardableResult
+  public func listen(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<StdLibBlock.EventResult>) -> StdLibBlock.SignalBindable
+  @discardableResult
+  public func once<R>(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<R>) -> StdLibBlock.SignalBindable where R : StdLibBlock.EventResult
+  @discardableResult
+  public func once(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<StdLibBlock.EventResult>) -> StdLibBlock.SignalBindable
+  public func has(_ binding: StdLibBlock.SignalBindable) -> Swift.Bool
+  public func unlisten(to binding: StdLibBlock.SignalBindable)
+  public func unlistenAll()
+}
+extension EventSignal : StdLibBlock.Dispatchable {
+  public func dispatch(data: ResultType)
+}
+@_hasMissingDesignatedInitializers final public class StdLibKit {
+  public static var description: Swift.String {
+    get
+  }
+  public static func version() -> Swift.String
+  @objc deinit
+}
+@frozen public struct LogConfig {
+  public let contexts: [StdLibBlock.Context]?
+  public var categories: StdLibBlock.LogCategories
+  public var allowedLevels: StdLibBlock.LogLevels
+  public var isEnabled: Swift.Bool
+  public init(isEnabled: Swift.Bool, contexts: [StdLibBlock.Context] = [], categories: StdLibBlock.LogCategories = [:], allowedLevels: StdLibBlock.LogLevels = [:])
+  public static let defaultGlobal: StdLibBlock.LogConfig
+}
+public protocol HookCollection {
+}
+@frozen public struct LogEventResult : StdLibBlock.EventResult {
+  public var eventType: StdLibBlock.EventType?
+  public let message: StdLibBlock.LogMessage
+}
+@frozen public struct LogConfigChangedEventResult : StdLibBlock.EventResult {
+  public var eventType: StdLibBlock.EventType?
+  public let data: StdLibBlock.ManagerConfig
+}
+@frozen public enum LogEventAction : StdLibBlock.EventActionable {
+  case verbose(StdLibBlock.SignalCompletion<StdLibBlock.LogEventResult>)
+  case debug(StdLibBlock.SignalCompletion<StdLibBlock.LogEventResult>)
+  case info(StdLibBlock.SignalCompletion<StdLibBlock.LogEventResult>)
+  case warning(StdLibBlock.SignalCompletion<StdLibBlock.LogEventResult>)
+  case error(StdLibBlock.SignalCompletion<StdLibBlock.LogEventResult>)
+  case configChanged(StdLibBlock.SignalCompletion<StdLibBlock.LogConfigChangedEventResult>)
+  public func bind(with observer: StdLibBlock.Observer, eventSignal: StdLibBlock.BaseEventSignal, type: StdLibBlock.BindingType) -> StdLibBlock.SignalBindable?
+}
+public protocol EventSignalCollection {
+  associatedtype Event : StdLibBlock.EventType, Swift.Hashable
+  associatedtype Action : StdLibBlock.EventActionable
+  var count: Swift.Int { get }
+  func forEach<EventSignal>(_ completion: @escaping Self.EventSignalCompletion<EventSignal>) -> Self where EventSignal : StdLibBlock.BaseEventSignal, EventSignal : StdLibBlock.Dispatchable
+  func once(_ completion: @escaping Self.Completion<Self.Event>) -> StdLibBlock.SignalBindable
+  func once(for actions: [Self.Action]) -> StdLibBlock.SignalBindable
+  @available(*, deprecated, message: "Use once(for actions: _) instead")
+  func once(for collection: [Self.Event : StdLibBlock.SignalCompletion<StdLibBlock.EventResult>]) -> StdLibBlock.SignalBindable
+  func listen(_ completion: @escaping Self.Completion<Self.Event>) -> StdLibBlock.SignalBindable
+  func listen(for actions: [Self.Action]) -> StdLibBlock.SignalBindable
+  @available(*, deprecated, message: "Use listen(for actions: _) instead")
+  func listen(for collection: [Self.Event : StdLibBlock.SignalCompletion<StdLibBlock.EventResult>]) -> StdLibBlock.SignalBindable
+  func unlisten(to binding: StdLibBlock.SignalBindable) -> Self
+  func unlistenAll() -> Self
+  func removeAllListeners() -> Self
+}
+extension EventSignalCollection {
+  public typealias Completion<Event> = (Event, StdLibBlock.EventResult) -> Swift.Void where Event : StdLibBlock.EventType
+  public typealias CollectionType = [Self.Event : StdLibBlock.BaseEventSignal]
+  public typealias EventSignalCompletion<EventSignal> = (EventSignal) -> Swift.Void where EventSignal : StdLibBlock.BaseEventSignal, EventSignal : StdLibBlock.Dispatchable
+}
+public protocol Hook {
+  associatedtype Name : StdLibBlock.HookName
+  associatedtype Value : StdLibBlock.HookEventResult
+  associatedtype Failure : StdLibBlock.HookError
+  var name: Self.Name { get }
+  @discardableResult
+  func set(hookHandler handler: @escaping StdLibBlock.HookHandler<Self.Value, Self.Failure>, handlerType: StdLibBlock.HookHandlerType) -> StdLibBlock.HookHandlerId
+  func clear(handlerId id: StdLibBlock.HookHandlerId)
+  func clear(handlerType type: StdLibBlock.HookHandlerType)
+}
+public protocol EventResult : Swift.CustomStringConvertible {
+  var eventType: StdLibBlock.EventType? { get set }
+}
+extension EventResult {
+  public var description: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class DefaultLogger : StdLibBlock.Logger {
+  public var categories: StdLibBlock.LogCategories {
+    get
+    set
+  }
+  public var source: StdLibBlock.LogSource {
+    get
+    set
+  }
+  public var context: StdLibBlock.Context
+  public var contextDetail: StdLibBlock.Context?
+  public var filters: [StdLibBlock.FilterCriteria]
+  public var isEnabled: Swift.Bool {
+    get
+  }
+  public var canBeEnabled: Swift.Bool {
+    get
+    set
+  }
+  public var allowedLevels: StdLibBlock.LogLevels {
+    get
+  }
+  public func verbose(_ message: Swift.String, payload: StdLibBlock.LogMessage.Payload? = nil)
+  public func debug(_ message: Swift.String, payload: StdLibBlock.LogMessage.Payload? = nil)
+  public func info(_ message: Swift.String, payload: StdLibBlock.LogMessage.Payload? = nil)
+  public func error(_ message: Swift.String, payload: StdLibBlock.LogMessage.Payload? = nil)
+  public func warning(_ message: Swift.String, payload: StdLibBlock.LogMessage.Payload? = nil)
+  public func updateConfig(allowedLevels: StdLibBlock.LogLevels? = nil, categories: StdLibBlock.LogCategories? = nil, source: StdLibBlock.LogSource? = nil)
+  public func filter(criteria: StdLibBlock.FilterCriteria) -> StdLibBlock.Logger
+  public func child(contextDetail: StdLibBlock.Context) -> StdLibBlock.Logger
+  @objc deinit
+}
+extension DefaultLogger : Swift.Hashable, Swift.Equatable {
+  public static func == (lhs: StdLibBlock.DefaultLogger, rhs: StdLibBlock.DefaultLogger) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@frozen public struct ConsoleLogTarget : StdLibBlock.LogTarget {
+  public let id: Swift.String = "console"
+  public let serialQueue: Dispatch.DispatchQueue
+  public var format: StdLibBlock.ConsoleLogTarget.Format
+  public let dateFormat: Swift.String
+  private let dateFormatter: Foundation.DateFormatter
+  public func send(message: StdLibBlock.LogMessage)
+}
+extension ConsoleLogTarget {
+  public static func == (lhs: StdLibBlock.LogTarget, rhs: StdLibBlock.ConsoleLogTarget) -> Swift.Bool
+  @frozen public enum Marker : Swift.String {
+    case icon
+    case message
+    case date
+    case context
+    case contextDetail
+    case parentCategory
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @frozen public enum Format {
+    case long
+    case short
+    case custom(Swift.String)
+  }
+}
+final public class SignalImpl<T> {
+  public typealias SignalCallback = (T) -> Swift.Void
+  final public var fireCount: Swift.Int {
+    get
+  }
+  final public var retainLastData: Swift.Bool {
+    get
+    set
+  }
+  final public var lastDataFired: T? {
+    get
+  }
+  final public var observers: [Swift.AnyObject] {
+    get
+  }
+  public init(retainLastData: Swift.Bool = false)
+  @discardableResult
+  final public func subscribe(with observer: Swift.AnyObject, callback: @escaping StdLibBlock.SignalImpl<T>.SignalCallback) -> StdLibBlock.SignalSubscription<T>
+  @discardableResult
+  final public func subscribeOnce(with observer: Swift.AnyObject, callback: @escaping StdLibBlock.SignalImpl<T>.SignalCallback) -> StdLibBlock.SignalSubscription<T>
+  @discardableResult
+  final public func subscribePast(with observer: Swift.AnyObject, callback: @escaping StdLibBlock.SignalImpl<T>.SignalCallback) -> StdLibBlock.SignalSubscription<T>
+  @discardableResult
+  final public func subscribePastOnce(with observer: Swift.AnyObject, callback: @escaping StdLibBlock.SignalImpl<T>.SignalCallback) -> StdLibBlock.SignalSubscription<T>
+  final public func fire(_ data: T)
+  final public func cancelSubscription(for observer: Swift.AnyObject)
+  final public func cancelAllSubscriptions()
+  final public func clearLastData()
+  @objc deinit
+}
+extension SignalImpl where T == Swift.Void {
+  final public func fire()
+}
+@_hasMissingDesignatedInitializers final public class SignalSubscription<T> {
+  public typealias SignalCallback = (T) -> Swift.Void
+  public typealias SignalFilter = (T) -> Swift.Bool
+  weak final public var observer: Swift.AnyObject?
+  final public var once: Swift.Bool
+  @discardableResult
+  final public func filter(_ predicate: @escaping StdLibBlock.SignalSubscription<T>.SignalFilter) -> StdLibBlock.SignalSubscription<T>
+  @discardableResult
+  final public func sample(every sampleInterval: Foundation.TimeInterval) -> StdLibBlock.SignalSubscription<T>
+  @discardableResult
+  final public func onQueue(_ queue: Dispatch.DispatchQueue) -> StdLibBlock.SignalSubscription<T>
+  final public func cancel()
+  @objc deinit
+}
+infix operator => : AssignmentPrecedence
+public func => <T>(signal: StdLibBlock.SignalImpl<T>, data: T)
+public protocol LogMessageListener : AnyObject {
+  func logger(pushed message: StdLibBlock.LogMessage)
+}
+public protocol HookName : Swift.Decodable, Swift.Encodable, Swift.RawRepresentable {
+}
+public struct HookEvent<Name, Value, Failure> where Name : StdLibBlock.HookName, Value : StdLibBlock.HookEventResult, Failure : StdLibBlock.HookError {
+  public let eventType: StdLibBlock.HookEventType
+  public let hook: Name
+  public let handlerId: StdLibBlock.HookHandlerId
+  public let hookHandlerType: StdLibBlock.HookHandlerType?
+  public let data: Value?
+  public let result: Value?
+  public let error: Failure?
+}
+extension HookEvent : StdLibBlock.HookCodable {
+  public static func from(dictionary: [Swift.String : Any]?) -> StdLibBlock.HookEvent<Name, Value, Failure>?
+  public func toDictionary() -> [Swift.String : Any]?
+}
+open class EventCollection<Event, Action> where Event : StdLibBlock.EventType, Event : Swift.Hashable, Action : StdLibBlock.EventActionable {
+  public init(events: StdLibBlock.EventCollection<Event, Action>.CollectionType)
+  @objc deinit
+}
+extension EventCollection : StdLibBlock.EventSignalCollection {
+  public var count: Swift.Int {
+    get
+  }
+  @discardableResult
+  public func forEach<EventSignal>(_ completion: @escaping StdLibBlock.EventCollection<Event, Action>.EventSignalCompletion<EventSignal>) -> Self where EventSignal : StdLibBlock.BaseEventSignal, EventSignal : StdLibBlock.Dispatchable
+  @discardableResult
+  public func once(_ completion: @escaping StdLibBlock.EventCollection<Event, Action>.Completion<Event>) -> StdLibBlock.SignalBindable
+  @discardableResult
+  public func once(for actions: [Action]) -> StdLibBlock.SignalBindable
+  @discardableResult
+  public func listen(_ completion: @escaping StdLibBlock.EventCollection<Event, Action>.Completion<Event>) -> StdLibBlock.SignalBindable
+  @discardableResult
+  public func listen(for actions: [Action]) -> StdLibBlock.SignalBindable
+  @available(*, deprecated, message: "Use once(for actions: _) instead")
+  @discardableResult
+  public func once(for collection: [Event : StdLibBlock.SignalCompletion<StdLibBlock.EventResult>]) -> StdLibBlock.SignalBindable
+  @available(*, deprecated, message: "Use listen(for actions: _) instead")
+  @discardableResult
+  public func listen(for collection: [Event : StdLibBlock.SignalCompletion<StdLibBlock.EventResult>]) -> StdLibBlock.SignalBindable
+  @discardableResult
+  public func unlisten(to binding: StdLibBlock.SignalBindable) -> Self
+  @discardableResult
+  public func unlistenAll() -> Self
+  @discardableResult
+  public func removeAllListeners() -> Self
+}
+@frozen public enum HookEventType : Swift.String, Swift.Codable {
+  case added
+  case removed
+  case executing
+  case executed
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public typealias Category = Swift.String
+public typealias Source = Swift.String
+public typealias LogSource = (name: StdLibBlock.Source, isEnabled: Swift.Bool)
+public typealias FilterCriteria = Swift.String
+public typealias LogCategories = [StdLibBlock.Category : Swift.Bool]
+public typealias Context = Swift.String
+public protocol Logger {
+  func verbose(_ message: Swift.String, payload: StdLibBlock.LogMessage.Payload?)
+  func debug(_ message: Swift.String, payload: StdLibBlock.LogMessage.Payload?)
+  func info(_ message: Swift.String, payload: StdLibBlock.LogMessage.Payload?)
+  func error(_ message: Swift.String, payload: StdLibBlock.LogMessage.Payload?)
+  func warning(_ message: Swift.String, payload: StdLibBlock.LogMessage.Payload?)
+  func filter(criteria: StdLibBlock.FilterCriteria) -> StdLibBlock.Logger
+  func child(contextDetail: StdLibBlock.Context) -> StdLibBlock.Logger
+  func updateConfig(allowedLevels: StdLibBlock.LogLevels?, categories: StdLibBlock.LogCategories?, source: StdLibBlock.LogSource?)
+  var isEnabled: Swift.Bool { get }
+  var allowedLevels: StdLibBlock.LogLevels { get }
+  var categories: StdLibBlock.LogCategories { get }
+  var source: StdLibBlock.LogSource { get }
+  var context: StdLibBlock.Context { get }
+  var contextDetail: StdLibBlock.Context? { get }
+  var filters: [StdLibBlock.FilterCriteria] { get }
+}
+extension Logger {
+  public func verbose(_ message: Swift.String)
+  public func debug(_ message: Swift.String)
+  public func info(_ message: Swift.String)
+  public func error(_ message: Swift.String)
+  public func warning(_ message: Swift.String)
+}
+extension String {
+  public static let global: Swift.String
+}
+@frozen public struct LogProxy {
+  internal var targets: [StdLibBlock.LogTarget]
+  private let queue: Dispatch.DispatchQueue = DispatchQueue(label: "com.wm.logger.proxy", qos: .default, attributes: .concurrent)
+  public func push(message: StdLibBlock.LogMessage)
+  public mutating func update(targets: [StdLibBlock.LogTarget])
+}
+@frozen public struct TOPLog {
+  public static var isEnabled: Swift.Bool {
+    get
+    set
+  }
+  public static var events: StdLibBlock.LogEvents {
+    get
+  }
+  public static var currentConfig: StdLibBlock.ManagerConfig {
+    get
+  }
+  public static func config(for source: StdLibBlock.Source) -> StdLibBlock.LogConfig?
+  public static func getLogger(for context: StdLibBlock.Context, options: StdLibBlock.LoggerOptions? = nil) -> StdLibBlock.Logger
+  public static func setEnabled(_ value: Swift.Bool)
+  public static func updateConfig(for source: StdLibBlock.Source = .global, isEnabled: Swift.Bool? = nil, levels: StdLibBlock.LogLevels? = nil, categories: StdLibBlock.LogCategories? = nil)
+  public static func set(isEnabled: Swift.Bool? = nil, sources: [StdLibBlock.Source : StdLibBlock.LogConfig]? = nil, targets: [StdLibBlock.LogTarget]? = nil)
+  public static func reset()
+  public static func factory(options: StdLibBlock.LoggerOptions) -> StdLibBlock.LogFactory
+}
+public typealias LogLevels = [StdLibBlock.LogMessage.Level : Swift.Bool]
+@frozen public struct LogMessage {
+  @frozen public enum Level : Swift.String, Swift.Codable {
+    case error
+    case warning
+    case info
+    case debug
+    case verbose
+    public static var all: StdLibBlock.LogLevels
+    public static var defaultLevels: StdLibBlock.LogLevels
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public typealias Payload = [Swift.String : Any]
+  internal let text: Swift.String
+  internal let timestamp: Foundation.Date
+  internal let context: StdLibBlock.Context
+  internal let contextDetail: StdLibBlock.Context?
+  internal let payload: StdLibBlock.LogMessage.Payload?
+  internal let level: StdLibBlock.LogMessage.Level
+}
+public protocol BaseSignal : StdLibBlock.Listenable {
+}
+public struct Signal<T> : StdLibBlock.BaseSignal where T : StdLibBlock.EventResult {
+  public init(shouldRetain: Swift.Bool = false)
+}
+extension Signal : StdLibBlock.Listenable {
+  public var count: Swift.Int {
+    get
+  }
+  @discardableResult
+  public func listen<R>(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<R>) -> StdLibBlock.SignalBindable where R : StdLibBlock.EventResult
+  @discardableResult
+  public func listen(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<StdLibBlock.EventResult>) -> StdLibBlock.SignalBindable
+  @discardableResult
+  public func once(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<StdLibBlock.EventResult>) -> StdLibBlock.SignalBindable
+  @discardableResult
+  public func once<R>(with observer: StdLibBlock.Observer, completion: @escaping StdLibBlock.SignalCompletion<R>) -> StdLibBlock.SignalBindable where R : StdLibBlock.EventResult
+  public func has(_ binding: StdLibBlock.SignalBindable) -> Swift.Bool
+  public func unlisten(to binding: StdLibBlock.SignalBindable)
+  public func unlistenAll()
+}
+extension Signal : StdLibBlock.Dispatchable {
+  public func dispatch(data: T)
+}
+public protocol HookError : StdLibBlock.HookCodable, Swift.Error {
+  var message: Swift.String { get }
+}
+public struct HookEventError : StdLibBlock.HookError {
+  public let message: Swift.String
+  public init(message: Swift.String)
+}
+extension HookEventError : StdLibBlock.HookCodable {
+  public static func from(dictionary: [Swift.String : Any]?) -> StdLibBlock.HookEventError?
+  public func toDictionary() -> [Swift.String : Any]?
+}
+public class LogFactory {
+  public var options: StdLibBlock.LoggerOptions
+  public init(options: StdLibBlock.LoggerOptions)
+  public func getLogger(for context: StdLibBlock.Context) -> StdLibBlock.Logger
+  @objc deinit
+}
+public protocol SignalBindable {
+  var identifier: Foundation.UUID { get }
+  @discardableResult
+  func detach() -> Swift.Bool
+  func onQueue(_ queue: Dispatch.DispatchQueue)
+}
+public func == (lhs: StdLibBlock.SignalBindable, rhs: StdLibBlock.SignalBindable) -> Swift.Bool
+public struct SignalBinding<T> : StdLibBlock.SignalBindable where T : StdLibBlock.EventResult {
+  public var identifier: Foundation.UUID
+  @discardableResult
+  public func detach() -> Swift.Bool
+  public func onQueue(_ queue: Dispatch.DispatchQueue)
+}
+public struct SignalBindingCollection : StdLibBlock.SignalBindable {
+  public typealias ArrayType = [StdLibBlock.SignalBindable]
+  public let identifier: Foundation.UUID
+  public var bindings: StdLibBlock.SignalBindingCollection.ArrayType
+  public init(bindings: StdLibBlock.SignalBindingCollection.ArrayType)
+  @discardableResult
+  public func detach() -> Swift.Bool
+  public func onQueue(_ queue: Dispatch.DispatchQueue)
+}
+public protocol LogTarget {
+  var id: Swift.String { get }
+  var serialQueue: Dispatch.DispatchQueue { get }
+  func send(message: StdLibBlock.LogMessage)
+}
+extension LogTarget {
+  public func innerSend(message: StdLibBlock.LogMessage)
+}
+public protocol LogManager {
+  func getLogger(for context: StdLibBlock.Context, options: StdLibBlock.LoggerOptions?) -> StdLibBlock.Logger
+  func set(isEnabled: Swift.Bool?, sources: [StdLibBlock.Source : StdLibBlock.LogConfig]?, targets: [StdLibBlock.LogTarget]?)
+  func setEnabled(isEnabled: Swift.Bool)
+  func updateConfig(for source: StdLibBlock.Source, isEnabled: Swift.Bool?, allowedLevels: StdLibBlock.LogLevels?, categories: StdLibBlock.LogCategories?)
+  func register(filter: StdLibBlock.FilterCriteria, for source: StdLibBlock.Source)
+  func registerSource(with options: StdLibBlock.LoggerOptions)
+}
+extension LogManager {
+  @discardableResult
+  public func getLogger(for context: StdLibBlock.Context) -> StdLibBlock.Logger
+}
+@frozen public struct AnyCodable : Swift.Codable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+extension AnyCodable : StdLibBlock._AnyEncodable, StdLibBlock._AnyDecodable {
+}
+extension AnyCodable : Swift.Equatable {
+  public static func == (lhs: StdLibBlock.AnyCodable, rhs: StdLibBlock.AnyCodable) -> Swift.Bool
+}
+extension AnyCodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AnyCodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension AnyCodable : Swift.ExpressibleByNilLiteral {
+}
+extension AnyCodable : Swift.ExpressibleByBooleanLiteral {
+  public typealias BooleanLiteralType = Swift.Bool
+}
+extension AnyCodable : Swift.ExpressibleByIntegerLiteral {
+  public typealias IntegerLiteralType = Swift.Int
+}
+extension AnyCodable : Swift.ExpressibleByFloatLiteral {
+  public typealias FloatLiteralType = Swift.Double
+}
+extension AnyCodable : Swift.ExpressibleByStringLiteral {
+  public typealias StringLiteralType = Swift.String
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.String
+  public typealias UnicodeScalarLiteralType = Swift.String
+}
+extension AnyCodable : Swift.ExpressibleByArrayLiteral {
+  public typealias ArrayLiteralElement = Any
+}
+extension AnyCodable : Swift.ExpressibleByDictionaryLiteral {
+  public typealias Key = Swift.AnyHashable
+  public typealias Value = Any
+}
+@frozen public struct AnyDecodable : Swift.Decodable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+@usableFromInline
+internal protocol _AnyDecodable {
+  var value: Any { get }
+  init<T>(_ value: T?)
+}
+extension AnyDecodable : StdLibBlock._AnyDecodable {
+}
+extension _AnyDecodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+extension AnyDecodable : Swift.Equatable {
+  public static func == (lhs: StdLibBlock.AnyDecodable, rhs: StdLibBlock.AnyDecodable) -> Swift.Bool
+}
+extension AnyDecodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AnyDecodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+@frozen public struct AnyEncodable : Swift.Encodable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+@usableFromInline
+internal protocol _AnyEncodable {
+  var value: Any { get }
+  init<T>(_ value: T?)
+}
+extension AnyEncodable : StdLibBlock._AnyEncodable {
+}
+extension _AnyEncodable {
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension AnyEncodable : Swift.Equatable {
+  public static func == (lhs: StdLibBlock.AnyEncodable, rhs: StdLibBlock.AnyEncodable) -> Swift.Bool
+}
+extension AnyEncodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AnyEncodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension AnyEncodable : Swift.ExpressibleByNilLiteral {
+}
+extension AnyEncodable : Swift.ExpressibleByBooleanLiteral {
+  public typealias BooleanLiteralType = Swift.Bool
+}
+extension AnyEncodable : Swift.ExpressibleByIntegerLiteral {
+  public typealias IntegerLiteralType = Swift.Int
+}
+extension AnyEncodable : Swift.ExpressibleByFloatLiteral {
+  public typealias FloatLiteralType = Swift.Double
+}
+extension AnyEncodable : Swift.ExpressibleByStringLiteral {
+  public typealias StringLiteralType = Swift.String
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.String
+  public typealias UnicodeScalarLiteralType = Swift.String
+}
+extension AnyEncodable : Swift.ExpressibleByArrayLiteral {
+  public typealias ArrayLiteralElement = Any
+}
+extension AnyEncodable : Swift.ExpressibleByDictionaryLiteral {
+  public typealias Key = Swift.AnyHashable
+  public typealias Value = Any
+}
+extension _AnyEncodable {
+  public init(nilLiteral _: ())
+  public init(booleanLiteral value: Swift.Bool)
+  public init(integerLiteral value: Swift.Int)
+  public init(floatLiteral value: Swift.Double)
+  public init(extendedGraphemeClusterLiteral value: Swift.String)
+  public init(stringLiteral value: Swift.String)
+  public init(arrayLiteral elements: Any...)
+  public init(dictionaryLiteral elements: (Swift.AnyHashable, Any)...)
+}
+public class LogEvents : StdLibBlock.EventCollection<StdLibBlock.LogEventType, StdLibBlock.LogEventAction> {
+  public typealias LogMessageSignal = StdLibBlock.EventSignal<StdLibBlock.LogEventType, StdLibBlock.LogEventResult>
+  public typealias LogConfigChangedSignal = StdLibBlock.EventSignal<StdLibBlock.LogEventType, StdLibBlock.LogConfigChangedEventResult>
+  final public let verbose: StdLibBlock.LogEvents.LogMessageSignal
+  final public let debug: StdLibBlock.LogEvents.LogMessageSignal
+  final public let info: StdLibBlock.LogEvents.LogMessageSignal
+  final public let warning: StdLibBlock.LogEvents.LogMessageSignal
+  final public let error: StdLibBlock.LogEvents.LogMessageSignal
+  final public let configChanged: StdLibBlock.LogEvents.LogConfigChangedSignal
+  public init()
+  override public init(events: StdLibBlock.EventCollection<StdLibBlock.LogEventType, StdLibBlock.LogEventAction>.CollectionType)
+  @objc deinit
+}
+@frozen public struct SharedLogMessage : StdLibBlock.BlockCodable {
+  internal let timestamp: Swift.Double
+  internal let level: Swift.String
+  internal let context: StdLibBlock.Context
+  internal let contextDetail: StdLibBlock.Context
+  internal let message: Swift.String
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@frozen public struct LoggerOptions {
+  public let context: StdLibBlock.Context?
+  public var source: StdLibBlock.LogSource?
+  public let contextDetail: StdLibBlock.Context?
+  public let categories: StdLibBlock.LogCategories?
+  public let allowedLevels: StdLibBlock.LogLevels?
+  public let filters: [StdLibBlock.FilterCriteria]?
+  public init(context: StdLibBlock.Context? = nil, source: StdLibBlock.LogSource? = nil, contextDetail: StdLibBlock.Context? = nil, categories: StdLibBlock.LogCategories? = nil, allowedLevels: StdLibBlock.LogLevels? = nil, filters: [StdLibBlock.FilterCriteria]? = nil)
+}
+public protocol HookCodable {
+  func toDictionary() -> [Swift.String : Any]?
+  static func from(dictionary: [Swift.String : Any]?) -> Self?
+}
+extension StdLibBlock.LogEventType : Swift.Equatable {}
+extension StdLibBlock.LogEventType : Swift.Hashable {}
+extension StdLibBlock.LogEventType : Swift.RawRepresentable {}
+extension StdLibBlock.BlockCodableError.Kind : Swift.Equatable {}
+extension StdLibBlock.BlockCodableError.Kind : Swift.Hashable {}
+extension StdLibBlock.HookHandlerType : Swift.Equatable {}
+extension StdLibBlock.HookHandlerType : Swift.Hashable {}
+extension StdLibBlock.HookHandlerType : Swift.RawRepresentable {}
+extension StdLibBlock.BindingType : Swift.Equatable {}
+extension StdLibBlock.BindingType : Swift.Hashable {}
+extension StdLibBlock.ConsoleLogTarget.Marker : Swift.Equatable {}
+extension StdLibBlock.ConsoleLogTarget.Marker : Swift.Hashable {}
+extension StdLibBlock.ConsoleLogTarget.Marker : Swift.RawRepresentable {}
+extension StdLibBlock.HookEventType : Swift.Equatable {}
+extension StdLibBlock.HookEventType : Swift.Hashable {}
+extension StdLibBlock.HookEventType : Swift.RawRepresentable {}
+extension StdLibBlock.LogMessage.Level : Swift.Equatable {}
+extension StdLibBlock.LogMessage.Level : Swift.Hashable {}
+extension StdLibBlock.LogMessage.Level : Swift.RawRepresentable {}

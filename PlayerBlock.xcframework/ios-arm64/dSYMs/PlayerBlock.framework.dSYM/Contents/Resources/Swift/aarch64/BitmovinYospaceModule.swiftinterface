@@ -1,0 +1,363 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-module-flags: -target arm64-apple-ios12.4 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BitmovinYospaceModule
+import BitmovinPlayer
+@_exported import BitmovinYospaceModule
+import Foundation
+import Swift
+import TruexAdRenderer
+import UIKit
+import Yospace
+public class AdTimeline : Swift.CustomDebugStringConvertible {
+  public var adBreaks: [YospaceAdBreak] {
+    get
+  }
+  public init(adBreaks: [Yospace.YSAdBreak])
+  public var debugDescription: Swift.String {
+    get
+  }
+  public func relativeToAbsolute(time: Foundation.TimeInterval) -> Foundation.TimeInterval
+  public func adTime(time: Foundation.TimeInterval) -> Foundation.TimeInterval
+  public func absoluteToRelative(time: Foundation.TimeInterval) -> Foundation.TimeInterval
+  @objc deinit
+}
+public class AdTimelineChangedEvent {
+  final public let name: Swift.String
+  final public let timestamp: Swift.Double
+  final public let timeline: AdTimeline
+  public init(name: Swift.String, timestamp: Swift.Double, timeline: AdTimeline)
+  @objc deinit
+}
+@objc open class BitmovinYospacePlayer : Player {
+  public var timeline: AdTimeline? {
+    get
+  }
+  public var playerPolicy: BitmovinYospacePlayerPolicy? {
+    get
+    set(playerPolicy)
+  }
+  @objc override dynamic open var duration: Foundation.TimeInterval {
+    @objc get
+  }
+  @objc override dynamic open var currentTime: Foundation.TimeInterval {
+    @objc get
+  }
+  public var suppressAnalytics: Swift.Bool {
+    get
+    set
+  }
+  public init(configuration: PlayerConfiguration, yospaceConfiguration: YospaceConfiguration? = nil, integrationConfiguration: IntegrationConfiguration? = nil)
+  @objc override dynamic open func destroy()
+  open func load(sourceConfiguration: SourceConfiguration, yospaceSourceConfiguration: YospaceSourceConfiguration? = nil, truexConfiguration: TruexConfiguration? = nil)
+  @objc override dynamic open func unload()
+  @objc override dynamic open func pause()
+  @objc override dynamic open func seek(time: Foundation.TimeInterval)
+  open func forceSeek(time: Foundation.TimeInterval)
+  @objc override dynamic open func add(listener: PlayerListener)
+  @objc override dynamic open func remove(listener: PlayerListener)
+  public func add(yospaceListener: YospaceListener)
+  public func remove(yospaceListener: YospaceListener)
+  public func add(integrationListener: IntegrationListener)
+  public func remove(integrationListener: IntegrationListener)
+  public func linearClickThroughDidOccur()
+  public func companionClickThroughDidOccur(companionId: Swift.String)
+  public func companionRendered(companionId: Swift.String)
+  @objc override dynamic open func skipAd()
+  @objc override dynamic open var isAd: Swift.Bool {
+    @objc get
+  }
+  open func currentTimeWithAds() -> Foundation.TimeInterval
+  public func durationWithAds() -> Foundation.TimeInterval
+  public func getActiveAdBreak() -> YospaceAdBreak?
+  public func getActiveAd() -> YospaceAd?
+  @objc deinit
+  @objc override dynamic public init(configuration: PlayerConfiguration)
+  @objc override dynamic public init()
+}
+extension BitmovinYospacePlayer : Yospace.YSAnalyticObserver {
+  @objc dynamic public func advertBreakDidStart(_ adBreak: Yospace.YSAdBreak?)
+  @objc dynamic public func advertDidStart(_ advert: Yospace.YSAdvert) -> [Any]?
+  @objc dynamic public func advertDidEnd(_ advert: Yospace.YSAdvert)
+  @objc dynamic public func advertBreakDidEnd(_ adBreak: Yospace.YSAdBreak)
+  @objc dynamic public func trackingEventDidOccur(_ event: Yospace.YSETrackingEvent, for advert: Yospace.YSAdvert)
+  @objc dynamic public func linearClickThroughDidOccur(_ linearCreative: Yospace.YSLinearCreative)
+  @objc dynamic public func timelineUpdateReceived(_ vmap: Swift.String)
+}
+extension BitmovinYospacePlayer : Yospace.YSSessionManagerObserver {
+  @objc dynamic public func sessionDidInitialise(_ sessionManager: Yospace.YSSessionManager, with stream: Yospace.YSStream)
+  @objc dynamic public func operationDidFailWithError(_ error: Swift.Error)
+}
+extension BitmovinYospacePlayer : PlayerListener {
+  @objc dynamic public func onPlay(_ event: PlayEvent)
+  @objc dynamic public func onPlaying(_ event: PlayingEvent)
+  @objc dynamic public func onPaused(_ event: PausedEvent)
+  @objc dynamic public func onSourceUnloaded(_ event: SourceUnloadedEvent)
+  @objc dynamic public func onStallStarted(_ event: StallStartedEvent)
+  @objc dynamic public func onStallEnded(_ event: StallEndedEvent)
+  @objc dynamic public func onError(_ event: ErrorEvent)
+  @objc dynamic public func onWarning(_ event: WarningEvent)
+  @objc dynamic public func onReady(_ event: ReadyEvent)
+  @objc dynamic public func onMuted(_ event: MutedEvent)
+  @objc dynamic public func onUnmuted(_ event: UnmutedEvent)
+  @objc dynamic public func onMetadataParsed(_ event: MetadataParsedEvent)
+  @objc dynamic public func onMetadata(_ event: MetadataEvent)
+  @objc dynamic public func onPlaybackFinished(_ event: PlaybackFinishedEvent)
+  @objc dynamic public func onDurationChanged(_ event: DurationChangedEvent)
+  @objc dynamic public func onTimeChanged(_ event: TimeChangedEvent)
+  @objc dynamic public func onSeek(_ event: SeekEvent)
+  @objc dynamic public func onSeeked(_ event: SeekedEvent)
+  @objc dynamic public func onDestroy(_ event: DestroyEvent)
+  @objc dynamic public func onEvent(_ event: PlayerEvent)
+  @objc dynamic public func onAdClicked(_ event: AdClickedEvent)
+  @objc dynamic public func onAdSkipped(_ event: AdSkippedEvent)
+  @objc dynamic public func onAdStarted(_ event: AdStartedEvent)
+  @objc dynamic public func onAdQuartile(_ event: AdQuartileEvent)
+  @objc dynamic public func onCastStart(_ event: CastStartEvent)
+  @objc dynamic public func onAdFinished(_ event: AdFinishedEvent)
+  @objc dynamic public func onTimeShift(_ event: TimeShiftEvent)
+  @objc dynamic public func onAdScheduled(_ event: AdScheduledEvent)
+  @objc dynamic public func onAudioAdded(_ event: AudioAddedEvent)
+  @objc dynamic public func onVideoDownloadQualityChanged(_ event: VideoDownloadQualityChangedEvent)
+  @objc dynamic public func onCastPlaying(_ event: CastPlayingEvent)
+  @objc dynamic public func onCastStarted(_ event: CastStartedEvent)
+  @objc dynamic public func onCastStopped(_ event: CastStoppedEvent)
+  @objc dynamic public func onCastAvailable(_ event: CastAvailableEvent)
+  @objc dynamic public func onCastPlaybackFinished(_ event: CastPlaybackFinishedEvent)
+  @objc dynamic public func onCastPaused(_ event: CastPausedEvent)
+  @objc dynamic public func onTimeShifted(_ event: TimeShiftedEvent)
+  @objc dynamic public func onAudioChanged(_ event: AudioChangedEvent)
+  @objc dynamic public func onAudioRemoved(_ event: AudioRemovedEvent)
+  @objc dynamic public func onSourceLoaded(_ event: SourceLoadedEvent)
+  @objc dynamic public func onSubtitleAdded(_ event: SubtitleAddedEvent)
+  @objc dynamic public func onAdBreakStarted(_ event: AdBreakStartedEvent)
+  @objc dynamic public func onAdBreakFinished(_ event: AdBreakFinishedEvent)
+  @objc dynamic public func onAdManifestLoaded(_ event: AdManifestLoadedEvent)
+  @objc dynamic public func onCastTimeUpdated(_ event: CastTimeUpdatedEvent)
+  @objc dynamic public func onSubtitleRemoved(_ event: SubtitleRemovedEvent)
+  @objc dynamic public func onSubtitleChanged(_ event: SubtitleChangedEvent)
+  @objc dynamic public func onCueEnter(_ event: CueEnterEvent)
+  @objc dynamic public func onCueExit(_ event: CueExitEvent)
+  @objc dynamic public func onDvrWindowExceeded(_ event: DvrWindowExceededEvent)
+  @objc dynamic public func onDownloadFinished(_ event: DownloadFinishedEvent)
+  @objc dynamic public func onRenderFirstFrame(_ event: RenderFirstFrameEvent)
+  @objc dynamic public func onSourceWillUnload(_ event: SourceWillUnloadEvent)
+  @objc dynamic public func onVideoSizeChanged(_ event: VideoSizeChangedEvent)
+  @objc dynamic public func onConfigurationUpdated(_ event: ConfigurationUpdatedEvent)
+  @objc dynamic public func onDrmDataParsed(_ event: DrmDataParsedEvent)
+}
+public protocol BitmovinYospacePlayerPolicy : AnyObject {
+  func canSeek() -> Swift.Bool
+  func canSeekTo(seekTarget: Foundation.TimeInterval) -> Foundation.TimeInterval
+  func canSkip() -> Foundation.TimeInterval
+  func canPause() -> Swift.Bool
+}
+@frozen public enum CompanionAdType {
+  case html
+  case `static`
+  public static func == (a: CompanionAdType, b: CompanionAdType) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+@frozen public struct CompanionAdResource {
+  public let source: Swift.String?
+  public let type: CompanionAdType
+}
+@frozen public struct CompanionAd {
+  public let id: Swift.String?
+  public let adSlotId: Swift.String?
+  public let width: CoreGraphics.CGFloat?
+  public let height: CoreGraphics.CGFloat?
+  public let clickThroughUrl: Swift.String?
+  public let resource: CompanionAdResource?
+}
+public class DefaultBitmovinYospacePlayerPolicy : BitmovinYospacePlayerPolicy {
+  public init(_ bitmovinYospacePlayer: BitmovinYospacePlayer)
+  public func canMute() -> Swift.Bool
+  public func canSeek() -> Swift.Bool
+  public func canSeekTo(seekTarget: Foundation.TimeInterval) -> Foundation.TimeInterval
+  public func canSkip() -> Foundation.TimeInterval
+  public func canPause() -> Swift.Bool
+  @objc deinit
+}
+@objc public class IntegrationConfiguration : ObjectiveC.NSObject {
+  public init(enablePlayheadNormalization: Swift.Bool)
+  @objc deinit
+  @objc override dynamic public init()
+}
+public protocol IntegrationListener : AnyObject {
+  func onPlayheadNormalizingStarted()
+  func onPlayheadNormalizingFinished()
+}
+@objc @_hasMissingDesignatedInitializers public class PlayheadNormalizer : ObjectiveC.NSObject {
+  public func notifyDateRangeMetadataReceived()
+  public func normalize(time: Swift.Double) -> Swift.Double
+  public func getDeltaSince(rawTime: Swift.Double) -> Swift.Double
+  public func normalizeToCurrent(rawTime: Swift.Double, normalized: Swift.Double) -> Swift.Double
+  public func currentNormalizedTime() -> Swift.Double
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension PlayheadNormalizer : PlayerListener {
+  @objc dynamic public func onReady(_ event: ReadyEvent)
+  @objc dynamic public func onAdBreakStarted(_ event: AdBreakStartedEvent)
+  @objc dynamic public func onAdBreakFinished(_ event: AdBreakFinishedEvent)
+  @objc dynamic public func onSeek(_ event: SeekEvent)
+  @objc dynamic public func onSeeked(_ event: SeekedEvent)
+  @objc dynamic public func onTimeShift(_ event: TimeShiftEvent)
+  @objc dynamic public func onTimeShifted(_ event: TimeShiftedEvent)
+}
+public class TimeRange {
+  public var start: Foundation.TimeInterval
+  public var end: Foundation.TimeInterval
+  public init(start: Foundation.TimeInterval, end: Foundation.TimeInterval)
+  @objc deinit
+}
+public class TruexConfiguration {
+  public var view: UIKit.UIView {
+    get
+  }
+  public var userId: Swift.String {
+    get
+  }
+  public var vastConfigUrl: Swift.String {
+    get
+  }
+  public init(view: UIKit.UIView, userId: Swift.String = "", vastConfigUrl: Swift.String = "")
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class YospaceAd : ObjectiveC.NSObject, Ad {
+  @objc public var identifier: Swift.String?
+  final public let creativeId: Swift.String?
+  final public let sequence: Swift.String?
+  final public let absoluteStart: Foundation.TimeInterval
+  final public let relativeStart: Foundation.TimeInterval
+  final public let duration: Foundation.TimeInterval
+  final public let absoluteEnd: Foundation.TimeInterval
+  final public let system: Swift.String?
+  final public let title: Swift.String?
+  final public let advertiser: Swift.String?
+  final public let hasInteractiveUnit: Swift.Bool
+  final public let lineage: Yospace.YSAdvertWrapper?
+  final public let extensions: [Yospace.YSXmlNode]
+  final public let isFiller: Swift.Bool
+  @objc final public let isLinear: Swift.Bool
+  @objc public var clickThroughUrl: Foundation.URL?
+  @objc public var data: AdData?
+  @objc public var width: Swift.Int
+  @objc public var height: Swift.Int
+  @objc public var mediaFileUrl: Foundation.URL?
+  @objc override dynamic public var debugDescription: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension YospaceAd : BMPJsonable {
+  @objc dynamic public func toJsonString() throws -> Swift.String
+  @objc dynamic public func toJsonData() -> [Swift.AnyHashable : Any]
+  @objc public static func fromJsonData(_ jsonData: [Swift.AnyHashable : Any]) throws -> Self
+}
+@objc @_hasMissingDesignatedInitializers public class YospaceAdBreak : ObjectiveC.NSObject, AdBreak {
+  @objc final public let identifier: Swift.String
+  final public let absoluteStart: Foundation.TimeInterval
+  final public let relativeStart: Foundation.TimeInterval
+  final public let duration: Foundation.TimeInterval
+  final public let absoluteEnd: Foundation.TimeInterval
+  @objc public var ads: [Ad] {
+    get
+  }
+  @objc public var scheduleTime: Foundation.TimeInterval
+  @objc public var replaceContentDuration: Foundation.TimeInterval
+  final public let position: YospaceAdBreakPosition
+  @objc public func register(_ adItem: Ad)
+  @objc override dynamic public var debugDescription: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension YospaceAdBreak : BMPJsonable {
+  @objc dynamic public func toJsonString() throws -> Swift.String
+  @objc dynamic public func toJsonData() -> [Swift.AnyHashable : Any]
+  @objc public static func fromJsonData(_ jsonData: [Swift.AnyHashable : Any]) throws -> Self
+}
+@frozen public enum YospaceAdBreakPosition : Swift.String {
+  case preroll, midroll, postroll, unknown
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+@objc @_hasMissingDesignatedInitializers public class YospaceAdStartedEvent : AdStartedEvent {
+  public var companionAds: [CompanionAd]
+  @objc override dynamic public init(clickThroughUrl: Foundation.URL?, clientType: BMPAdSourceType, indexInQueue: Swift.UInt, duration: Foundation.TimeInterval, timeOffset: Foundation.TimeInterval, skipOffset: Foundation.TimeInterval, position: Swift.String?, ad: Ad?)
+  @objc deinit
+}
+@frozen public enum YospaceAssetType : Swift.String {
+  case linear
+  case vod
+  case nonLinearStartOver
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+public class YospaceConfiguration {
+  public init(userAgent: Swift.String? = nil, timeout: Foundation.TimeInterval? = nil, pollingInterval: Swift.Int? = nil, isDebugEnabled: Swift.Bool = false)
+  @objc deinit
+}
+@frozen public enum YospaceErrorCode : Swift.UInt {
+  case unknownError, invalidSource, noAnalytics, notIntialised, invalidPlayer
+  public typealias RawValue = Swift.UInt
+  public var rawValue: Swift.UInt {
+    get
+  }
+  public init?(rawValue: Swift.UInt)
+}
+@objc public class YospaceId3MetadataEntry : ObjectiveC.NSObject, MetadataEntry {
+  @objc public var metadataType: BMPMetadataType
+  final public let mediaId: Swift.String
+  final public let type: Swift.String
+  final public let segmentCount: Swift.Int
+  final public let segmentNumber: Swift.Int
+  final public let offset: Swift.Double
+  final public let timestamp: Foundation.Date
+  public init(mediaId: Swift.String, type: Swift.String, segmentCount: Swift.Int, segmentNumber: Swift.Int, offset: Swift.Double, timestamp: Foundation.Date)
+  @objc override dynamic public var debugDescription: Swift.String {
+    @objc get
+  }
+  @objc override dynamic public init()
+  @objc deinit
+}
+public protocol YospaceListener : AnyObject {
+  func onTimelineChanged(event: AdTimelineChangedEvent)
+  func onTrueXAdFree()
+}
+public class YospaceSourceConfiguration {
+  public var yospaceAssetType: YospaceAssetType {
+    get
+  }
+  public var retryExcludingYospace: Swift.Bool {
+    get
+  }
+  public init(yospaceAssetType: YospaceAssetType, retryExcludingYospace: Swift.Bool = false)
+  @objc deinit
+}
+extension YSTimedMetadata {
+  public static func createFromMetadata(event: MetadataEvent) -> Yospace.YSTimedMetadata
+}
+extension CompanionAdType : Swift.Equatable {}
+extension CompanionAdType : Swift.Hashable {}
+extension YospaceAdBreakPosition : Swift.Equatable {}
+extension YospaceAdBreakPosition : Swift.Hashable {}
+extension YospaceAdBreakPosition : Swift.RawRepresentable {}
+extension YospaceAssetType : Swift.Equatable {}
+extension YospaceAssetType : Swift.Hashable {}
+extension YospaceAssetType : Swift.RawRepresentable {}
+extension YospaceErrorCode : Swift.Equatable {}
+extension YospaceErrorCode : Swift.Hashable {}
+extension YospaceErrorCode : Swift.RawRepresentable {}

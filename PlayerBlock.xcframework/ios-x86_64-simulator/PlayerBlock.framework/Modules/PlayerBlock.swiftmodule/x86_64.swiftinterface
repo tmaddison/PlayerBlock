@@ -1,0 +1,3674 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.1 (swiftlang-1200.0.41 clang-1200.0.32.8)
+// swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name PlayerBlock
+import AVFoundation
+import AVKit
+import AdSupport
+import AppTrackingTransparency
+import BitmovinComScoreAnalytics
+import BitmovinOpenMeasurement
+import BitmovinPlayer
+import BitmovinYospaceModule
+import CoreMedia.CMTextMarkup
+import CoreMedia
+import Foundation
+import MediaAccessibility
+import MediaPlayer
+import NexusCore
+@_exported import PlayerBlock
+import StdLibBlock
+import Swift
+import Tub
+import UIKit
+import WebKit
+import Yospace
+@objc public class TubEngineListener : ObjectiveC.NSObject, PlayerListener, UserInterfaceListener {
+  public init(notifier: PlayerBlock.TubEngineNotifier?)
+  @objc deinit
+  @objc public func onReady(_ event: ReadyEvent)
+  @objc public func onPlaying(_ event: PlayingEvent)
+  @objc public func onPaused(_ event: PausedEvent)
+  @objc public func onMetadataParsed(_ event: MetadataParsedEvent)
+  @objc public func onAudioAdded(_ event: AudioAddedEvent)
+  @objc public func onAudioChanged(_ event: AudioChangedEvent)
+  @objc public func onUnmuted(_ event: UnmutedEvent)
+  @objc public func onMuted(_ event: MutedEvent)
+  @objc public func onTimeChanged(_ event: TimeChangedEvent)
+  @objc public func onDurationChanged(_ event: DurationChangedEvent)
+  @objc public func onStallEnded(_ event: StallEndedEvent)
+  @objc public func onStallStarted(_ event: StallStartedEvent)
+  @objc public func onSeek(_ event: SeekEvent)
+  @objc public func onSeeked(_ event: SeekedEvent)
+  @objc public func onTimeShift(_ event: TimeShiftEvent)
+  @objc public func onTimeShifted(_ event: TimeShiftedEvent)
+  @objc public func onVideoDownloadQualityChanged(_ event: VideoDownloadQualityChangedEvent)
+  @objc public func onSourceUnloaded(_ event: SourceUnloadedEvent)
+  @objc public func onPlaybackFinished(_ event: PlaybackFinishedEvent)
+  @objc public func onError(_ event: ErrorEvent)
+  @objc public func onAdBreakStarted(_ event: AdBreakStartedEvent)
+  @objc public func onAdStarted(_ event: AdStartedEvent)
+  @objc public func onAdFinished(_ event: AdFinishedEvent)
+  @objc public func onAdBreakFinished(_ event: AdBreakFinishedEvent)
+  @objc public func onAdError(_ event: AdErrorEvent)
+  @objc public func onSubtitleAdded(_ event: SubtitleAddedEvent)
+  @objc public func onSubtitleChanged(_ event: SubtitleChangedEvent)
+  @objc public func onSubtitleRemoved(_ event: SubtitleRemovedEvent)
+  @objc public func onCueEnter(_ event: CueEnterEvent)
+  @objc public func onCueExit(_ event: CueExitEvent)
+  @objc override dynamic public init()
+}
+@frozen public struct AdsConfig {
+  public var enabled: Swift.Bool?
+  public var profile: Swift.String?
+  public var kvps: [Swift.String : Swift.String]?
+  public var companions: PlayerBlock.AdCompanionConfigData?
+  public init(disable: Swift.Bool)
+  public init(profile: Swift.String? = nil, kvps: [Swift.String : Swift.String]? = nil, companions: PlayerBlock.AdCompanionConfigData? = nil)
+}
+@frozen public enum Color : Swift.Codable {
+  case `default`
+  case black
+  case blue
+  case cyan
+  case green
+  case magenta
+  case red
+  case white
+  case yellow
+  case custom(hexString: Swift.String)
+}
+extension Color : Swift.RawRepresentable {
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+}
+@frozen public enum Edge : Swift.String, Swift.Codable {
+  case `default`
+  case none
+  case raised
+  case depressed
+  case uniform
+  case dropShadowLeft
+  case dropShadowRight
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum FontType : Swift.String, Swift.Codable {
+  case `default`
+  case monospacedWithSerifs
+  case monospacedWithoutSerifs
+  case proportionalWithSerifs
+  case proportionalWithoutSerifs
+  case casual
+  case cursive
+  case smallCapitals
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum Opacity : Swift.String, Swift.Codable {
+  case `default`
+  case opacity0
+  case opacity25
+  case opacity50
+  case opacity75
+  case opacity100
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum Size : Swift.String, Swift.Codable {
+  case `default`
+  case small
+  case medium
+  case large
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+final public class CCSettings {
+  final public var backgroundColor: PlayerBlock.Color?
+  final public var backgroundOpacity: PlayerBlock.Opacity?
+  final public var fontColor: PlayerBlock.Color?
+  final public var fontOpacity: PlayerBlock.Opacity?
+  final public var fontType: PlayerBlock.FontType?
+  final public var fontEdge: PlayerBlock.Edge?
+  final public var size: PlayerBlock.Size?
+  public init(backgroundColor: PlayerBlock.Color? = nil, backgroundOpacity: PlayerBlock.Opacity? = nil, fontColor: PlayerBlock.Color? = nil, fontOpacity: PlayerBlock.Opacity? = nil, fontType: PlayerBlock.FontType? = nil, fontEdge: PlayerBlock.Edge? = nil, size: PlayerBlock.Size? = nil)
+  @objc deinit
+}
+@frozen public enum CCChannel : Swift.String, Swift.Codable {
+  case cc1
+  case cc2
+  case cc3
+  case cc4
+  case unknown
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public struct DebugConfig {
+  public var enabled: Swift.Bool?
+  public var logging: PlayerBlock.DebugLogConfig?
+  public var enableMocks: Swift.Bool?
+  public init(enabled: Swift.Bool? = nil, logConfig: PlayerBlock.DebugLogConfig? = nil, enableMocks: Swift.Bool? = nil)
+}
+@frozen public struct DebugLogConfig {
+  internal var categories: StdLibBlock.LogCategories?
+  internal var allowedLevels: StdLibBlock.LogLevels?
+  internal var isEnabled: Swift.Bool?
+  public init(isEnabled: Swift.Bool? = nil, allowedLevels: StdLibBlock.LogLevels? = nil, categories: StdLibBlock.LogCategories? = nil)
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.DebugLogConfig?
+}
+@available(*, deprecated, renamed: "AdBreakPosition", message: "since 2.2.0-1, removal scheduled for 2.3.0-1")
+public typealias AdType = PlayerBlock.AdBreakPosition
+@frozen public enum AdBreakPosition : Swift.String, Swift.Codable {
+  case unknown
+  case preroll
+  case midroll
+  case postroll
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum CCState : Swift.String, Swift.Codable {
+  case pending
+  case ready
+  case changingTrack
+  case showingTrack
+  case disabled
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum TCFKey : Swift.String, Swift.Codable {
+  public static let prefix: Swift.String
+  case sdkId
+  case sdkVersion
+  case policyVersion
+  case gdprApplies
+  case publisherCc
+  case purposeOneTreatment
+  case tcString
+  case vendorConsents
+  case purposeConsents
+  case publisherConsent
+  public var rawKey: Swift.String {
+    get
+  }
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ModelUpdateMode : Swift.String, Swift.Codable {
+  case overwrite
+  case extend
+  case arrayAppend
+  case arrayRemoveByPos
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public struct LifecycleConfig {
+  public let enabled: Swift.Bool?
+  public let persistence: Swift.Bool?
+  public let focusLost: PlayerBlock.PlayerLifecycleState?
+  public let background: PlayerBlock.PlayerLifecycleState?
+  public init(disable: Swift.Bool)
+  public init(persistence: Swift.Bool? = nil, focusLost: PlayerBlock.PlayerLifecycleState? = nil, background: PlayerBlock.PlayerLifecycleState? = nil)
+}
+@_hasMissingDesignatedInitializers public class PlayerConfigBuilder {
+  public static func forSetup() -> PlayerBlock.SetupConfigBuilder
+  public static func forPlay() -> PlayerBlock.PlayConfigBuilder
+  public static func forUpdate() -> PlayerBlock.PlayConfigBuilder
+  @objc deinit
+}
+@frozen public enum AuthCdnTokenType : Swift.String, Swift.Codable {
+  case spe
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public typealias PlayerStateChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.PlayerStateChangedResult>
+public typealias PlayerViewStateChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.ViewStateChangedResult>
+public typealias PlayerLifecycleStateChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.LifecycleStateChangedResult>
+public typealias PlayerInitializedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.PlayerInitializedResult>
+public typealias PlayerReadySignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.PlayerReadyResult>
+public typealias PlayerListeningSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.PlayerListeningResult>
+public typealias PlayerContentChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.ContentStateChangedResult>
+public typealias PlayerContentBeginningSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.ContentBeginningResult>
+public typealias PlayerContentSetupSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.ContentSetupResult>
+public typealias PlayerContentWaitingSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.ContentWaitingResult>
+public typealias PlayerContentInterruptedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.ContentInterruptedResult>
+public typealias PlayerContentCompletedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.ContentCompletedResult>
+public typealias PlayerContentErrorSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.ContentErrorResult>
+public typealias PlayerContentEndedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.ContentEndedResult>
+public typealias PlayerMuteChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MuteChangedResult>
+public typealias PlayerMediaStateChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaStateChangedResult>
+public typealias PlayerMediaStartingSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaStartingResult>
+public typealias PlayerMediaLoadedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaLoadedResult>
+public typealias PlayerMediaStartedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaStartedResult>
+public typealias PlayerMediaTimeChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaTimeChangedResult>
+public typealias PlayerMediaBufferingStartedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaBufferingStartedResult>
+public typealias PlayerMediaBufferingFinishedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaBufferingFinishedResult>
+public typealias PlayerMediaSeekingStartedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaSeekingStartedResult>
+public typealias PlayerMediaSeekingFinishedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaSeekingFinishedResult>
+public typealias PlayerMediaPausedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaPausedResult>
+public typealias PlayerMediaResumedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaResumedResult>
+public typealias PlayerMediaResizedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaResizedResult>
+public typealias PlayerMediaAudioTrackAvailabilityChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaAudioTrackAvailabilityChangedResult>
+public typealias PlayerMediaAudioTrackSelectedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaAudioTrackSelectedResult>
+public typealias PlayerMediaStoppedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaStoppedResult>
+public typealias PlayerMediaFinishedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaFinishedResult>
+public typealias PlayerMediaErrorSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaErrorResult>
+public typealias PlayerAdStateChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.AdStateChangedResult>
+public typealias PlayerAdTimeChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.AdTimeChangedResult>
+public typealias PlayerAdErrorSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.AdErrorResult>
+public typealias PlayerAdSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.AdResult>
+public typealias PlayerAdCreativeSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.AdCreativeResult>
+public typealias PlayerMediaRequestProfileChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaRequestProfileChangedResult>
+public typealias PlayerMediaProfileChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaProfileChangedResult>
+public typealias PlayerModelUpdatedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.ModelUpdatedResult>
+public typealias PlayerMediaTimedMetadataParsedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaTimedMetadataParsedResult>
+public typealias PlayerMediaTimeMetadataReceivedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.MediaTimedMetadataReceivedResult>
+public typealias PlayerTimelineMarkerSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.TimelineMarkerResult>
+public typealias PlayerCaptionsStateChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.CCStateChangedResult>
+public typealias PlayerCaptionsTrackSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.CCTrackResult>
+public typealias PlayerCaptionsCueSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.CCCueResult>
+public typealias PlayerCueStateChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.CueStateChangedResult>
+public typealias PlayerCueProcessedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.CueProcessedResult>
+public typealias PlayerCueActivatedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.CueActivatedResult>
+public typealias PlayerViewModeChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.ViewModeChangedResult>
+public typealias PlayerCaptionSettingsUpdatedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.CCSettingsUpdatedResult>
+public typealias PlayerVolumeChangedSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.VolumeChangedResult>
+public typealias PlayerErrorSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.PlayerErrorResult>
+public typealias PlayerUIMessageSignal = StdLibBlock.EventSignal<PlayerBlock.PlayerEventType, PlayerBlock.UIMessageResult>
+@frozen public struct MarkerOptions {
+  internal var startBuffer: Swift.Double = 0.25
+  internal var approachingThreshold: Swift.Double = 10
+  internal var finishingThreshold: Swift.Double = 10
+  internal var activationLimit: Swift.Int = -1
+}
+@_hasMissingDesignatedInitializers public class SCTEMetadataHelpers {
+  public static func containsSegmentationType(metadata: PlayerBlock.SCTEMetadata, type: Swift.Int) -> Swift.Bool
+  public static func getSegmentationDescriptors(metadata: PlayerBlock.SCTEMetadata, type: Swift.Int?) -> [PlayerBlock.SCTESegmentationDescriptor]
+  public static func getFirstSegmentationDescriptor(metadata: PlayerBlock.SCTEMetadata, type: Swift.Int?) -> PlayerBlock.SCTESegmentationDescriptor?
+  public static func isChapterStart(metadata: PlayerBlock.SCTEMetadata?) -> Swift.Bool
+  public static func isChapterEnd(metadata: PlayerBlock.SCTEMetadata?) -> Swift.Bool
+  public static func isProgramStart(metadata: PlayerBlock.SCTEMetadata?) -> Swift.Bool
+  public static func isProgramEnd(metadata: PlayerBlock.SCTEMetadata?) -> Swift.Bool
+  public static func isProgramOverlapStart(metadata: PlayerBlock.SCTEMetadata?) -> Swift.Bool
+  public static func getChapterStart(metadata: PlayerBlock.SCTEMetadata) -> PlayerBlock.SCTESegmentationDescriptor?
+  public static func getChapterEnd(metadata: PlayerBlock.SCTEMetadata) -> PlayerBlock.SCTESegmentationDescriptor?
+  public static func getProgramStart(metadata: PlayerBlock.SCTEMetadata?) -> PlayerBlock.SCTESegmentationDescriptor?
+  public static func getProgramEnd(metadata: PlayerBlock.SCTEMetadata?) -> PlayerBlock.SCTESegmentationDescriptor?
+  public static func getProgramOverlapStart(metadata: PlayerBlock.SCTEMetadata?) -> PlayerBlock.SCTESegmentationDescriptor?
+  public static func getTypeIdProp(descriptor: PlayerBlock.SCTESegmentationDescriptor) -> Swift.Int?
+  public static func getRegionalBlackoutProp(descriptor: PlayerBlock.SCTESegmentationDescriptor) -> Swift.Bool?
+  public static func getWebDeliveryAllowedProp(descriptor: PlayerBlock.SCTESegmentationDescriptor) -> Swift.Bool?
+  public static func getAiringIdProp(descriptor: PlayerBlock.SCTESegmentationDescriptor) -> Swift.Int?
+  public static func getDurationProp(descriptor: PlayerBlock.SCTESegmentationDescriptor) -> Swift.Int?
+  @objc deinit
+}
+@frozen public struct ContentEntrySegmentData {
+  internal var start: Swift.Double?
+  internal var duration: Swift.Double?
+}
+@frozen public struct ContentEntryCaptionTrack {
+  internal var lang: Swift.String?
+  internal var channel: Swift.String?
+  internal var label: Swift.String?
+  internal var url: Swift.String?
+}
+@frozen public struct ContentEntryCaptionSourceWithoutTracks {
+  internal var type: Swift.String?
+  internal var format: Swift.String?
+  internal var platform: Swift.String?
+}
+@frozen public struct ContentEntryCaptionSource {
+  internal var type: Swift.String?
+  internal var format: Swift.String?
+  internal var platform: Swift.String?
+  internal var tracks: [PlayerBlock.ContentEntryCaptionTrack]?
+}
+@frozen public struct ContentEntryCaptions {
+  internal var enabled: Swift.Bool?
+  internal var sources: [PlayerBlock.ContentEntryCaptionSource]?
+  public init(enabled: Swift.Bool? = nil, sources: [PlayerBlock.ContentEntryCaptionSource]? = nil)
+}
+@frozen public struct ContentEntryData {
+  internal var id: Swift.String = ""
+  internal var metadata: [Swift.String : Any] = [:]
+  internal var isLive: Swift.Bool = false
+  internal var trt: Swift.Double?
+  internal var captions: PlayerBlock.ContentEntryCaptions = ContentEntryCaptions()
+  internal var validators: [Swift.String : Swift.Bool] = [:]
+  internal var segments: [PlayerBlock.ContentEntrySegmentData] = []
+  internal var files: [PlayerBlock.ContentEntryFileData] = []
+  public func toDictionary() -> [Swift.String : Any]?
+}
+@frozen public struct ContentEntryOptionalData {
+  public var mvpdId: Swift.String?
+  public var accessTokenType: Swift.String?
+  public var accessToken: Swift.String?
+  public var config: PlayerBlock.PlayConfig?
+  public init(mvpdId: Swift.String? = nil, accessTokenType: Swift.String? = nil, accessToken: Swift.String? = nil, config: PlayerBlock.PlayConfig? = nil)
+}
+@_hasMissingDesignatedInitializers public class VideoEngineCommandFactory {
+  public static func handleDRMTokenRequest(data: PlayerBlock.HandleDRMTokenRequestMetadata) -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaStarting() -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaLoaded(data: PlayerBlock.HandleMediaLoadedData) -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaReady() -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaStarted() -> PlayerBlock.VideoEngineCommand
+  public static func handlePaused() -> PlayerBlock.VideoEngineCommand
+  public static func handleResumed() -> PlayerBlock.VideoEngineCommand
+  public static func handleTimeChanged(data: PlayerBlock.HandleMediaTimeChangedData) -> PlayerBlock.VideoEngineCommand
+  public static func handleMuteChanged(muted: Swift.Bool) -> PlayerBlock.VideoEngineCommand
+  public static func handleVolumeChanged(volume: Swift.Double) -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaRequestProfileChanged(data: PlayerBlock.HandleMediaProfileData) -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaProfileChanged(data: PlayerBlock.HandleMediaProfileData) -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaBufferingStarted() -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaBufferingFinished() -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaSeekingStarted(time: Swift.Double, requestedTime: Swift.Double) -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaSeekingFinished(time: Swift.Double, requestedTime: Swift.Double) -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaResized(data: PlayerBlock.HandleMediaResizedData) -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaTimedMetadataParsed(data: PlayerBlock.HandleMediaTimedMetadataData) -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaAudioTrackAvailabilityChanged(track: PlayerBlock.HandleMediaAudioTrackData, added: Swift.Bool) -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaAudioTrackSelected(track: PlayerBlock.HandleMediaAudioTrackData) -> PlayerBlock.VideoEngineCommand
+  public static func handleStopped() -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaFinished() -> PlayerBlock.VideoEngineCommand
+  public static func handleMediaError(code: Swift.UInt, message: Swift.String, domain: PlayerBlock.MediaDomain = MediaDomain.general) -> PlayerBlock.VideoEngineCommand
+  public static func handleAdBreakListChange(adBreaks: [PlayerBlock.AdBreak]) -> PlayerBlock.VideoEngineCommand
+  public static func handleAdStarting(adBreak: PlayerBlock.AdBreak) -> PlayerBlock.VideoEngineCommand
+  public static func handleAdStarted() -> PlayerBlock.VideoEngineCommand
+  public static func handleAdLoaded(duration: Swift.Double) -> PlayerBlock.VideoEngineCommand
+  public static func handleAdCreativeStarted(adCreative: PlayerBlock.AdCreative) -> PlayerBlock.VideoEngineCommand
+  public static func handleAdCreativeEnded() -> PlayerBlock.VideoEngineCommand
+  public static func handleAdFinished() -> PlayerBlock.VideoEngineCommand
+  public static func handleAdError(code: Swift.UInt, message: Swift.String) -> PlayerBlock.VideoEngineCommand
+  public static func handleCaptionTrack(action: PlayerBlock.CaptionTrackAction, track: PlayerBlock.CCTrack) -> PlayerBlock.VideoEngineCommand
+  public static func handleCaptionCue(action: PlayerBlock.CaptionCueAction, cue: PlayerBlock.CCAnonymousCue) -> PlayerBlock.VideoEngineCommand
+  public static func handleRemotePlayback(value: Swift.Bool) -> PlayerBlock.VideoEngineCommand
+  @objc deinit
+}
+@frozen public struct HandleMediaLoadedData {
+  internal let isLive: Swift.Bool
+  internal let isProtected: Swift.Bool
+  internal let isDynamic: Swift.Bool
+  internal let viewWidth: Swift.Double
+  internal let viewHeight: Swift.Double
+  internal let duration: Swift.Double
+  internal let initialTimedMetadata: [Any]
+  internal let seekableRange: PlayerBlock.TimeRange
+  internal let bufferedRange: PlayerBlock.TimeRange
+}
+@frozen public struct HandleMediaTimeChangedData {
+  internal let time: Swift.Double
+  internal let duration: Swift.Double
+  internal let bufferedRange: PlayerBlock.TimeRange
+  internal let seekableRange: PlayerBlock.TimeRange
+}
+@frozen public struct HandleMediaProfileData {
+  internal let url: Swift.String
+  internal let bitrate: Swift.Int
+  internal let width: Swift.Double
+  internal let height: Swift.Double
+  internal let mediaWidth: Swift.Double
+  internal let mediaHeight: Swift.Double
+}
+@frozen public struct HandleMediaResizedData {
+  internal let mediaWidth: Swift.Double
+  internal let mediaHeight: Swift.Double
+  internal let viewWidth: Swift.Double
+  internal let viewHeight: Swift.Double
+}
+@frozen public struct HandleMediaAudioTrackData {
+  internal let id: Swift.Int
+  internal let enabled: Swift.Bool
+  internal let kind: Swift.String
+  internal let isDefault: Swift.Bool
+  internal let lang: Swift.String
+  internal let label: Swift.String
+}
+@frozen public struct HandleMediaTimedMetadataData {
+  internal let timeReceived: Swift.Double?
+  internal let start: Swift.Double?
+  internal let end: Swift.Double?
+  internal let source: PlayerBlock.VideoEngineMetadataSourceType?
+  internal let metadataType: PlayerBlock.VideoEngineMetadataType?
+  internal let metadata: [Swift.String : Any?]?
+}
+@frozen public struct HandleDRMTokenRequestMetadata {
+  internal let keyData: PlayerBlock.DRMKeyData
+}
+@frozen public struct CCCuePosition {
+  public var row: Swift.Int
+  public var column: Swift.Int
+  public init(row: Swift.Int, column: Swift.Int)
+}
+@frozen public struct CCCueMetadata {
+  public var position: PlayerBlock.CCCuePosition
+  public var region: Swift.String
+  public init(position: PlayerBlock.CCCuePosition, region: Swift.String)
+}
+final public class CCCue {
+  final public var id: Swift.String
+  final public var trackId: Swift.String
+  final public var content: Swift.String
+  final public var range: PlayerBlock.TimeRange
+  final public var metadata: PlayerBlock.CCCueMetadata
+  public init(id: Swift.String, trackId: Swift.String, content: Swift.String, range: PlayerBlock.TimeRange, metadata: PlayerBlock.CCCueMetadata)
+  @objc deinit
+}
+final public class CCAnonymousCue {
+  final public var trackId: Swift.String
+  final public var content: Swift.String
+  final public var range: PlayerBlock.TimeRange
+  final public var metadata: PlayerBlock.CCCueMetadata
+  public init(trackId: Swift.String, content: Swift.String, range: PlayerBlock.TimeRange, metadata: PlayerBlock.CCCueMetadata)
+  @objc deinit
+}
+@frozen public struct AdBreakMetadata {
+  public var id: Swift.String?
+  public var position: PlayerBlock.AdBreakPosition?
+  public var scheduleTime: Swift.Double?
+  public var duration: Swift.Double?
+  @available(*, deprecated, renamed: "position", message: "since 2.2.0-1, removal scheduled for 2.3.0-1")
+  public var type: PlayerBlock.AdType? {
+    get
+  }
+  public init(id: Swift.String? = nil, position: PlayerBlock.AdBreakPosition? = nil, scheduleTime: Swift.Double? = nil, duration: Swift.Double? = nil)
+}
+@frozen public struct AdBreak : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+  public var id: Swift.String?
+  public var position: PlayerBlock.AdBreakPosition?
+  @available(*, deprecated, renamed: "position", message: "since 2.2.0-1, removal scheduled for 2.3.0-1")
+  public var type: PlayerBlock.AdType? {
+    get
+  }
+  public var scheduleTime: Swift.Double?
+  public var duration: Swift.Double?
+  public var state: PlayerBlock.AdState?
+  public var ads: [PlayerBlock.AdCreative]?
+  public init(id: Swift.String? = nil, position: PlayerBlock.AdBreakPosition? = nil, scheduleTime: Swift.Double? = nil, duration: Swift.Double? = nil, state: PlayerBlock.AdState? = nil, ads: [PlayerBlock.AdCreative]? = nil)
+}
+@frozen public struct DrmConfig {
+  public var enabled: Swift.Bool?
+  public var fairplay: PlayerBlock.FairplayDRMConfig?
+  public var setHeaders: Swift.Bool?
+  public init(disable: Swift.Bool)
+  public init(fairplay: PlayerBlock.FairplayDRMConfig? = nil, setHeaders: Swift.Bool? = nil)
+}
+@frozen public struct FairplayDRMConfig {
+  public var licenseServer: Swift.String?
+  public var certificateURL: Swift.String?
+  public var headers: [Swift.String : Swift.String]?
+  public init(licenseServer: Swift.String? = nil, certificateURL: Swift.String? = nil, headers: [Swift.String : Swift.String]? = nil)
+}
+@frozen public struct DRMKeyData {
+  public var rawData: Swift.String
+  public var protectionType: PlayerBlock.ContentEntryFileData.ContentProtection
+  public init(rawData: Swift.String, protectionType: PlayerBlock.ContentEntryFileData.ContentProtection)
+}
+@frozen public struct PlayConfig {
+  public var features: PlayerBlock.FeaturesConfig?
+  public var ads: PlayerBlock.AdsConfig?
+  public var auth: PlayerBlock.AuthConfig?
+  public var analytics: PlayerBlock.AnalyticsConfig?
+  public var cms: PlayerBlock.CmsConfig?
+  public var drm: PlayerBlock.DrmConfig?
+  public var media: PlayerBlock.MediaConfig?
+  public var metadata: [Swift.String : Swift.String?]?
+  public var playback: PlayerBlock.PlaybackConfig?
+  public var lifecycle: PlayerBlock.LifecycleConfig?
+  public var monitors: PlayerBlock.MonitorsConfig?
+  public var ui: PlayerBlock.UIConfig?
+  public var mocks: PlayerBlock.MocksConfig?
+  public var debug: PlayerBlock.DebugConfig?
+  public var captions: PlayerBlock.CaptionsConfig?
+  public init(features: PlayerBlock.FeaturesConfig? = nil, ads: PlayerBlock.AdsConfig? = nil, auth: PlayerBlock.AuthConfig? = nil, analytics: PlayerBlock.AnalyticsConfig? = nil, cms: PlayerBlock.CmsConfig? = nil, drm: PlayerBlock.DrmConfig? = nil, media: PlayerBlock.MediaConfig? = nil, metadata: [Swift.String : Swift.String?]? = nil, playback: PlayerBlock.PlaybackConfig? = nil, ui: PlayerBlock.UIConfig? = nil, mocks: PlayerBlock.MocksConfig? = nil, lifecycle: PlayerBlock.LifecycleConfig? = nil, monitors: PlayerBlock.MonitorsConfig? = nil, debug: PlayerBlock.DebugConfig? = nil, captions: PlayerBlock.CaptionsConfig? = nil)
+  public func toDictionary() -> [Swift.String : Any]?
+}
+@frozen public struct AnalyticsMeasure {
+  private let entry: PlayerBlock.AnalyticsEntry
+  public let name: PlayerBlock.AnalyticsMeasureName
+  public let startTime: Foundation.TimeInterval
+  public let duration: Foundation.TimeInterval
+  public init(name: PlayerBlock.AnalyticsMeasureName, startTime: Foundation.TimeInterval, duration: Foundation.TimeInterval)
+}
+public typealias BridgeCommandData = [Swift.String : Any?]?
+public func wrapIDizable<T>(_ value: T) -> NexusCore.IDizable<T>
+public protocol BridgeCommand {
+  var method: Swift.String { get }
+  var argMap: PlayerBlock.BridgeCommandData { get }
+}
+@frozen public struct PlayerCommand : PlayerBlock.BridgeCommand {
+  public let method: Swift.String
+  public let argMap: PlayerBlock.BridgeCommandData
+}
+@frozen public struct VideoEngineCommand : PlayerBlock.BridgeCommand {
+  public let method: Swift.String
+  public let argMap: PlayerBlock.BridgeCommandData
+}
+@frozen public enum ViewState : Swift.String, Swift.Codable {
+  case pending
+  case creating
+  case created
+  case attaching
+  case attached
+  case windowed
+  case enteringFullscreen
+  case fullscreen
+  case exitingFullscreen
+  case enteringRemote
+  case remote
+  case exitingRemote
+  case detaching
+  case detached
+  case destroying
+  case destroyed
+  case error
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum MockMessageType : Swift.String, Swift.Codable {
+  case timedMetadata
+  case unknown
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum MarkerType : Swift.String, Swift.Codable {
+  case unknown
+  case media
+  case adBreak
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public typealias MockTimedMetadataMessage = PlayerBlock.MockMessage<PlayerBlock.MockTimedMetadataMessageData<PlayerBlock.MockTimedMetadataMessageContents>>
+@frozen public struct ConvivaConfig {
+  public var enabled: Swift.Bool?
+  public var customerKey: Swift.String?
+  public var applicationName: Swift.String?
+  public var viewerId: Swift.String?
+  public var assetName: Swift.String?
+  public var tags: [Swift.String : Swift.String]?
+  public var defaultResource: Swift.String?
+  public var encodedFrameRate: Swift.Double?
+  public var touchstoneUrl: Swift.String?
+  public var adInsights: Swift.Bool?
+  public init(disable: Swift.Bool)
+  public init(customerKey: Swift.String? = nil, applicationName: Swift.String? = nil, viewerId: Swift.String? = nil, assetName: Swift.String? = nil, tags: [Swift.String : Swift.String]? = nil, defaultResource: Swift.String? = nil, encodedFrameRate: Swift.Double? = nil, touchstoneUrl: Swift.String? = nil, adInsights: Swift.Bool? = nil)
+}
+@_inheritsConvenienceInitializers final public class BridgeHook<Name, Value, Failure> : StdLibBlock.BaseHook<Name, Value, Failure>, NexusCore.Closeable where Name : StdLibBlock.HookName, Value : StdLibBlock.HookEventResult, Failure : StdLibBlock.HookError {
+  override public init(name: Name, dispatcher: StdLibBlock.HookDispatchable)
+  @objc final public func close()
+  @objc deinit
+}
+public class PlayConfigBuilder {
+  public init()
+  public static func create() -> PlayerBlock.PlayConfigBuilder
+  public func withFeatures(features: PlayerBlock.FeaturesConfig) -> PlayerBlock.PlayConfigBuilder
+  public func withCaptions(captions: PlayerBlock.CaptionsConfig) -> PlayerBlock.PlayConfigBuilder
+  public func withConviva(conviva: PlayerBlock.ConvivaConfig) -> PlayerBlock.PlayConfigBuilder
+  public func withComscore(comscore: PlayerBlock.ComscoreConfig) -> PlayerBlock.PlayConfigBuilder
+  public func withSuppressAdAnalytics(suppressAdAnalytics: Swift.Bool) -> PlayerBlock.PlayConfigBuilder
+  public func withOpenMeasurement(openMeasurement: PlayerBlock.OpenMeasurementConfig) -> PlayerBlock.PlayConfigBuilder
+  public func disableAnalytics() -> PlayerBlock.PlayConfigBuilder
+  public func withAds(ads: PlayerBlock.AdsConfig) -> PlayerBlock.PlayConfigBuilder
+  public func disableAds() -> PlayerBlock.PlayConfigBuilder
+  public func withAuth(auth: PlayerBlock.AuthConfig) -> PlayerBlock.PlayConfigBuilder
+  public func disableAuth() -> PlayerBlock.PlayConfigBuilder
+  public func withCms(cms: PlayerBlock.CmsConfig) -> PlayerBlock.PlayConfigBuilder
+  public func withDrm(drm: PlayerBlock.DrmConfig) -> PlayerBlock.PlayConfigBuilder
+  public func disableDrm() -> PlayerBlock.PlayConfigBuilder
+  public func withMedia(media: PlayerBlock.MediaConfig) -> PlayerBlock.PlayConfigBuilder
+  public func withPlayback(playback: PlayerBlock.PlaybackConfig) -> PlayerBlock.PlayConfigBuilder
+  public func withMetadata(metadata: [Swift.String : Swift.String?]) -> PlayerBlock.PlayConfigBuilder
+  public func withUI(ui: PlayerBlock.UIConfig) -> PlayerBlock.PlayConfigBuilder
+  public func withMocks(mocks: PlayerBlock.MocksConfig) -> PlayerBlock.PlayConfigBuilder
+  public func withLifecycle(lifecycle: PlayerBlock.LifecycleConfig) -> PlayerBlock.PlayConfigBuilder
+  public func withMonitors(monitors: PlayerBlock.MonitorsConfig) -> PlayerBlock.PlayConfigBuilder
+  public func disableLifecycle() -> PlayerBlock.PlayConfigBuilder
+  public func withDebug(debug: PlayerBlock.DebugConfig) -> PlayerBlock.PlayConfigBuilder
+  public func withNowPlayingInfo(info: PlayerBlock.NowPlayingInfoConfig) -> PlayerBlock.PlayConfigBuilder
+  public func build() -> PlayerBlock.PlayConfig
+  @objc deinit
+}
+@frozen public struct AuthConfig {
+  public var enabled: Swift.Bool?
+  public var cdn: PlayerBlock.AuthCDNConfig?
+  public var drm: PlayerBlock.AuthDRMService?
+  public init(disable: Swift.Bool)
+  public init(cdn: PlayerBlock.AuthCDNConfig? = nil, drm: PlayerBlock.AuthDRMService? = nil)
+  public func toDictionary() -> [Swift.String : Any]?
+}
+@frozen public struct AuthCDNConfig {
+  public var enabled: Swift.Bool?
+  public var services: [PlayerBlock.AuthServiceConfig]?
+  public init(disable: Swift.Bool)
+  public init(services: [PlayerBlock.AuthServiceConfig]? = nil)
+  public func toDictionary() -> [Swift.String : Any]?
+}
+@frozen public struct AuthDRMService {
+  public var enabled: Swift.Bool?
+  public var type: PlayerBlock.AuthDrmTokenType?
+  public var appId: Swift.String?
+  public var serviceUrl: Swift.String?
+  public var setHeaders: Swift.Bool?
+  public var assetIdSource: PlayerBlock.DRMSourceConfig?
+  public var companyIdSource: PlayerBlock.DRMSourceConfig?
+  public init(disable: Swift.Bool)
+  public init(type: PlayerBlock.AuthDrmTokenType? = nil, appId: Swift.String? = nil, serviceUrl: Swift.String? = nil, setHeaders: Swift.Bool? = nil, assetIdSource: PlayerBlock.DRMSourceConfig? = nil, companyIdSource: PlayerBlock.DRMSourceConfig? = nil)
+  public func toDictionary() -> [Swift.String : Any]?
+}
+@frozen public struct DRMSourceConfig {
+  public var prePlay: [PlayerBlock.DRMDataSource]?
+  public var inPlay: [PlayerBlock.DRMDataSource]?
+  public init(prePlay: [PlayerBlock.DRMDataSource]? = nil, inPlay: [PlayerBlock.DRMDataSource]? = nil)
+  public func toDictionary() -> [Swift.String : Any]?
+}
+@frozen public struct AuthServiceConfig {
+  public var type: PlayerBlock.AuthCdnTokenType?
+  public var prefix: Swift.String?
+  public var appId: Swift.String?
+  public var serviceUrl: Swift.String?
+  public init(type: PlayerBlock.AuthCdnTokenType? = nil, prefix: Swift.String? = nil, appId: Swift.String? = nil, serviceUrl: Swift.String? = nil)
+  public func toDictionary() -> [Swift.String : Any]?
+}
+@frozen public struct MetadataCue {
+  public let id: Swift.String
+  public let state: PlayerBlock.CueState
+  public let type: PlayerBlock.CueType
+  public let source: PlayerBlock.CueSource
+  public let data: PlayerBlock.CueData?
+  public init(id: Swift.String, state: PlayerBlock.CueState, type: PlayerBlock.CueType, source: PlayerBlock.CueSource, data: PlayerBlock.CueData?)
+}
+public class Marker {
+  public var options: PlayerBlock.MarkerOptions
+  public var type: PlayerBlock.MarkerType
+  public var id: Swift.String
+  public var enabled: Swift.Bool
+  public var range: PlayerBlock.TimeRange
+  public init(type: PlayerBlock.MarkerType, id: Swift.String, range: PlayerBlock.TimeRange, options: PlayerBlock.MarkerOptions, enabled: Swift.Bool = true)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class ContentEntryBuilder {
+  public static func forEntryData() -> PlayerBlock.ContentEntryDataBuilder
+  public static func forEntryOptions() -> PlayerBlock.ContentEntryOptionsBuilder
+  @objc deinit
+}
+public protocol VideoEngine {
+  func play(data: PlayerBlock.ContentEntryFileData, playlistItem: PlayerBlock.PlaylistItem, config: PlayerBlock.PlayConfig)
+  func updateConfig(config: PlayerBlock.PlayConfig, dict: [Swift.String : Any?])
+  func enterFullscreen()
+  func exitFullscreen()
+  func pause()
+  func resume()
+  func stop()
+  func seek(time: Swift.Double)
+  func seekToLive()
+  func selectCaptionTrack(trackId: Swift.String)
+  func deselectCaptionTrack(trackId: Swift.String)
+  func adClicked()
+  func applyDRMToken(id: Swift.String, token: Swift.String)
+  func destroy()
+  func setSubtitleStyle(styles: [AVFoundation.AVTextStyleRule])
+  func willRotate()
+  func didRotate()
+  func displayRemoteTargets(for type: PlayerBlock.RemoteTargetType)
+  func getRemoteTargetsStatus()
+  func setInternalFriendlyObstructions(friendlyObstructions: [PlayerBlock.PlayerFriendlyObstruction])
+}
+extension VideoEngine {
+  public func play(data: PlayerBlock.ContentEntryFileData, playlistItem: PlayerBlock.PlaylistItem, config: PlayerBlock.PlayConfig = PlayConfig())
+  public func updateConfig(config: PlayerBlock.PlayConfig, dict: [Swift.String : Any?])
+  public func enterFullscreen()
+  public func exitFullscreen()
+  public func willRotate()
+  public func didRotate()
+  public func adClicked()
+  public func displayRemoteTargets(for type: PlayerBlock.RemoteTargetType)
+  public func getRemoteTargetsStatus()
+  public func setSubtitleStyle(styles: [AVFoundation.AVTextStyleRule])
+  public func setInternalFriendlyObstructions(friendlyObstructions: [PlayerBlock.PlayerFriendlyObstruction])
+}
+public protocol VideoEngineBlock : NexusCore.Closeable {
+  func create(config: PlayerBlock.PlayerConfig)
+  func willRotate()
+  func didRotate()
+  func displayRemoteTargets(for type: PlayerBlock.RemoteTargetType)
+  func getRemoteTargetsStatus()
+  func setInternalFriendlyObstructions(friendlyObstructions: [PlayerBlock.PlayerFriendlyObstruction])
+}
+public class VideoEngineBlockImpl : PlayerBlock.VideoEngineBlock {
+  public init(blockBridge: NexusCore.BlockBridge)
+  public func create(config: PlayerBlock.PlayerConfig)
+  public func willRotate()
+  public func didRotate()
+  public func displayRemoteTargets(for type: PlayerBlock.RemoteTargetType)
+  public func getRemoteTargetsStatus()
+  @objc public func close()
+  public func setSubtitleStyle(styles: [AVFoundation.AVTextStyleRule])
+  public func setInternalFriendlyObstructions(friendlyObstructions: [PlayerBlock.PlayerFriendlyObstruction])
+  @objc deinit
+}
+public typealias MockMessageTiming = Any
+public class SetupConfigBuilder {
+  public init()
+  public static func create() -> PlayerBlock.SetupConfigBuilder
+  public func withContainer(container: UIKit.UIView) -> PlayerBlock.SetupConfigBuilder
+  public func withFeatures(features: PlayerBlock.FeaturesConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withConviva(conviva: PlayerBlock.ConvivaConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withCaptions(captions: PlayerBlock.CaptionsConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withComscore(comscore: PlayerBlock.ComscoreConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withSuppressAdAnalytics(suppressAdAnalytics: Swift.Bool) -> PlayerBlock.SetupConfigBuilder
+  public func withOpenMeasurement(openMeasurement: PlayerBlock.OpenMeasurementConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withAds(ads: PlayerBlock.AdsConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withAuth(auth: PlayerBlock.AuthConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withCms(cms: PlayerBlock.CmsConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withDrm(drm: PlayerBlock.DrmConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withMedia(media: PlayerBlock.MediaConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withPlayback(playback: PlayerBlock.PlaybackConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withMetadata(metadata: [Swift.String : Swift.String?]) -> PlayerBlock.SetupConfigBuilder
+  public func withUI(ui: PlayerBlock.UIConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withMocks(mocks: PlayerBlock.MocksConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withLifecycle(lifecycle: PlayerBlock.LifecycleConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withMonitors(monitors: PlayerBlock.MonitorsConfig) -> PlayerBlock.SetupConfigBuilder
+  public func withDebug(debug: PlayerBlock.DebugConfig) -> PlayerBlock.SetupConfigBuilder
+  public func build() -> PlayerBlock.PlayerConfig
+  @objc deinit
+}
+@frozen public enum UIControlName : Swift.String, Swift.Codable {
+  case play
+  case volume
+  case closedCaptions
+  case timeDuration
+  case fullscreen
+  case progressBar
+  case live
+  case airPlay
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum UIControlLocation : Swift.String, Swift.Codable {
+  case left
+  case right
+  case center
+  case topLeft
+  case topRight
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum PlayerEventType : Swift.String, StdLibBlock.EventType {
+  case modelUpdated
+  case playerStateChanged
+  case playerError
+  case playerInitialized
+  case playerReady
+  case playerListening
+  case contentStateChanged
+  case contentBeginning
+  case contentSetup
+  case contentWaiting
+  case muteChanged
+  case volumeChanged
+  case mediaStateChanged
+  case mediaCommandReceived
+  case mediaCommandRejected
+  case mediaReady
+  case mediaStarting
+  case mediaBlocked
+  case mediaLoaded
+  case mediaStarted
+  case mediaBufferingStarted
+  case mediaBufferingFinished
+  case mediaSeekingStarted
+  case mediaSeekingFinished
+  case mediaRequestProfileChanged
+  case mediaProfileChanged
+  case mediaTimeChanged
+  case mediaPaused
+  case mediaResumed
+  case mediaRecoveryStarted
+  case mediaRecoveryFinished
+  case mediaResized
+  case mediaStopped
+  case mediaTimedMetadataParsed
+  case mediaTimedMetadataReceived
+  case mediaFinished
+  case mediaError
+  case mediaStalled
+  case mediaAudioTrackAvailabilityChanged
+  case mediaAudioTrackSelected
+  case adStateChanged
+  case adStarting
+  case adLoaded
+  case adStarted
+  case adCreativeStarted
+  case adTimeChanged
+  case adPaused
+  case adResumed
+  case adStopped
+  case adCreativeEnded
+  case adFinished
+  case adError
+  case timelineMarkerAdded
+  case timelineMarkerApproaching
+  case timelineMarkerActivated
+  case timelineMarkerFinishing
+  case timelineMarkerDeactivated
+  case timelineMarkerRemoved
+  case captionsStateChanged
+  case captionSettingsUpdated
+  case captionTrackAdded
+  case captionTrackRemoved
+  case captionTrackSelected
+  case captionTrackDeselected
+  case captionCueParsed
+  case captionCueEntered
+  case captionCueExited
+  case captionCueUpdated
+  case cueStateChanged
+  case cueProcessed
+  case cueActivated
+  case contentInterrupted
+  case contentCompleted
+  case contentError
+  case contentEnded
+  case viewModeChanged
+  case viewStateChanged
+  case lifecycleStateChanged
+  case messageToUI
+  case messageFromUI
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum ContentState : Swift.String, Swift.Codable {
+  case pending
+  case initializing
+  case preparing
+  case transforming
+  case initialized
+  case waiting
+  case validating
+  case validated
+  case adsBeginning
+  case adsPlayback
+  case adsCompleted
+  case authorizing
+  case authorized
+  case mediaBeginning
+  case mediaPlayback
+  case mediaCompleted
+  case interrupting
+  case interrupted
+  case finished
+  case error
+  case ending
+  case ended
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum GDPRConsentKeys : Swift.String {
+  case consentStringKey
+  case consentStringKeyV2
+  case subjectToKey
+  case subjectToKeyV2
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum SubjectToGDPROptions : Swift.String {
+  case yes
+  case no
+  case unknown
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum TCFVersion : Swift.String {
+  case v1
+  case v2
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public let tcfVersionDefault: PlayerBlock.TCFVersion
+@_hasMissingDesignatedInitializers public class GDPRConsentUtils {
+  public var consentString: Swift.String? {
+    get
+  }
+  public static func consentString(config: PlayerBlock.GDPRConfig?) -> Swift.String?
+  public static func subjectToGDPR() -> PlayerBlock.SubjectToGDPROptions?
+  public static func subjectToGDPR(config: PlayerBlock.GDPRConfig?) -> PlayerBlock.SubjectToGDPROptions?
+  @objc deinit
+}
+@frozen public struct FeaturesConfig {
+  public var ccpa: PlayerBlock.CCPAConfig?
+  public var gdpr: PlayerBlock.GDPRConfig?
+  public var tve: PlayerBlock.TVEConfig?
+  public init(ccpa: PlayerBlock.CCPAConfig? = nil, gdpr: PlayerBlock.GDPRConfig? = nil, tve: PlayerBlock.TVEConfig? = nil)
+}
+@frozen public struct CCPAConfig {
+  public var enabled: Swift.Bool?
+  public var doNotSell: Swift.Bool?
+  public init(enabled: Swift.Bool? = nil, doNotSell: Swift.Bool? = nil)
+}
+@frozen public struct GDPRConfig {
+  public var enabled: Swift.Bool?
+  public var consentFrameworkVersion: PlayerBlock.TCFVersion?
+  public var consentDataOverrides: PlayerBlock.GDPRConsentDataOverridesConfig?
+  public init(enabled: Swift.Bool? = nil, consentFrameworkVersion: PlayerBlock.TCFVersion? = nil, consentDataOverrides: PlayerBlock.GDPRConsentDataOverridesConfig? = nil)
+}
+@frozen public struct GDPRConsentDataOverridesConfig {
+  public var consentString: Swift.String?
+  public var subjectToGDPR: Swift.String?
+  public init(consentString: Swift.String? = nil, subjectToGDPR: Swift.String? = nil)
+}
+@frozen public struct TVEConfig {
+  internal var enabled: Swift.Bool?
+  internal var trapDuration: Swift.Int?
+  internal var enableTrueX: Swift.Bool?
+  public init(enabled: Swift.Bool? = nil, trapDuration: Swift.Int? = nil, enableTrueX: Swift.Bool? = nil)
+}
+@frozen public enum PlayerState : Swift.String, Swift.Codable {
+  case pending
+  case initializing
+  case initialized
+  case attaching
+  case attached
+  case listening
+  case detaching
+  case detached
+  case destroying
+  case destroyed
+  case error
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public struct MockProgramChapterConfig {
+  public init(startOffset: Swift.Double? = nil, duration: Swift.Double, processTime: PlayerBlock.MockMessageTiming? = nil, data: [Swift.String : Any]? = nil)
+  internal var startOffset: Swift.Double?
+  internal var duration: Swift.Double
+  internal var processTime: PlayerBlock.MockMessageTiming?
+  internal var data: [Swift.String : Any]?
+}
+public typealias MockProgramChapters = [Swift.Int : [PlayerBlock.MockProgramChapterConfig]]
+@frozen public struct MockChapterBoundaryConfig {
+  public init(offset: PlayerBlock.MockMessageTiming, duration: Swift.Double, processTime: PlayerBlock.MockMessageTiming? = nil, metadata: [Swift.String : Any]? = nil)
+  internal var offset: PlayerBlock.MockMessageTiming
+  internal var duration: Swift.Double
+  internal var processTime: PlayerBlock.MockMessageTiming?
+  internal var metadata: [Swift.String : Any]?
+}
+@frozen public struct MockChapterConfig {
+  public init(startTime: PlayerBlock.MockMessageTiming, processTime: PlayerBlock.MockMessageTiming? = nil, metadata: [Swift.String : Any]? = nil)
+  internal var startTime: PlayerBlock.MockMessageTiming
+  internal var processTime: PlayerBlock.MockMessageTiming?
+  internal var metadata: [Swift.String : Any]?
+}
+@frozen public struct MockProgramBoundaryConfig {
+  public init(offset: PlayerBlock.MockMessageTiming, duration: Swift.Double, processTime: PlayerBlock.MockMessageTiming? = nil, assetId: Swift.Int, programChapters: [PlayerBlock.MockProgramChapterConfig]? = nil)
+  internal var offset: PlayerBlock.MockMessageTiming
+  internal var duration: Swift.Double
+  internal var processTime: PlayerBlock.MockMessageTiming?
+  internal var assetId: Swift.Int
+  internal var programChapters: [PlayerBlock.MockProgramChapterConfig]?
+}
+@frozen public struct MockProgramBoundarySetConfig {
+  public init(offset: PlayerBlock.MockMessageTiming, duration: Swift.Double, processTime: PlayerBlock.MockMessageTiming? = nil, assetIds: [Swift.Int], programChapters: PlayerBlock.MockProgramChapters? = nil)
+  internal var offset: PlayerBlock.MockMessageTiming
+  internal var duration: Swift.Double
+  internal var processTime: PlayerBlock.MockMessageTiming?
+  internal var assetIds: [Swift.Int]
+  internal var programChapters: PlayerBlock.MockProgramChapters?
+}
+@frozen public struct MockProgramConfig {
+  public init(assetId: Swift.Int, startTime: PlayerBlock.MockMessageTiming, processTime: PlayerBlock.MockMessageTiming? = nil)
+  internal var assetId: Swift.Int
+  internal var startTime: PlayerBlock.MockMessageTiming
+  internal var processTime: PlayerBlock.MockMessageTiming?
+}
+public class PlayerEvents : StdLibBlock.EventCollection<PlayerBlock.PlayerEventType, PlayerBlock.PlayerAction> {
+  final public let playerStateChanged: PlayerBlock.PlayerStateChangedSignal
+  final public let viewStateChanged: PlayerBlock.PlayerViewStateChangedSignal
+  final public let lifecycleStateChanged: PlayerBlock.PlayerLifecycleStateChangedSignal
+  final public let playerInitialized: PlayerBlock.PlayerInitializedSignal
+  final public let playerReady: PlayerBlock.PlayerReadySignal
+  final public let playerListening: PlayerBlock.PlayerListeningSignal
+  final public let contentStateChanged: PlayerBlock.PlayerContentChangedSignal
+  final public let contentBeginning: PlayerBlock.PlayerContentBeginningSignal
+  final public let contentSetup: PlayerBlock.PlayerContentSetupSignal
+  final public let contentWaiting: PlayerBlock.PlayerContentWaitingSignal
+  final public let contentInterrupted: PlayerBlock.PlayerContentInterruptedSignal
+  final public let contentCompleted: PlayerBlock.PlayerContentCompletedSignal
+  final public let contentError: PlayerBlock.PlayerContentErrorSignal
+  final public let contentEnded: PlayerBlock.PlayerContentEndedSignal
+  final public let muteChanged: PlayerBlock.PlayerMuteChangedSignal
+  final public let mediaStateChanged: PlayerBlock.PlayerMediaStateChangedSignal
+  final public let mediaStarting: PlayerBlock.PlayerMediaStartingSignal
+  final public let mediaLoaded: PlayerBlock.PlayerMediaLoadedSignal
+  final public let mediaStarted: PlayerBlock.PlayerMediaStartedSignal
+  final public let mediaTimeChanged: PlayerBlock.PlayerMediaTimeChangedSignal
+  final public let mediaBufferingStarted: PlayerBlock.PlayerMediaBufferingStartedSignal
+  final public let mediaBufferingFinished: PlayerBlock.PlayerMediaBufferingFinishedSignal
+  final public let mediaSeekingStarted: PlayerBlock.PlayerMediaSeekingStartedSignal
+  final public let mediaSeekingFinished: PlayerBlock.PlayerMediaSeekingFinishedSignal
+  final public let mediaPaused: PlayerBlock.PlayerMediaPausedSignal
+  final public let mediaResumed: PlayerBlock.PlayerMediaResumedSignal
+  final public let mediaResized: PlayerBlock.PlayerMediaResizedSignal
+  final public let mediaAudioTrackAvailabilityChanged: PlayerBlock.PlayerMediaAudioTrackAvailabilityChangedSignal
+  final public let mediaAudioTrackSelected: PlayerBlock.PlayerMediaAudioTrackSelectedSignal
+  final public let mediaStopped: PlayerBlock.PlayerMediaStoppedSignal
+  final public let mediaFinished: PlayerBlock.PlayerMediaFinishedSignal
+  final public let mediaError: PlayerBlock.PlayerMediaErrorSignal
+  final public let adStateChanged: PlayerBlock.PlayerAdStateChangedSignal
+  final public let adTimeChanged: PlayerBlock.PlayerAdTimeChangedSignal
+  final public let adError: PlayerBlock.PlayerAdErrorSignal
+  final public let adStarted: PlayerBlock.PlayerAdSignal
+  final public let adPaused: PlayerBlock.PlayerAdSignal
+  final public let adResumed: PlayerBlock.PlayerAdSignal
+  final public let adStopped: PlayerBlock.PlayerAdSignal
+  final public let adFinished: PlayerBlock.PlayerAdSignal
+  final public let adStarting: PlayerBlock.PlayerAdSignal
+  final public let adLoaded: PlayerBlock.PlayerAdSignal
+  final public let adCreativeStarted: PlayerBlock.PlayerAdCreativeSignal
+  final public let adCreativeEnded: PlayerBlock.PlayerAdCreativeSignal
+  final public let mediaRequestProfileChanged: PlayerBlock.PlayerMediaRequestProfileChangedSignal
+  final public let mediaProfileChanged: PlayerBlock.PlayerMediaProfileChangedSignal
+  final public let modelUpdated: PlayerBlock.PlayerModelUpdatedSignal
+  final public let mediaTimedMetadataParsed: PlayerBlock.PlayerMediaTimedMetadataParsedSignal
+  final public let mediaTimeMetadataReceived: PlayerBlock.PlayerMediaTimeMetadataReceivedSignal
+  final public let timelineMarkerAdded: PlayerBlock.PlayerTimelineMarkerSignal
+  final public let timelineMarkerRemoved: PlayerBlock.PlayerTimelineMarkerSignal
+  final public let timelineMarkerActivated: PlayerBlock.PlayerTimelineMarkerSignal
+  final public let timelineMarkerFinishing: PlayerBlock.PlayerTimelineMarkerSignal
+  final public let timelineMarkerApproaching: PlayerBlock.PlayerTimelineMarkerSignal
+  final public let timelineMarkerDeactivated: PlayerBlock.PlayerTimelineMarkerSignal
+  final public let captionsStateChanged: PlayerBlock.PlayerCaptionsStateChangedSignal
+  final public let captionsTrackAdded: PlayerBlock.PlayerCaptionsTrackSignal
+  final public let captionsTrackRemoved: PlayerBlock.PlayerCaptionsTrackSignal
+  final public let captionsTrackSelected: PlayerBlock.PlayerCaptionsTrackSignal
+  final public let captionsTrackDeselected: PlayerBlock.PlayerCaptionsTrackSignal
+  final public let captionCueEntered: PlayerBlock.PlayerCaptionsCueSignal
+  final public let captionCueParsed: PlayerBlock.PlayerCaptionsCueSignal
+  final public let captionCueUpdated: PlayerBlock.PlayerCaptionsCueSignal
+  final public let captionCueExited: PlayerBlock.PlayerCaptionsCueSignal
+  final public let cueStateChanged: PlayerBlock.PlayerCueStateChangedSignal
+  final public let cueProcessed: PlayerBlock.PlayerCueProcessedSignal
+  final public let cueActivated: PlayerBlock.PlayerCueActivatedSignal
+  final public let viewModeChanged: PlayerBlock.PlayerViewModeChangedSignal
+  final public let captionSettingsUpdated: PlayerBlock.PlayerCaptionSettingsUpdatedSignal
+  final public let volumeChanged: PlayerBlock.PlayerVolumeChangedSignal
+  final public let playerError: PlayerBlock.PlayerErrorSignal
+  final public let messageFromUI: PlayerBlock.PlayerUIMessageSignal
+  public init()
+  @objc deinit
+  override public init(events: StdLibBlock.EventCollection<PlayerBlock.PlayerEventType, PlayerBlock.PlayerAction>.CollectionType)
+}
+public class ContentEntryOptionsBuilder {
+  public static func create() -> PlayerBlock.ContentEntryOptionsBuilder
+  public static func fromPlaylistItem(item: PlayerBlock.PlaylistItem) -> PlayerBlock.ContentEntryOptionsBuilder
+  public init()
+  public func withContentEntryOptions(value: PlayerBlock.ContentEntryOptionalData) -> PlayerBlock.ContentEntryOptionsBuilder
+  public func withMVPDId(mvpdId: Swift.String) -> PlayerBlock.ContentEntryOptionsBuilder
+  public func withAccessTokenType(accessTokenType: Swift.String) -> PlayerBlock.ContentEntryOptionsBuilder
+  public func withAccessToken(accessToken: Swift.String) -> PlayerBlock.ContentEntryOptionsBuilder
+  public func withTokenParams(params: [Swift.String : Swift.String]) -> PlayerBlock.ContentEntryOptionsBuilder
+  public func withAssetType(assetType: Swift.Int) -> PlayerBlock.ContentEntryOptionsBuilder
+  public func withPlayConfigOverrides(overrides: PlayerBlock.PlayConfig) -> PlayerBlock.ContentEntryOptionsBuilder
+  public func build() -> PlayerBlock.ContentEntryOptionalData
+  @objc deinit
+}
+@frozen public struct OpenMeasurementConfig {
+  public var enabled: Swift.Bool?
+  public var friendlyObstructions: [PlayerBlock.PlayerFriendlyObstruction]?
+  public init(enabled: Swift.Bool? = nil, friendlyObstructions: [PlayerBlock.PlayerFriendlyObstruction]? = nil)
+}
+@frozen public struct PlayerFriendlyObstruction {
+  public let id: Swift.String?
+  public let container: UIKit.UIView?
+  public let purpose: PlayerBlock.PlayerFriendlyObstructionPurpose?
+  public let detailReason: Swift.String?
+  public init(id: Swift.String? = nil, container: UIKit.UIView? = nil, purpose: PlayerBlock.PlayerFriendlyObstructionPurpose? = nil, detailReason: Swift.String? = nil)
+}
+@frozen public enum PlayerFriendlyObstructionPurpose : Swift.String, Swift.Codable {
+  case mediaControls
+  case closeAd
+  case notVisible
+  case other
+  public init?(_ string: Swift.String)
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum PlayerLifecycleEvent : Swift.String, Swift.Codable {
+  case playback
+  case focusLost
+  case background
+  case unload
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum PlayerLifecycleState : Swift.String, Swift.Codable {
+  case `continue`
+  case pause
+  case unload
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+@_hasMissingDesignatedInitializers public class AdTrackingUtils {
+  @objc deinit
+}
+@frozen public struct CmsConfig {
+  public var preferDRM: Swift.Bool
+  public var providers: PlayerBlock.Providers?
+  public init(preferDRM: Swift.Bool = true, mediaJsonConfig: PlayerBlock.MediaJSONProviderConfig? = nil)
+}
+@frozen public struct Providers {
+  public var mediaJson: PlayerBlock.MediaJSONProviderConfig?
+  public init(mediaJsonConfig: PlayerBlock.MediaJSONProviderConfig? = nil)
+}
+@frozen public struct MediaJSONProviderConfig {
+  public var host: Swift.String?
+  public var mediaTypes: [Swift.String]?
+  public var platform: Swift.String?
+  public init(host: Swift.String? = nil, mediaTypes: [Swift.String]? = nil, platform: Swift.String? = nil)
+}
+@frozen public struct PlayerError : Swift.CustomStringConvertible {
+  public let severity: PlayerBlock.ErrorSeverity
+  public let message: Swift.String
+  public let metadata: PlayerBlock.ErrorMetadata?
+  public let category: PlayerBlock.CategoryType
+  public let platform: PlayerBlock.Platform
+  public let domain: PlayerBlock.Domain
+  public let code: PlayerBlock.CategoryCode
+  public var description: Swift.String {
+    get
+  }
+  public func getCode() -> Swift.String
+}
+@frozen public struct ErrorMetadata : Swift.CustomStringConvertible {
+  public let recoverySuggestion: Swift.String?
+  public let subErrorCode: Swift.String?
+  public let subErrorMessage: Swift.String?
+  public let subErrorMetadata: [Swift.String : Any]?
+  @inlinable internal init(recoverySuggestion: Swift.String? = nil, subErrorCode: Swift.String? = nil, subErrorMessage: Swift.String? = nil, subErrorMetadata: [Swift.String : Any]? = nil) {
+        self.recoverySuggestion = recoverySuggestion
+        self.subErrorCode = subErrorCode
+        self.subErrorMessage = subErrorMessage
+        self.subErrorMetadata = subErrorMetadata
+    }
+  public var description: Swift.String {
+    get
+  }
+}
+@frozen public enum ErrorSeverity : Swift.String {
+  case error
+  case warn
+  case fatal
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum Platform : Swift.String {
+  case unknown
+  case web
+  case iOS
+  case android
+  case reactNative
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum Domain : Swift.String {
+  case unknown
+  case nexus
+  case target
+  case shared
+  case nativeService
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum CategoryType : Swift.String {
+  case unknown
+  case player
+  case view
+  case transaction
+  case compConfig
+  case compCMS
+  case compAuth
+  case compTimeline
+  case compAds
+  case compMedia
+  case compCaptions
+  case compAnalytics
+  case ui
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum CategoryCode : Swift.String {
+  case unspecified
+  case networkRequestFailure
+  case networkConnectionLost
+  case playerInitFailure
+  case viewAttachFailure
+  case viewDetachFailure
+  case transactionInitFailure
+  case transactionStateTransitionFailure
+  case transactionComponentSetupFailure
+  case contentResolutionFailure
+  case contentSelectionFailure
+  case contentSupportFailure
+  case cdnTokenFailure
+  case drmTokenFailure
+  case adPlaybackFailure
+  case adSessionTimeout
+  case mediaPlaybackFailure
+  case mediaContentFailure
+  case mediaNetworkFailure
+  case mediaDRMFailure
+  case analyticsDisabled
+  case analyticsConfigFailure
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum MediaDomain : Swift.String {
+  case general
+  case content
+  case network
+  case drm
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public struct MonitorsConfig {
+  public var liveAdSession: PlayerBlock.LiveAdSessionMonitorConfig?
+  public var contentStall: PlayerBlock.ContentStallMonitorConfig?
+  public var prune: PlayerBlock.PruneMonitorConfig?
+  public var adStartDetection: PlayerBlock.AdStartDetectionMonitorConfig?
+  public init(liveAdSession: PlayerBlock.LiveAdSessionMonitorConfig? = nil, contentStall: PlayerBlock.ContentStallMonitorConfig? = nil, prune: PlayerBlock.PruneMonitorConfig? = nil, adStartDetection: PlayerBlock.AdStartDetectionMonitorConfig? = nil)
+}
+@frozen public struct LiveAdSessionMonitorConfig {
+  public var enabled: Swift.Bool?
+  public var timeout: Swift.Double?
+  public init(enabled: Swift.Bool? = nil, timeout: Swift.Double? = nil)
+}
+@frozen public struct ContentStallMonitorConfig {
+  public var enabled: Swift.Bool?
+  public var timeout: Swift.Double?
+  public var pollRate: Swift.Double?
+  public init(enabled: Swift.Bool? = nil, timeout: Swift.Double? = nil, pollRate: Swift.Double? = nil)
+}
+@frozen public struct PruneMonitorConfig {
+  public var enabled: Swift.Bool?
+  public var slidingWindowThreshold: Swift.Double?
+  public var slidingWindowBuffer: Swift.Double?
+  public init(enabled: Swift.Bool? = nil, slidingWindowThreshold: Swift.Double? = nil, slidingWindowBuffer: Swift.Double? = nil)
+}
+@frozen public struct AdStartDetectionMonitorConfig {
+  public var enabled: Swift.Bool?
+  public var timeout: Swift.Double?
+  public init(enabled: Swift.Bool? = nil, timeout: Swift.Double? = nil)
+}
+@frozen public enum UISlate : Swift.String, Swift.Codable, Swift.CaseIterable {
+  case giantPlaySlate
+  case startSlate
+  case bufferingSlate
+  case endSlate
+  case adSlate
+  case mediaPlaybackSlate
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+  public typealias AllCases = [PlayerBlock.UISlate]
+  public static var allCases: [PlayerBlock.UISlate] {
+    get
+  }
+}
+public class BridgeDispatcher {
+  public var bridge: NexusCore.BlockBridge?
+  public init(bridge: NexusCore.BlockBridge?)
+  @objc deinit
+}
+extension BridgeDispatcher : StdLibBlock.HookDispatchable {
+  public func dispatch<Name, Value, Failure>(hookEvent event: StdLibBlock.HookEvent<Name, Value, Failure>) where Name : StdLibBlock.HookName, Value : StdLibBlock.HookEventResult, Failure : StdLibBlock.HookError
+}
+@_hasMissingDesignatedInitializers public class PlayerModel {
+  public var rootContainer: UIKit.UIView? {
+    get
+  }
+  public var subContainer: UIKit.UIView? {
+    get
+  }
+  public var currentAdBreak: PlayerBlock.AdBreak? {
+    get
+  }
+  public var currentAdCreative: PlayerBlock.AdCreative? {
+    get
+  }
+  public var adBreaks: [PlayerBlock.AdBreakMetadata] {
+    get
+  }
+  public var playerState: PlayerBlock.PlayerState {
+    get
+  }
+  public var viewState: PlayerBlock.ViewState {
+    get
+  }
+  public var config: PlayerBlock.PlayConfig {
+    get
+  }
+  public var contentState: PlayerBlock.ContentState {
+    get
+  }
+  public var playlistItem: PlayerBlock.PlaylistItem? {
+    get
+  }
+  public var volume: Swift.Double {
+    get
+  }
+  public var muted: Swift.Bool {
+    get
+  }
+  public var analytics: PlayerBlock.AnalyticsModel! {
+    get
+  }
+  public var captions: PlayerBlock.CaptionsModel! {
+    get
+  }
+  public var timeline: PlayerBlock.TimelineModel! {
+    get
+  }
+  public var cues: PlayerBlock.CuesModel? {
+    get
+  }
+  public var mediaState: PlayerBlock.MediaState {
+    get
+  }
+  public var mediaTime: Swift.Double {
+    get
+  }
+  public var mediaDuration: Swift.Double {
+    get
+  }
+  public var contentSeekableRange: PlayerBlock.TimeRange {
+    get
+  }
+  public var contentIsLive: Swift.Bool {
+    get
+  }
+  public var contentBufferedRange: PlayerBlock.TimeRange {
+    get
+  }
+  public var lifecycleState: PlayerBlock.PlayerLifecycleState {
+    get
+  }
+  public var captionTracks: [PlayerBlock.CCTrack] {
+    get
+  }
+  public var activeCaptionCues: [PlayerBlock.CCCue] {
+    get
+  }
+  public var captionsAvailable: Swift.Bool {
+    get
+  }
+  public var captionsEnabled: Swift.Bool {
+    get
+  }
+  public var captionState: PlayerBlock.CCState {
+    get
+  }
+  public var activeCaptionTrack: PlayerBlock.CCTrack? {
+    get
+  }
+  public var captionSettings: PlayerBlock.CCSettings {
+    get
+  }
+  @objc deinit
+}
+@frozen public struct NowPlayingInfoConfig {
+  public var title: Swift.String?
+  public var artist: Swift.String?
+  public var genre: Swift.String?
+  public var duration: Swift.Double?
+  public var elapsedTime: Swift.Double?
+  public var shouldPauseSystemUI: Swift.Bool?
+  public var isLive: Swift.Bool?
+  public var base64Artwork: Swift.String?
+  public var contentIdentifier: Swift.String?
+  public var serviceIdentifier: Swift.String?
+  public var currentPlaybackDate: Foundation.Date?
+  public static var nowPlayingMetadataPrefix: Swift.String
+  public enum CodingKeys : Swift.String, Swift.CodingKey, Swift.CaseIterable {
+    case title, artist, genre, duration, shouldPauseSystemUI, isLive, elapsedTime, base64Artwork, contentIdentifier, currentPlaybackDate, serviceIdentifier
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+    public typealias AllCases = [PlayerBlock.NowPlayingInfoConfig.CodingKeys]
+    public static var allCases: [PlayerBlock.NowPlayingInfoConfig.CodingKeys] {
+      get
+    }
+  }
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.NowPlayingInfoConfig?
+  public static func metadataKey(for codingKey: PlayerBlock.NowPlayingInfoConfig.CodingKeys) -> Swift.String
+}
+extension NowPlayingInfoConfig {
+  public static func imageToBase64(_ image: UIKit.UIImage) -> Swift.String?
+  public static func base64StringToImage(_ base64: Swift.String) -> UIKit.UIImage?
+}
+extension NowPlayingInfoConfig {
+  public init(title: Swift.String? = nil, artist: Swift.String? = nil, genre: Swift.String? = nil, duration: Swift.Double? = nil, elapsedTime: Swift.Double? = nil, isLive: Swift.Bool? = nil, artwork: UIKit.UIImage? = nil, contentIdentifier: Swift.String? = nil, serviceIdentifier: Swift.String? = nil, currentPlaybackDate: Foundation.Date? = nil)
+}
+@frozen public enum VideoEngineMetadataSourceType : Swift.String, Swift.Codable {
+  case embedded
+  case tag
+  case other
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+@frozen public enum VideoEngineMetadataType : Swift.String, Swift.Codable {
+  case emsg
+  case id3
+  case cueTag
+  case dateRange
+  case custom
+  case scte
+  case cast
+  case eventStream
+  case unknown
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+final public class CCTrack {
+  final public var id: Swift.String
+  final public var active: Swift.Bool
+  final public var source: PlayerBlock.CCSource
+  final public var channel: PlayerBlock.CCChannel
+  final public var lang: PlayerBlock.CCLang
+  final public var label: Swift.String
+  public init(id: Swift.String, active: Swift.Bool, source: PlayerBlock.CCSource, channel: PlayerBlock.CCChannel, lang: PlayerBlock.CCLang, label: Swift.String)
+  @objc deinit
+}
+@frozen public enum CueState : Swift.String, Swift.Codable {
+  case pending
+  case processing
+  case processed
+  case listening
+  case activated
+  case completed
+  case unknown
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum CCSource : Swift.String, Swift.Codable {
+  case cea608
+  case cea708
+  case webvtt
+  case unknown
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+public enum UITheme : Swift.String, Swift.Codable {
+  case `default`
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers final public class PlayerStateChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var previousState: PlayerBlock.PlayerState? {
+    get
+  }
+  final public var currentState: PlayerBlock.PlayerState? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class PlayerErrorResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public let error: PlayerBlock.PlayerError
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ViewStateChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var previousState: PlayerBlock.ViewState? {
+    get
+  }
+  final public var currentState: PlayerBlock.ViewState? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class LifecycleStateChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var previousState: PlayerBlock.PlayerLifecycleState? {
+    get
+  }
+  final public var currentState: PlayerBlock.PlayerLifecycleState? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class PlayerInitializedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class PlayerReadyResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class PlayerListeningResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ContentStateChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var previousState: PlayerBlock.ContentState? {
+    get
+  }
+  final public var currentState: PlayerBlock.ContentState? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ContentBeginningResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ContentSetupResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ContentWaitingResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ContentInterruptedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ContentCompletedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ContentErrorResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var error: PlayerBlock.PlayerError? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ContentEndedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MuteChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var muted: Swift.Bool? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class VolumeChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var volume: Swift.Double? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class ModelUpdatedResult : PlayerBlock.PlayerResult {
+  public var eventType: StdLibBlock.EventType?
+  public var changed: [PlayerBlock.ModelPropertyChangedResult] {
+    get
+  }
+  @objc deinit
+}
+public struct ModelPropertyChangedResult {
+  public let property: Swift.String
+  public let currentValue: Any
+  public let previousValue: Any?
+  public let mode: PlayerBlock.ModelUpdateMode
+}
+@_hasMissingDesignatedInitializers final public class MediaStateChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var previousState: PlayerBlock.MediaState? {
+    get
+  }
+  final public var currentState: PlayerBlock.MediaState? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaStartingResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var url: Swift.String? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaLoadedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var initialTimedMetadata: [Swift.String]? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaStartedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaTimeChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var time: Swift.Double? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaBufferingStartedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaBufferingFinishedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaSeekingStartedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaSeekingFinishedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var requestedTime: Swift.Double? {
+    get
+  }
+  final public var time: Swift.Double? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class MediaProfileResult : PlayerBlock.PlayerResult {
+  public var eventType: StdLibBlock.EventType?
+  public var index: Swift.Int? {
+    get
+  }
+  public var profile: PlayerBlock.MediaProfile? {
+    get
+  }
+  public var mediaWidth: Swift.Double? {
+    get
+  }
+  public var mediaHeight: Swift.Double? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaProfile {
+  final public var url: Swift.String? {
+    get
+  }
+  final public var bitrate: Swift.Double? {
+    get
+  }
+  final public var width: Swift.Double? {
+    get
+  }
+  final public var height: Swift.Double? {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MediaRequestProfileChangedResult : PlayerBlock.MediaProfileResult {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MediaProfileChangedResult : PlayerBlock.MediaProfileResult {
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaPausedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaResumedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaResizedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var viewWidth: Swift.Double? {
+    get
+  }
+  final public var viewHeight: Swift.Double? {
+    get
+  }
+  final public var mediaWidth: Swift.Double? {
+    get
+  }
+  final public var mediaHeight: Swift.Double? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class MediaTimedMetadataResult : PlayerBlock.PlayerResult {
+  public var eventType: StdLibBlock.EventType?
+  public var content: PlayerBlock.MediaTimedMetadataContent? {
+    get
+  }
+  public var metadataType: Swift.String? {
+    get
+  }
+  public var timeReceived: Swift.Double? {
+    get
+  }
+  public var timeToTrigger: Swift.Double? {
+    get
+  }
+  public var source: Swift.String? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaTimedMetadataContent {
+  final public var metadata: PlayerBlock.MediaTimedMetadata? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaTimedMetadata {
+  final public var entries: [PlayerBlock.MediaTimedMetadataEntry]? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class MediaTimedMetadataEntry {
+  public var pts: Swift.Double? {
+    get
+  }
+  public var key: Swift.String? {
+    get
+  }
+  public var metadataType: Swift.String? {
+    get
+  }
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MediaTimedMetadataParsedResult : PlayerBlock.MediaTimedMetadataResult {
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MediaTimedMetadataReceivedResult : PlayerBlock.MediaTimedMetadataResult {
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaAudioTrackAvailabilityChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var track: PlayerBlock.MediaAudioTrack? {
+    get
+  }
+  final public var added: Swift.Bool? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaAudioTrackSelectedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var track: PlayerBlock.MediaAudioTrack? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaAudioTrack {
+  final public var id: Swift.Int? {
+    get
+  }
+  final public var enabled: Swift.Bool? {
+    get
+  }
+  final public var kind: Swift.String? {
+    get
+  }
+  final public var isDefault: Swift.Bool? {
+    get
+  }
+  final public var lang: Swift.String? {
+    get
+  }
+  final public var label: Swift.String? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaStoppedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaFinishedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class MediaErrorResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public let error: PlayerBlock.PlayerError
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class AdStateChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var previousState: PlayerBlock.AdState? {
+    get
+  }
+  final public var currentState: PlayerBlock.AdState? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class AdResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var adBreakId: Swift.String? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class AdCreativeResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var adBreakId: Swift.String? {
+    get
+  }
+  final public var adCreativeId: Swift.String? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class AdTimeChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var adBreakId: Swift.String? {
+    get
+  }
+  final public var adCreativeId: Swift.String? {
+    get
+  }
+  final public var time: Swift.Double? {
+    get
+  }
+  final public var duration: Swift.Double? {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class AdErrorResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var adBreakId: Swift.String? {
+    get
+  }
+  final public let error: PlayerBlock.PlayerError
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class TimelineMarkerResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var marker: PlayerBlock.Marker? {
+    get
+  }
+  @objc deinit
+}
+final public class CCStateChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var previousState: PlayerBlock.CCState? {
+    get
+  }
+  final public var currentState: PlayerBlock.CCState? {
+    get
+  }
+  public init(eventType: PlayerBlock.PlayerEventType? = nil, previousState: PlayerBlock.CCState? = nil, currentState: PlayerBlock.CCState? = nil)
+  @objc deinit
+}
+final public class CCSettingsUpdatedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var settings: PlayerBlock.CCSettings? {
+    get
+  }
+  public init(eventType: PlayerBlock.PlayerEventType?, settings: PlayerBlock.CCSettings?)
+  @objc deinit
+}
+final public class CCTrackResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var id: Swift.String? {
+    get
+  }
+  public init(eventType: PlayerBlock.PlayerEventType? = nil, id: Swift.String? = nil)
+  @objc deinit
+}
+final public class CCCueResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var id: Swift.String? {
+    get
+  }
+  final public var trackId: Swift.String? {
+    get
+  }
+  public init(eventType: PlayerBlock.PlayerEventType? = nil, id: Swift.String? = nil, trackId: Swift.String? = nil)
+  @objc deinit
+}
+final public class CueStateChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public let id: Swift.String?
+  final public let previousState: PlayerBlock.CueState?
+  final public let currentState: PlayerBlock.CueState?
+  public init(eventType: PlayerBlock.PlayerEventType? = nil, id: Swift.String? = nil, previousState: PlayerBlock.CueState? = nil, currentState: PlayerBlock.CueState? = nil)
+  @objc deinit
+}
+public protocol CueDataEventResult : PlayerBlock.PlayerResult {
+  var cue: PlayerBlock.MetadataCue? { get }
+}
+final public class CueProcessedResult : PlayerBlock.CueDataEventResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public let cue: PlayerBlock.MetadataCue?
+  public init(eventType: PlayerBlock.PlayerEventType? = nil, cue: PlayerBlock.MetadataCue? = nil)
+  @objc deinit
+}
+final public class CueActivatedResult : PlayerBlock.CueDataEventResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public let cue: PlayerBlock.MetadataCue?
+  public init(eventType: PlayerBlock.PlayerEventType? = nil, cue: PlayerBlock.MetadataCue? = nil)
+  @objc deinit
+}
+final public class ViewModeChangedResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var currentValue: Swift.String? {
+    get
+  }
+  final public var previousValue: Swift.String? {
+    get
+  }
+  public init(currentValue: Swift.String? = nil, previousValue: Swift.String? = nil)
+  @objc deinit
+}
+final public class UIMessageResult : PlayerBlock.PlayerResult {
+  final public var eventType: StdLibBlock.EventType?
+  final public var name: Swift.String? {
+    get
+  }
+  final public var payload: Any? {
+    get
+  }
+  public init(name: Swift.String? = nil, payload: Any? = nil)
+  @objc deinit
+}
+@frozen public enum MediaState : Swift.String, Swift.Codable {
+  case pending
+  case ready
+  case starting
+  case loaded
+  case playing
+  case paused
+  case buffering
+  case seeking
+  case stopped
+  case finished
+  case error
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum UIComponentType : Swift.String, Swift.Codable {
+  case controls
+  case slates
+  case containers
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public struct AnalyticsEntry {
+  internal let entryType: Swift.String
+  internal let name: Swift.String
+  internal let startTime: Foundation.TimeInterval
+  internal let duration: Foundation.TimeInterval
+  public init(entryType: Swift.String, name: Swift.String, startTime: Foundation.TimeInterval, duration: Foundation.TimeInterval)
+}
+@frozen public enum UIContainer : Swift.String, Swift.Codable, Swift.CaseIterable {
+  case rootSurface
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+  public typealias AllCases = [PlayerBlock.UIContainer]
+  public static var allCases: [PlayerBlock.UIContainer] {
+    get
+  }
+}
+@frozen public enum DRMDataSource : Swift.String, Swift.Codable {
+  case manifest
+  case metadata
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+@frozen public struct AdCreative {
+  public var id: Swift.String?
+  public var creativeId: Swift.String?
+  public var clickThroughUrl: Swift.String?
+  public var duration: Swift.Double?
+  public var currentTime: Swift.Double?
+  public var requiresUi: Swift.Bool?
+  public var sequence: Swift.Int?
+  public var title: Swift.String?
+  public var advertiser: Swift.String?
+  public var system: Swift.String?
+  public var mediaFileUrl: Swift.String?
+  public var isFiller: Swift.Bool?
+  public var lineage: [[Swift.String : Swift.String]]?
+  public init(id: Swift.String? = nil, creativeId: Swift.String? = nil, clickThroughUrl: Swift.String? = nil, duration: Swift.Double? = nil, currentTime: Swift.Double? = nil, requiresUi: Swift.Bool? = nil, sequence: Swift.Int? = nil, title: Swift.String? = nil, advertiser: Swift.String? = nil, system: Swift.String? = nil, mediaFileUrl: Swift.String? = nil, isFiller: Swift.Bool? = nil, lineage: [[Swift.String : Swift.String]]? = nil)
+}
+@frozen public struct TimeRange {
+  internal let start: Swift.Double
+  internal let end: Swift.Double
+  public init(start: Swift.Double = 0.0, end: Swift.Double = 0.0)
+  public init(from decoder: Swift.Decoder) throws
+  public func contains(time: Swift.Double) -> Swift.Bool
+  public func equals(range: PlayerBlock.TimeRange) -> Swift.Bool
+}
+@frozen public enum AnalyticsMarkName : Swift.String, Swift.Codable {
+  case transactionInitializing
+  case transactionDetailsResolved
+  case transactionInitialized
+  case transactionTransforming
+  case transactionWaiting
+  case transactionUserAction
+  case transactionMediaBeginning
+  case mediaEngineStarted
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum PlayerHookName : Swift.String, Swift.Codable, StdLibBlock.HookName {
+  case checkAutoPlay
+  case checkGDPRConsent
+  case addPlatformMetadata
+  case authRefresh
+  case validateContentResolution
+  case validateDRMTokenRequest
+  case validateDRMTokenResponse
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public protocol TubEngineNotifier : AnyObject {
+  func handleMediaStarting()
+  func handleMediaLoaded()
+  func handleMediaReady()
+  func handleMediaStarted()
+  func handleMediaPaused()
+  func handleMediaResumed()
+  func handleMediaTimeChanged(time: Swift.Double)
+  func handleMediaDurationChanged(duration: Swift.Double)
+  func handleMediaMuteChanged(muted: Swift.Bool)
+  func handleMediaRequestProfileChanged(data: VideoDownloadQualityChangedEvent)
+  func handleMediaProfileChanged()
+  func handleMediaBufferingStarted()
+  func handleMediaBufferingFinished()
+  func handleMediaSeekingStarted()
+  func handleMediaSeekingFinished()
+  func handleMediaResized(data: PlayerBlock.HandleMediaResizedData)
+  func handleMediaTimedMetadataParsed(event: MetadataParsedEvent)
+  func handleMediaAudioTrackAvailabilityChanged(track: AudioTrack, added: Swift.Bool)
+  func handleMediaAudioTrackSelected(track: AudioTrack)
+  func handleMediaStopped()
+  func handleMediaFinished()
+  func handleMediaError(event: ErrorEvent)
+  func handleAdStarting(event: AdBreakStartedEvent)
+  func handleAdStarted(event: AdBreakStartedEvent)
+  func handleAdLoaded(duration: Swift.Double)
+  func handleAdCreativeStarted(event: AdStartedEvent)
+  func handleAdCreativeEnded()
+  func handleAdFinished()
+  func handleSubtitleTrackAdded(event: SubtitleAddedEvent)
+  func handleSubtitleTrackChanged(event: SubtitleChangedEvent)
+  func handleSubtitleTrackRemoved(event: SubtitleRemovedEvent)
+  func handleSubtitleCueEntered(event: CueEnterEvent)
+  func handleSubtitleCueExited(event: CueExitEvent)
+  func handleAdError(event: AdErrorEvent)
+}
+@frozen public enum AuthDrmTokenType : Swift.String, Swift.Codable {
+  case iSP
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public enum UIClickAction : Swift.String, Swift.Codable, Swift.CaseIterable {
+  case defaultAction
+  case none
+  case togglePause
+  case toggleControls
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+  public typealias AllCases = [PlayerBlock.UIClickAction]
+  public static var allCases: [PlayerBlock.UIClickAction] {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class PlayerCommandFactory {
+  public static func addListener() -> PlayerBlock.PlayerCommand
+  public static func setup(config: PlayerBlock.PlayerConfig) -> PlayerBlock.PlayerCommand
+  public static func sendMessageToUI(name: Swift.String, payload: [Swift.String : Any]) -> PlayerBlock.PlayerCommand
+  public static func setPlayerMode(event: PlayerBlock.PlayerLifecycleEvent) -> PlayerBlock.PlayerCommand
+  public static func processCommand(command: [Swift.String : Any?]) -> PlayerBlock.PlayerCommand
+  public static func play(contentData: PlayerBlock.ContentEntryData, contentOptionalData: PlayerBlock.ContentEntryOptionalData) -> PlayerBlock.PlayerCommand
+  public static func play(byMediaJson data: PlayerBlock.MediaJSONPlayData, contentOptionalData: PlayerBlock.ContentEntryOptionalData) -> PlayerBlock.PlayerCommand
+  public static func play(contentData: [Swift.String : Any], contentOptionalData: [Swift.String : Any]) -> PlayerBlock.PlayerCommand
+  public static func enterFullscreen() -> PlayerBlock.PlayerCommand
+  public static func exitFullscreen() -> PlayerBlock.PlayerCommand
+  public static func updateConfig(config: PlayerBlock.PlayConfig) -> PlayerBlock.PlayerCommand
+  public static func updateConfig(config: [Swift.String : Any]) -> PlayerBlock.PlayerCommand
+  public static func pause() -> PlayerBlock.PlayerCommand
+  public static func resume() -> PlayerBlock.PlayerCommand
+  public static func seek(time: Swift.Double) -> PlayerBlock.PlayerCommand
+  public static func seekToLive() -> PlayerBlock.PlayerCommand
+  public static func stop() -> PlayerBlock.PlayerCommand
+  public static func setVolume(volume: Swift.Float) -> PlayerBlock.PlayerCommand
+  public static func mute() -> PlayerBlock.PlayerCommand
+  public static func unmute() -> PlayerBlock.PlayerCommand
+  public static func captionsSelectTrack(track: PlayerBlock.CCTrack) -> PlayerBlock.PlayerCommand
+  public static func captionsSelectTrackByLang(lang: PlayerBlock.CCLang) -> PlayerBlock.PlayerCommand
+  public static func captionsSetEnabled(enabled: Swift.Bool) -> PlayerBlock.PlayerCommand
+  public static func captionsUpdateSettings(settings: PlayerBlock.CCSettings) -> PlayerBlock.PlayerCommand
+  public static func detach(exitFullscreenOnDetach: Swift.Bool) -> PlayerBlock.PlayerCommand
+  public static func attach(container: UIKit.UIView) -> PlayerBlock.PlayerCommand
+  @objc deinit
+}
+public protocol IMockTimedMetadataMessageContents {
+  func toDictionary() -> [Swift.String : Any]?
+  static func from(dictionary: [Swift.String : Any]?) -> Self?
+}
+@frozen public struct MockTimedMetadataMessageData<M> : PlayerBlock.IMockMessageData where M : PlayerBlock.IMockTimedMetadataMessageContents {
+  internal var metadataType: PlayerBlock.VideoEngineMetadataType?
+  internal var metadata: M?
+  internal var startTime: PlayerBlock.MockMessageTiming?
+  public init(metadataType: PlayerBlock.VideoEngineMetadataType? = nil, metadata: M? = nil, startTime: PlayerBlock.MockMessageTiming? = nil)
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from<M>(dictionary: [Swift.String : Any]?) -> PlayerBlock.MockTimedMetadataMessageData<M>? where M : PlayerBlock.IMockTimedMetadataMessageContents
+}
+public typealias MockTimedMetadataDefaultMessageContents = [Swift.String : Any]
+@frozen public struct MockTimedMetadataMessageContents : PlayerBlock.IMockTimedMetadataMessageContents {
+  internal var type: PlayerBlock.VideoEngineMetadataType
+  internal var encoded: [Swift.String : Any]
+  internal var decoded: PlayerBlock.IMockTimedMetadataMessageContents?
+  public init(type: PlayerBlock.VideoEngineMetadataType, encoded: [Swift.String : Any])
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.MockTimedMetadataMessageContents?
+}
+@frozen public struct MockTimedMetadataID3MessageContents : PlayerBlock.IMockTimedMetadataMessageContents {
+  internal var id: Swift.String?
+  internal var message: Swift.String?
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.MockTimedMetadataID3MessageContents?
+}
+@frozen public struct MockTimedMetadataSCTEMessageContents : PlayerBlock.IMockTimedMetadataMessageContents {
+  internal var spliceType: Swift.Int?
+  internal var descriptors: [Swift.String : [Swift.String : Any]]
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.MockTimedMetadataSCTEMessageContents?
+}
+@frozen public enum SCTESpliceCommandType : Swift.Int, Swift.Codable {
+  case null
+  case schedule
+  case insert
+  case timeSignal
+  case bandwidthReservation
+  case `private`
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@frozen public struct SCTEMetadata {
+  public let spliceCommandType: Swift.Int
+  public let spliceDescriptors: [PlayerBlock.BaseSCTEDescriptor?]
+  public let crc32: Swift.Int
+  public let cwIndex: Swift.Int
+  public let encryptedPacket: Swift.Int
+  public let encryptionAlgorithm: Swift.Int
+  public let privateIndicator: Swift.Int
+  public let protocolVersion: Swift.Int
+  public let ptsAdjustment: Swift.Int
+  public let sectionLength: Swift.Int
+  public let sectionSyntaxIndicator: Swift.Int
+  public let spliceCommand: PlayerBlock.BaseSCTESpliceCommand?
+  public let spliceCommandLength: Swift.Int
+  public let tableId: Swift.Int
+  public let tier: Swift.Int
+  public init(spliceCommandType: Swift.Int, spliceDescriptors: [PlayerBlock.BaseSCTEDescriptor?], crc32: Swift.Int, cwIndex: Swift.Int, encryptedPacket: Swift.Int, encryptionAlgorithm: Swift.Int, privateIndicator: Swift.Int, protocolVersion: Swift.Int, ptsAdjustment: Swift.Int, sectionLength: Swift.Int, sectionSyntaxIndicator: Swift.Int, spliceCommand: PlayerBlock.BaseSCTESpliceCommand?, spliceCommandLength: Swift.Int, tableId: Swift.Int, tier: Swift.Int)
+}
+public class BaseSCTESpliceCommand {
+  final public let commandType: Swift.Int
+  final public let typeName: Swift.String
+  public init(commandType: Swift.Int, typeName: Swift.String)
+  @objc deinit
+}
+public class SCTESpliceInsertCommand : PlayerBlock.BaseSCTESpliceCommand {
+  final public let spliceEventCancelIndicator: Swift.Int
+  final public let spliceEvent_id: Swift.Int
+  final public let availNum: Swift.Int
+  final public let availsExpected: Swift.Int
+  final public let durationFlag: Swift.Int
+  final public let outOfNetworkIndicator: Swift.Int
+  final public let programSpliceTag: Swift.Int
+  final public let spliceImmediateFlag: Swift.Int
+  final public let uniqueProgramId: Swift.Int
+  final public let spliceTime: PlayerBlock.SCTESpliceTime?
+  public init(commandType: Swift.Int, typeName: Swift.String, spliceEventCancelIndicator: Swift.Int, spliceEvent_id: Swift.Int, availNum: Swift.Int, availsExpected: Swift.Int, durationFlag: Swift.Int, outOfNetworkIndicator: Swift.Int, programSpliceTag: Swift.Int, spliceImmediateFlag: Swift.Int, uniqueProgramId: Swift.Int, spliceTime: PlayerBlock.SCTESpliceTime?)
+  @objc deinit
+  override public init(commandType: Swift.Int, typeName: Swift.String)
+}
+public class SCTESpliceTimeSignalCommand : PlayerBlock.BaseSCTESpliceCommand {
+  public var spliceTime: PlayerBlock.SCTESpliceTime?
+  public init(commandType: Swift.Int, typeName: Swift.String, spliceTime: PlayerBlock.SCTESpliceTime?)
+  @objc deinit
+  override public init(commandType: Swift.Int, typeName: Swift.String)
+}
+@frozen public struct SCTESpliceTime {
+  public let ptsTime: Swift.Int?
+  public let timeSpecifiedFlag: Swift.Int?
+}
+@objc public class BaseSCTEDescriptor : ObjectiveC.NSObject {
+  final public let descriptorType: Swift.Int
+  final public let typeName: Swift.String
+  final public let identifier: Swift.Int
+  public init(descriptorType: Swift.Int, typeName: Swift.String, identifier: Swift.Int)
+  @objc deinit
+  @objc override dynamic public init()
+}
+@objc public class SCTEAvailDescriptor : PlayerBlock.BaseSCTEDescriptor {
+  final public let providerAvailId: Swift.Int
+  public init(descriptorType: Swift.Int, typeName: Swift.String, identifier: Swift.Int, providerAvailId: Swift.Int)
+  @objc deinit
+  override public init(descriptorType: Swift.Int, typeName: Swift.String, identifier: Swift.Int)
+}
+@objc public class SCTESegmentationDescriptor : PlayerBlock.BaseSCTEDescriptor {
+  final public let archiveAllowedFlag: Swift.Int
+  final public let deliveryNotRestrictedFlag: Swift.Int
+  final public let deviceRestrictions: Swift.Int
+  final public let noRegionalBlackoutFlag: Swift.Int
+  final public let programSegmentationFlag: Swift.Int
+  final public let segmentNum: Swift.Int
+  final public let segmentationDuration: Swift.Int
+  final public let segmentationDurationFlag: Swift.Int
+  final public let segmentationEventCancelIndicator: Swift.Int
+  final public let segmentationEventId: Swift.Int
+  final public let segmentationTypeId: Swift.Int
+  final public let segmentationTypeIdName: Swift.String
+  final public let segmentationUpid: Swift.Int
+  final public let segmentationUpidLength: Swift.Int
+  final public let segmentationUpidType: Swift.Int
+  final public let segmentsExpected: Swift.Int
+  final public let webDeliveryAllowedFlag: Swift.Int
+  public init(descriptorType: Swift.Int, typeName: Swift.String, identifier: Swift.Int, archiveAllowedFlag: Swift.Int, deliveryNotRestrictedFlag: Swift.Int, deviceRestrictions: Swift.Int, noRegionalBlackoutFlag: Swift.Int, programSegmentationFlag: Swift.Int, segmentNum: Swift.Int, segmentationDuration: Swift.Int, segmentationDurationFlag: Swift.Int, segmentationEventCancelIndicator: Swift.Int, segmentationEventId: Swift.Int, segmentationTypeId: Swift.Int, segmentationTypeIdName: Swift.String, segmentationUpid: Swift.Int, segmentationUpidLength: Swift.Int, segmentationUpidType: Swift.Int, segmentsExpected: Swift.Int, webDeliveryAllowedFlag: Swift.Int)
+  @objc deinit
+  override public init(descriptorType: Swift.Int, typeName: Swift.String, identifier: Swift.Int)
+}
+@frozen public enum SCTESegmentationType : Swift.Int, Swift.Codable {
+  case notIndicated
+  case contentIdentification
+  case programStart
+  case programEnd
+  case programEarlyTermination
+  case programBreakaway
+  case programResumption
+  case programRunoverPlanned
+  case programRunoverUnplanned
+  case programOverlapStart
+  case programBlackoutOverride
+  case programStartInProgress
+  case chapterStart
+  case chapterEnd
+  case breakStart
+  case breakEnd
+  case providerAdStart
+  case providerAdEnd
+  case distributorAdStart
+  case distributorAdEnd
+  case providerPlacementOppStart
+  case providerPlacementOppEnd
+  case distributorPlacementOppStart
+  case distributorPlacementOppEnd
+  case unscheduledEventStart
+  case unscheduledEventEnd
+  case networkStart
+  case networkEnd
+  case unknown
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+}
+@frozen public enum SCTEDescriptorType : Swift.Int, Swift.Codable {
+  case avail
+  case segmentation
+  case unknown
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+  public init?(rawValue: Swift.Int)
+}
+@frozen public enum SCTESegmentationProperties : Swift.String, Swift.Codable {
+  case typeId
+  case noRegionalBlackout
+  case webDeliveryAllowed
+  case airingId
+  case duration
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+public class ContentEntryDataBuilder {
+  public static func createEntryId() -> Swift.String
+  public static func create() -> PlayerBlock.ContentEntryDataBuilder
+  public static func fromPlaylistItem(item: PlayerBlock.PlaylistItem) -> PlayerBlock.ContentEntryDataBuilder
+  public init()
+  public func withContentEntryData(value: PlayerBlock.ContentEntryData) -> PlayerBlock.ContentEntryDataBuilder
+  public func withId(value: Swift.String) -> PlayerBlock.ContentEntryDataBuilder
+  public func withMetadata(value: [Swift.String : Swift.String]) -> PlayerBlock.ContentEntryDataBuilder
+  public func withRemoteMetadata(value: Swift.String) -> PlayerBlock.ContentEntryDataBuilder
+  public func addFile(value: PlayerBlock.ContentEntryFileData) -> PlayerBlock.ContentEntryDataBuilder
+  public func addExternalWebVTTTrack(url: Swift.String, language: Swift.String = "en", label: Swift.String = "") -> PlayerBlock.ContentEntryDataBuilder
+  public func requiresCDNAuth(value: Swift.String) -> PlayerBlock.ContentEntryDataBuilder
+  public func isLive(value: Swift.Bool) -> PlayerBlock.ContentEntryDataBuilder
+  public func withTrt(value: Swift.Double) -> PlayerBlock.ContentEntryDataBuilder
+  public func addValidator(uri: Swift.String, value: Swift.Bool) -> PlayerBlock.ContentEntryDataBuilder
+  public func addSegment(value: PlayerBlock.ContentEntrySegmentData) -> PlayerBlock.ContentEntryDataBuilder
+  public func addCaptionSource(value: PlayerBlock.ContentEntryCaptionSource) -> PlayerBlock.ContentEntryDataBuilder
+  public func addCaptionTrackEmbedded(source: PlayerBlock.ContentEntryCaptionSourceWithoutTracks, track: PlayerBlock.ContentEntryCaptionTrack) -> PlayerBlock.ContentEntryDataBuilder
+  public func build() -> PlayerBlock.ContentEntryData
+  @objc deinit
+}
+@frozen public struct AnalyticsConfig {
+  public var enabled: Swift.Bool?
+  public var suppressAdAnalytics: Swift.Bool?
+  public var conviva: PlayerBlock.ConvivaConfig?
+  public var comscore: PlayerBlock.ComscoreConfig?
+  public var openMeasurement: PlayerBlock.OpenMeasurementConfig?
+  public init(disable: Swift.Bool)
+  public init(convivaConfig: PlayerBlock.ConvivaConfig? = nil, comscoreConfig: PlayerBlock.ComscoreConfig? = nil, openMeasurement: PlayerBlock.OpenMeasurementConfig? = nil, suppressAdAnalytics: Swift.Bool? = nil)
+}
+@frozen public enum CueSource : Swift.String, Swift.Codable {
+  case embedded
+  case manifest
+  case unknown
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public struct MocksTimedMetadataConfig {
+  internal var messages: [PlayerBlock.MockTimedMetadataMessage]
+  public init(messages: [PlayerBlock.MockTimedMetadataMessage])
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.MocksTimedMetadataConfig?
+}
+@frozen public struct PlaylistItem {
+  public var id: Swift.String?
+  public var entry: PlayerBlock.ContentEntryData?
+  public var options: PlayerBlock.ContentEntryOptionalData?
+  public init(id: Swift.String? = nil, entry: PlayerBlock.ContentEntryData? = nil, options: PlayerBlock.ContentEntryOptionalData? = nil)
+}
+public protocol PlayerResult : StdLibBlock.EventResult {
+}
+public class PlayerConfig {
+  final public let container: UIKit.UIView?
+  public var config: PlayerBlock.PlayConfig?
+  required public init(container: UIKit.UIView? = nil, config: PlayerBlock.PlayConfig? = nil)
+  public func toDictionary() -> [Swift.String : Any]?
+  @objc deinit
+}
+@frozen public enum AutoPlayPreloadBehavior : Swift.String, Swift.Codable {
+  case none
+  case full
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public struct PlaybackAutoPlayConfig {
+  public var preloadBehavior: PlayerBlock.AutoPlayPreloadBehavior
+  public init(preloadBehavior: PlayerBlock.AutoPlayPreloadBehavior = AutoPlayPreloadBehavior.full)
+  public func toDictionary() -> [Swift.String : Any]?
+}
+@frozen public struct PlaybackConfig {
+  public var volume: Swift.Double
+  public var muted: Swift.Bool
+  public var autoPlay: Swift.Bool
+  public var autoPlayOptions: PlayerBlock.PlaybackAutoPlayConfig?
+  public init(volume: Swift.Double = 1.0, muted: Swift.Bool = false, autoPlay: Swift.Bool = true, autoPlayOptions: PlayerBlock.PlaybackAutoPlayConfig? = nil)
+  public func toDictionary() -> [Swift.String : Any]?
+}
+@frozen public struct ContentEntryFileData {
+  @frozen public enum MediaDeliveryType : Swift.String, Swift.Codable {
+    case progressive
+    case streaming
+    case unknown
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @frozen public enum MediaFileType : Swift.String, Swift.Codable {
+    case mp4
+    case m3u8
+    case unknown
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @frozen public enum ContentProtection : Swift.String, Swift.Codable {
+    case unknown
+    case preview
+    case multidrm
+    case fairplay
+    case primetime
+    case widevine
+    case bulkaes
+    case unprotected
+    public typealias RawValue = Swift.String
+    public var rawValue: Swift.String {
+      get
+    }
+    public init?(rawValue: Swift.String)
+  }
+  @frozen public enum EncryptionMode : Swift.String, Swift.Codable {
+    case cenc
+    case cbcs
+    case unknown
+    case unencrypted
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  internal var assetId: Swift.String
+  internal var url: Swift.String
+  internal var key: Swift.String?
+  internal var playlistProtection: Swift.String?
+  internal var contentProtection: PlayerBlock.ContentEntryFileData.ContentProtection?
+  internal var encryptionMode: PlayerBlock.ContentEntryFileData.EncryptionMode?
+  internal var deliveryType: PlayerBlock.ContentEntryFileData.MediaDeliveryType?
+  internal var type: PlayerBlock.ContentEntryFileData.MediaFileType?
+  public init(assetId: Swift.String = "", url: Swift.String = "", key: Swift.String? = nil, playlistProtection: Swift.String? = nil, contentProtection: PlayerBlock.ContentEntryFileData.ContentProtection? = ContentProtection.unknown, encryptionMode: PlayerBlock.ContentEntryFileData.EncryptionMode? = EncryptionMode.unknown, deliveryType: PlayerBlock.ContentEntryFileData.MediaDeliveryType? = nil, type: PlayerBlock.ContentEntryFileData.MediaFileType? = nil)
+}
+@frozen public struct MediaJSONPlayData {
+  internal let mediaId: Swift.String?
+  internal let serviceUrl: Swift.String?
+  internal let appId: Swift.String?
+  internal let host: Swift.String?
+  internal let mediaTypes: [PlayerBlock.MediaJSONPlayData.AuthType]?
+  internal let platform: PlayerBlock.MediaJSONPlayData.PlatformType
+  @frozen public enum PlatformType : Swift.String {
+    case phone
+    case tablet
+    case tv
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  @frozen public enum AuthType : Swift.String {
+    case unprotected
+    case fairplay
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public init(mediaId: Swift.String? = nil, serviceUrl: Swift.String? = nil, appId: Swift.String? = nil, host: Swift.String? = nil, mediaTypes: [PlayerBlock.MediaJSONPlayData.AuthType]? = nil, platform: PlayerBlock.MediaJSONPlayData.PlatformType? = nil)
+}
+@_hasMissingDesignatedInitializers public class CaptionsModel {
+  public var available: Swift.Bool {
+    get
+  }
+  public var enabled: Swift.Bool {
+    get
+  }
+  public var activeTrack: PlayerBlock.CCTrack? {
+    get
+  }
+  public var state: PlayerBlock.CCState {
+    get
+  }
+  public var settings: PlayerBlock.CCSettings {
+    get
+  }
+  public func getAllTracks() -> [PlayerBlock.CCTrack]
+  public func getAllCues() -> [PlayerBlock.CCCue]
+  public func getAllActiveCues() -> [PlayerBlock.CCCue]
+  @objc deinit
+}
+@frozen public enum CaptionTrackAction : Swift.String, Swift.Codable {
+  case added
+  case deselected
+  case selected
+  case removed
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+@frozen public enum CaptionCueAction : Swift.String, Swift.Codable {
+  case parsed
+  case entered
+  case exited
+  case updated
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+@_hasMissingDesignatedInitializers public class AnalyticsCurrentPlayModel {
+  public var timeToCMSResolution: Foundation.TimeInterval {
+    get
+  }
+  public var timeToTransactionSetup: Foundation.TimeInterval {
+    get
+  }
+  public var timeToTransactionInit: Foundation.TimeInterval {
+    get
+  }
+  public var timeToContentResolution: Foundation.TimeInterval {
+    get
+  }
+  public var timeWaitingForUser: Foundation.TimeInterval {
+    get
+  }
+  public var totalTimeToFirstFrame: Swift.Double {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class AnalyticsModel {
+  public func getAllMarks() -> [PlayerBlock.AnalyticsMarkName : PlayerBlock.AnalyticsMark]
+  public func getAllMeasures() -> [PlayerBlock.AnalyticsMeasureName : PlayerBlock.AnalyticsMeasure]
+  public var currentPlay: PlayerBlock.AnalyticsCurrentPlayModel {
+    get
+  }
+  @objc deinit
+}
+@frozen public enum PlayerAction : StdLibBlock.EventActionable {
+  case playerStateChanged(StdLibBlock.SignalCompletion<PlayerBlock.PlayerStateChangedResult>)
+  case viewStateChanged(StdLibBlock.SignalCompletion<PlayerBlock.ViewStateChangedResult>)
+  case lifecycleStateChanged(StdLibBlock.SignalCompletion<PlayerBlock.LifecycleStateChangedResult>)
+  case playerInitialized(StdLibBlock.SignalCompletion<PlayerBlock.PlayerInitializedResult>)
+  case playerReady(StdLibBlock.SignalCompletion<PlayerBlock.PlayerReadyResult>)
+  case playerListening(StdLibBlock.SignalCompletion<PlayerBlock.PlayerListeningResult>)
+  case contentStateChanged(StdLibBlock.SignalCompletion<PlayerBlock.ContentStateChangedResult>)
+  case contentBeginning(StdLibBlock.SignalCompletion<PlayerBlock.ContentBeginningResult>)
+  case contentSetup(StdLibBlock.SignalCompletion<PlayerBlock.ContentSetupResult>)
+  case contentWaiting(StdLibBlock.SignalCompletion<PlayerBlock.ContentWaitingResult>)
+  case contentInterrupted(StdLibBlock.SignalCompletion<PlayerBlock.ContentInterruptedResult>)
+  case contentCompleted(StdLibBlock.SignalCompletion<PlayerBlock.ContentCompletedResult>)
+  case contentError(StdLibBlock.SignalCompletion<PlayerBlock.ContentErrorResult>)
+  case contentEnded(StdLibBlock.SignalCompletion<PlayerBlock.ContentEndedResult>)
+  case muteChanged(StdLibBlock.SignalCompletion<PlayerBlock.MuteChangedResult>)
+  case mediaStateChanged(StdLibBlock.SignalCompletion<PlayerBlock.MediaStateChangedResult>)
+  case mediaStarting(StdLibBlock.SignalCompletion<PlayerBlock.MediaStartingResult>)
+  case mediaLoaded(StdLibBlock.SignalCompletion<PlayerBlock.MediaLoadedResult>)
+  case mediaStarted(StdLibBlock.SignalCompletion<PlayerBlock.MediaStartedResult>)
+  case mediaTimeChanged(StdLibBlock.SignalCompletion<PlayerBlock.MediaTimeChangedResult>)
+  case mediaBufferingStarted(StdLibBlock.SignalCompletion<PlayerBlock.MediaBufferingStartedResult>)
+  case mediaBufferingFinished(StdLibBlock.SignalCompletion<PlayerBlock.MediaBufferingFinishedResult>)
+  case mediaSeekingStarted(StdLibBlock.SignalCompletion<PlayerBlock.MediaSeekingStartedResult>)
+  case mediaSeekingFinished(StdLibBlock.SignalCompletion<PlayerBlock.MediaSeekingFinishedResult>)
+  case mediaPaused(StdLibBlock.SignalCompletion<PlayerBlock.MediaPausedResult>)
+  case mediaResumed(StdLibBlock.SignalCompletion<PlayerBlock.MediaResumedResult>)
+  case mediaResized(StdLibBlock.SignalCompletion<PlayerBlock.MediaResizedResult>)
+  case mediaAudioTrackAvailabilityChanged(StdLibBlock.SignalCompletion<PlayerBlock.MediaAudioTrackAvailabilityChangedResult>)
+  case mediaAudioTrackSelected(StdLibBlock.SignalCompletion<PlayerBlock.MediaAudioTrackSelectedResult>)
+  case mediaStopped(StdLibBlock.SignalCompletion<PlayerBlock.MediaStoppedResult>)
+  case mediaFinished(StdLibBlock.SignalCompletion<PlayerBlock.MediaFinishedResult>)
+  case mediaError(StdLibBlock.SignalCompletion<PlayerBlock.MediaErrorResult>)
+  case adStateChanged(StdLibBlock.SignalCompletion<PlayerBlock.AdStateChangedResult>)
+  case adTimeChanged(StdLibBlock.SignalCompletion<PlayerBlock.AdTimeChangedResult>)
+  case adError(StdLibBlock.SignalCompletion<PlayerBlock.AdErrorResult>)
+  case adStarted(StdLibBlock.SignalCompletion<PlayerBlock.AdResult>)
+  case adPaused(StdLibBlock.SignalCompletion<PlayerBlock.AdResult>)
+  case adResumed(StdLibBlock.SignalCompletion<PlayerBlock.AdResult>)
+  case adStopped(StdLibBlock.SignalCompletion<PlayerBlock.AdResult>)
+  case adFinished(StdLibBlock.SignalCompletion<PlayerBlock.AdResult>)
+  case adStarting(StdLibBlock.SignalCompletion<PlayerBlock.AdResult>)
+  case adLoaded(StdLibBlock.SignalCompletion<PlayerBlock.AdResult>)
+  case adCreativeStarted(StdLibBlock.SignalCompletion<PlayerBlock.AdCreativeResult>)
+  case adCreativeEnded(StdLibBlock.SignalCompletion<PlayerBlock.AdCreativeResult>)
+  case mediaRequestProfileChanged(StdLibBlock.SignalCompletion<PlayerBlock.MediaRequestProfileChangedResult>)
+  case mediaProfileChanged(StdLibBlock.SignalCompletion<PlayerBlock.MediaProfileChangedResult>)
+  case modelUpdated(StdLibBlock.SignalCompletion<PlayerBlock.ModelUpdatedResult>)
+  case mediaTimedMetadataParsed(StdLibBlock.SignalCompletion<PlayerBlock.MediaTimedMetadataParsedResult>)
+  case mediaTimedMetadataReceived(StdLibBlock.SignalCompletion<PlayerBlock.MediaTimedMetadataReceivedResult>)
+  case timelineMarkerAdded(StdLibBlock.SignalCompletion<PlayerBlock.TimelineMarkerResult>)
+  case timelineMarkerRemoved(StdLibBlock.SignalCompletion<PlayerBlock.TimelineMarkerResult>)
+  case timelineMarkerActivated(StdLibBlock.SignalCompletion<PlayerBlock.TimelineMarkerResult>)
+  case timelineMarkerFinishing(StdLibBlock.SignalCompletion<PlayerBlock.TimelineMarkerResult>)
+  case timelineMarkerApproaching(StdLibBlock.SignalCompletion<PlayerBlock.TimelineMarkerResult>)
+  case timelineMarkerDeactivated(StdLibBlock.SignalCompletion<PlayerBlock.TimelineMarkerResult>)
+  case captionsStateChanged(StdLibBlock.SignalCompletion<PlayerBlock.CCStateChangedResult>)
+  case captionsTrackAdded(StdLibBlock.SignalCompletion<PlayerBlock.CCTrackResult>)
+  case captionsTrackRemoved(StdLibBlock.SignalCompletion<PlayerBlock.CCTrackResult>)
+  case captionsTrackSelected(StdLibBlock.SignalCompletion<PlayerBlock.CCTrackResult>)
+  case captionsTrackDeselected(StdLibBlock.SignalCompletion<PlayerBlock.CCTrackResult>)
+  case captionCueEntered(StdLibBlock.SignalCompletion<PlayerBlock.CCCueResult>)
+  case captionCueParsed(StdLibBlock.SignalCompletion<PlayerBlock.CCCueResult>)
+  case captionCueUpdated(StdLibBlock.SignalCompletion<PlayerBlock.CCCueResult>)
+  case captionCueExited(StdLibBlock.SignalCompletion<PlayerBlock.CCCueResult>)
+  case cueStateChanged(StdLibBlock.SignalCompletion<PlayerBlock.CueStateChangedResult>)
+  case cueProcessed(StdLibBlock.SignalCompletion<PlayerBlock.CueProcessedResult>)
+  case cueActivated(StdLibBlock.SignalCompletion<PlayerBlock.CueActivatedResult>)
+  case viewModeChanged(StdLibBlock.SignalCompletion<PlayerBlock.ViewModeChangedResult>)
+  case captionSettingsUpdated(StdLibBlock.SignalCompletion<PlayerBlock.CCSettingsUpdatedResult>)
+  case volumeChanged(StdLibBlock.SignalCompletion<PlayerBlock.VolumeChangedResult>)
+  case playerError(StdLibBlock.SignalCompletion<PlayerBlock.PlayerErrorResult>)
+  case messageFromUI(StdLibBlock.SignalCompletion<PlayerBlock.UIMessageResult>)
+  public func bind(with observer: StdLibBlock.Observer, eventSignal: StdLibBlock.BaseEventSignal, type: StdLibBlock.BindingType) -> StdLibBlock.SignalBindable?
+}
+public protocol IMockMessageData {
+  func toDictionary() -> [Swift.String : Any]?
+  static func from(dictionary: [Swift.String : Any]?) -> Self?
+}
+@frozen public struct MockMessage<D> where D : PlayerBlock.IMockMessageData {
+  internal var type: PlayerBlock.MockMessageType?
+  internal var triggers: [PlayerBlock.MockMessageTriggerName : Any]?
+  internal var retriggers: [PlayerBlock.MockMessageTriggerName : Any]?
+  internal var data: D?
+  public init(type: PlayerBlock.MockMessageType? = nil, triggers: [PlayerBlock.MockMessageTriggerName : Any]? = nil, retriggers: [PlayerBlock.MockMessageTriggerName : Any]? = nil, data: D? = nil)
+}
+@_hasMissingDesignatedInitializers public class MocksHelpers {
+  public static func mocksEnabled(config: PlayerBlock.PlayConfig) -> Swift.Bool
+  public static func createChapterBoundary(data: PlayerBlock.MockChapterBoundaryConfig) -> [PlayerBlock.MockTimedMetadataMessage]
+  public static func createChapterEnd(data: PlayerBlock.MockChapterConfig) -> PlayerBlock.MockTimedMetadataMessage
+  public static func createChapterStart(data: PlayerBlock.MockChapterConfig) -> PlayerBlock.MockTimedMetadataMessage
+  public static func createProgramBoundary(data: PlayerBlock.MockProgramBoundaryConfig) -> [PlayerBlock.MockTimedMetadataMessage]
+  public static func createProgramBoundary(assetId: Swift.Int, offset: PlayerBlock.MockMessageTiming, duration: Swift.Double, processTime: PlayerBlock.MockMessageTiming? = nil, programChapters: [PlayerBlock.MockProgramChapterConfig]? = nil) -> [PlayerBlock.MockTimedMetadataMessage]
+  public static func createProgramBoundarySet(data: PlayerBlock.MockProgramBoundarySetConfig) -> [PlayerBlock.MockTimedMetadataMessage]
+  public static func createProgramBoundarySet(assetIds: [Swift.Int], offset: PlayerBlock.MockMessageTiming, duration: Swift.Double, processTime: PlayerBlock.MockMessageTiming? = nil, programChapters: PlayerBlock.MockProgramChapters? = nil) -> [PlayerBlock.MockTimedMetadataMessage]
+  public static func createProgramEnd(data: PlayerBlock.MockProgramConfig) -> PlayerBlock.MockTimedMetadataMessage
+  public static func createProgramEnd(assetId: Swift.Int, startTime: PlayerBlock.MockMessageTiming, processTime: PlayerBlock.MockMessageTiming? = nil) -> PlayerBlock.MockTimedMetadataMessage
+  public static func createProgramStart(data: PlayerBlock.MockProgramConfig) -> PlayerBlock.MockTimedMetadataMessage
+  public static func createProgramStart(assetId: Swift.Int, startTime: PlayerBlock.MockMessageTiming, processTime: PlayerBlock.MockMessageTiming? = nil) -> PlayerBlock.MockTimedMetadataMessage
+  public static func createSegmentationSCTE(type: PlayerBlock.SCTESegmentationType, data: [Swift.String : Any], startTime: PlayerBlock.MockMessageTiming, processTime: PlayerBlock.MockMessageTiming? = nil) -> PlayerBlock.MockTimedMetadataMessage
+  public static func createSCTE(command: PlayerBlock.SCTESpliceCommandType, descriptors: [Swift.String : [Swift.String : Any]], startTime: PlayerBlock.MockMessageTiming, processTime: PlayerBlock.MockMessageTiming? = nil) -> PlayerBlock.MockTimedMetadataMessage
+  public static func createID3(id: Swift.String, message: Swift.String, startTime: PlayerBlock.MockMessageTiming, processTime: PlayerBlock.MockMessageTiming? = nil) -> PlayerBlock.MockTimedMetadataMessage
+  @objc deinit
+}
+@frozen public struct MocksConfig {
+  internal var timedMetadata: PlayerBlock.MocksTimedMetadataConfig
+  public init(timedMetadata: PlayerBlock.MocksTimedMetadataConfig)
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.MocksConfig?
+}
+@_hasMissingDesignatedInitializers final public class PlayerHook<H> where H : StdLibBlock.Hook {
+  final public func set(hookHandler handler: @escaping StdLibBlock.HookHandler<H.Value, H.Failure>)
+  final public func clear()
+  @objc deinit
+}
+@frozen public enum AdState : Swift.String, Swift.Codable {
+  case pending
+  case ready
+  case starting
+  case loaded
+  case playing
+  case paused
+  case buffering
+  case stopped
+  case finished
+  case error
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers final public class PlayerVersion {
+  public static let libVersion: Swift.String
+  public static var description: Swift.String {
+    get
+  }
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class TubMetadataHelpers {
+  public static func tubMetadataTypeToString(type: BMPMetadataType) -> Swift.String
+  @objc deinit
+}
+@frozen public enum MockMessageTriggerName : Swift.String, Swift.Codable {
+  case contentTime
+  case mediaTime
+  case adTime
+  case unknown
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@frozen public struct AdCompanionContainer {
+  public let id: Swift.String?
+  public let container: UIKit.UIView?
+  public let active: Swift.Bool?
+  public init(id: Swift.String? = nil, container: UIKit.UIView? = nil, active: Swift.Bool? = nil)
+}
+@frozen public struct AdCompanionConfigData {
+  public var containers: [PlayerBlock.AdCompanionContainer]?
+  public let clearOnAdFinished: Swift.Bool?
+  public init(containers: [PlayerBlock.AdCompanionContainer]? = nil, clearOnAdFinished: Swift.Bool? = nil)
+}
+public protocol PlayerEventListener {
+  func rawEvent(map: [Swift.String : Any?])
+  func playerStateChanged(result: PlayerBlock.PlayerStateChangedResult)
+  func playerError(result: PlayerBlock.PlayerErrorResult)
+  func playerInitialized(result: PlayerBlock.PlayerInitializedResult)
+  func playerReady(result: PlayerBlock.PlayerReadyResult)
+  func playerListening(result: PlayerBlock.PlayerListeningResult)
+  func contentStateChanged(result: PlayerBlock.ContentStateChangedResult)
+  func contentBeginning(result: PlayerBlock.ContentBeginningResult)
+  func contentSetup(result: PlayerBlock.ContentSetupResult)
+  func contentWaiting(result: PlayerBlock.ContentWaitingResult)
+  func muteChanged(result: PlayerBlock.MuteChangedResult)
+  func volumeChanged(result: PlayerBlock.VolumeChangedResult)
+  func playerEvent(type: PlayerBlock.PlayerEventType, result: PlayerBlock.PlayerResult)
+  func mediaStateChanged(result: PlayerBlock.MediaStateChangedResult)
+  func mediaStarting(result: PlayerBlock.MediaStartingResult)
+  func mediaLoaded(result: PlayerBlock.MediaLoadedResult)
+  func mediaStarted(result: PlayerBlock.MediaStartedResult)
+  func mediaTimeChanged(result: PlayerBlock.MediaTimeChangedResult)
+  func mediaBufferingStarted(result: PlayerBlock.MediaBufferingStartedResult)
+  func mediaBufferingFinished(result: PlayerBlock.MediaBufferingFinishedResult)
+  func mediaSeekingStarted(result: PlayerBlock.MediaSeekingStartedResult)
+  func mediaSeekingFinished(result: PlayerBlock.MediaSeekingFinishedResult)
+  func mediaRequestProfileChanged(result: PlayerBlock.MediaProfileResult)
+  func mediaProfileChanged(result: PlayerBlock.MediaProfileResult)
+  func mediaPaused(result: PlayerBlock.MediaPausedResult)
+  func mediaResumed(result: PlayerBlock.MediaResumedResult)
+  func mediaResized(result: PlayerBlock.MediaResizedResult)
+  func mediaTimedMetadataParsed(result: PlayerBlock.MediaTimedMetadataParsedResult)
+  func mediaTimedMetadataReceived(result: PlayerBlock.MediaTimedMetadataReceivedResult)
+  func mediaAudioTrackAvailabilityChanged(result: PlayerBlock.MediaAudioTrackAvailabilityChangedResult)
+  func mediaAudioTrackSelected(result: PlayerBlock.MediaAudioTrackSelectedResult)
+  func mediaStopped(result: PlayerBlock.MediaStoppedResult)
+  func mediaFinished(result: PlayerBlock.MediaFinishedResult)
+  func mediaError(result: PlayerBlock.MediaErrorResult)
+  func modelUpdated(result: PlayerBlock.ModelUpdatedResult)
+  func adStateChanged(result: PlayerBlock.AdStateChangedResult)
+  func adStarted(result: PlayerBlock.AdResult)
+  func adLoaded(result: PlayerBlock.AdResult)
+  func adStarting(result: PlayerBlock.AdResult)
+  func adCreativeStarted(result: PlayerBlock.AdCreativeResult)
+  func adTimeChanged(result: PlayerBlock.AdTimeChangedResult)
+  func adPaused(result: PlayerBlock.AdResult)
+  func adResumed(result: PlayerBlock.AdResult)
+  func adStopped(result: PlayerBlock.AdResult)
+  func adCreativeEnded(result: PlayerBlock.AdCreativeResult)
+  func adFinished(result: PlayerBlock.AdResult)
+  func adError(result: PlayerBlock.AdErrorResult)
+  func timelineMarkerAdded(result: PlayerBlock.TimelineMarkerResult)
+  func timelineMarkerApproaching(result: PlayerBlock.TimelineMarkerResult)
+  func timelineMarkerActivated(result: PlayerBlock.TimelineMarkerResult)
+  func timelineMarkerFinishing(result: PlayerBlock.TimelineMarkerResult)
+  func timelineMarkerDeactivated(result: PlayerBlock.TimelineMarkerResult)
+  func timelineMarkerRemoved(result: PlayerBlock.TimelineMarkerResult)
+  func captionsStateChanged(result: PlayerBlock.CCStateChangedResult)
+  func captionSettingsUpdated(result: PlayerBlock.CCSettingsUpdatedResult)
+  func captionTrackAdded(result: PlayerBlock.CCTrackResult)
+  func captionTrackRemoved(result: PlayerBlock.CCTrackResult)
+  func captionTrackSelected(result: PlayerBlock.CCTrackResult)
+  func captionTrackDeselected(result: PlayerBlock.CCTrackResult)
+  func captionCueParsed(result: PlayerBlock.CCCueResult)
+  func captionCueEntered(result: PlayerBlock.CCCueResult)
+  func captionCueExited(result: PlayerBlock.CCCueResult)
+  func captionCueUpdated(result: PlayerBlock.CCCueResult)
+  func cueStateChanged(result: PlayerBlock.CueStateChangedResult)
+  func cueProcessed(result: PlayerBlock.CueProcessedResult)
+  func cueActivated(result: PlayerBlock.CueActivatedResult)
+  func contentInterrupted(result: PlayerBlock.ContentInterruptedResult)
+  func contentCompleted(result: PlayerBlock.ContentCompletedResult)
+  func contentError(result: PlayerBlock.ContentErrorResult)
+  func contentEnded(result: PlayerBlock.ContentEndedResult)
+  func viewModeChanged(result: PlayerBlock.ViewModeChangedResult)
+  func viewStateChanged(result: PlayerBlock.ViewStateChangedResult)
+  func lifecycleStateChanged(result: PlayerBlock.LifecycleStateChangedResult)
+}
+extension PlayerEventListener {
+  public func rawEvent(map: [Swift.String : Any?])
+  public func playerStateChanged(result: PlayerBlock.PlayerStateChangedResult)
+  public func playerError(result: PlayerBlock.PlayerErrorResult)
+  public func playerInitialized(result: PlayerBlock.PlayerInitializedResult)
+  public func playerReady(result: PlayerBlock.PlayerReadyResult)
+  public func playerListening(result: PlayerBlock.PlayerListeningResult)
+  public func contentStateChanged(result: PlayerBlock.ContentStateChangedResult)
+  public func contentBeginning(result: PlayerBlock.ContentBeginningResult)
+  public func contentSetup(result: PlayerBlock.ContentSetupResult)
+  public func contentWaiting(result: PlayerBlock.ContentWaitingResult)
+  public func muteChanged(result: PlayerBlock.MuteChangedResult)
+  public func volumeChanged(result: PlayerBlock.VolumeChangedResult)
+  public func playerEvent(type: PlayerBlock.PlayerEventType, result: PlayerBlock.PlayerResult)
+  public func mediaStateChanged(result: PlayerBlock.MediaStateChangedResult)
+  public func mediaStarting(result: PlayerBlock.MediaStartingResult)
+  public func mediaLoaded(result: PlayerBlock.MediaLoadedResult)
+  public func mediaStarted(result: PlayerBlock.MediaStartedResult)
+  public func mediaTimeChanged(result: PlayerBlock.MediaTimeChangedResult)
+  public func mediaBufferingStarted(result: PlayerBlock.MediaBufferingStartedResult)
+  public func mediaBufferingFinished(result: PlayerBlock.MediaBufferingFinishedResult)
+  public func mediaSeekingStarted(result: PlayerBlock.MediaSeekingStartedResult)
+  public func mediaSeekingFinished(result: PlayerBlock.MediaSeekingFinishedResult)
+  public func mediaRequestProfileChanged(result: PlayerBlock.MediaProfileResult)
+  public func mediaProfileChanged(result: PlayerBlock.MediaProfileResult)
+  public func mediaPaused(result: PlayerBlock.MediaPausedResult)
+  public func mediaResumed(result: PlayerBlock.MediaResumedResult)
+  public func mediaResized(result: PlayerBlock.MediaResizedResult)
+  public func mediaTimedMetadataParsed(result: PlayerBlock.MediaTimedMetadataParsedResult)
+  public func mediaTimedMetadataReceived(result: PlayerBlock.MediaTimedMetadataReceivedResult)
+  public func mediaAudioTrackAvailabilityChanged(result: PlayerBlock.MediaAudioTrackAvailabilityChangedResult)
+  public func mediaAudioTrackSelected(result: PlayerBlock.MediaAudioTrackSelectedResult)
+  public func mediaStopped(result: PlayerBlock.MediaStoppedResult)
+  public func mediaFinished(result: PlayerBlock.MediaFinishedResult)
+  public func mediaError(result: PlayerBlock.MediaErrorResult)
+  public func modelUpdated(result: PlayerBlock.ModelUpdatedResult)
+  public func adStateChanged(result: PlayerBlock.AdStateChangedResult)
+  public func adStarted(result: PlayerBlock.AdResult)
+  public func adLoaded(result: PlayerBlock.AdResult)
+  public func adStarting(result: PlayerBlock.AdResult)
+  public func adCreativeStarted(result: PlayerBlock.AdCreativeResult)
+  public func adTimeChanged(result: PlayerBlock.AdTimeChangedResult)
+  public func adPaused(result: PlayerBlock.AdResult)
+  public func adResumed(result: PlayerBlock.AdResult)
+  public func adStopped(result: PlayerBlock.AdResult)
+  public func adCreativeEnded(result: PlayerBlock.AdCreativeResult)
+  public func adFinished(result: PlayerBlock.AdResult)
+  public func adError(result: PlayerBlock.AdErrorResult)
+  public func timelineMarkerAdded(result: PlayerBlock.TimelineMarkerResult)
+  public func timelineMarkerApproaching(result: PlayerBlock.TimelineMarkerResult)
+  public func timelineMarkerActivated(result: PlayerBlock.TimelineMarkerResult)
+  public func timelineMarkerFinishing(result: PlayerBlock.TimelineMarkerResult)
+  public func timelineMarkerDeactivated(result: PlayerBlock.TimelineMarkerResult)
+  public func timelineMarkerRemoved(result: PlayerBlock.TimelineMarkerResult)
+  public func captionsStateChanged(result: PlayerBlock.CCStateChangedResult)
+  public func captionSettingsUpdated(result: PlayerBlock.CCSettingsUpdatedResult)
+  public func captionTrackAdded(result: PlayerBlock.CCTrackResult)
+  public func captionTrackRemoved(result: PlayerBlock.CCTrackResult)
+  public func captionTrackSelected(result: PlayerBlock.CCTrackResult)
+  public func captionTrackDeselected(result: PlayerBlock.CCTrackResult)
+  public func captionCueParsed(result: PlayerBlock.CCCueResult)
+  public func captionCueEntered(result: PlayerBlock.CCCueResult)
+  public func captionCueExited(result: PlayerBlock.CCCueResult)
+  public func captionCueUpdated(result: PlayerBlock.CCCueResult)
+  public func cueStateChanged(result: PlayerBlock.CueStateChangedResult)
+  public func cueProcessed(result: PlayerBlock.CueProcessedResult)
+  public func cueActivated(result: PlayerBlock.CueActivatedResult)
+  public func contentInterrupted(result: PlayerBlock.ContentInterruptedResult)
+  public func contentCompleted(result: PlayerBlock.ContentCompletedResult)
+  public func contentError(result: PlayerBlock.ContentErrorResult)
+  public func contentEnded(result: PlayerBlock.ContentEndedResult)
+  public func viewModeChanged(result: PlayerBlock.ViewModeChangedResult)
+  public func viewStateChanged(result: PlayerBlock.ViewStateChangedResult)
+  public func lifecycleStateChanged(result: PlayerBlock.LifecycleStateChangedResult)
+}
+public protocol PlayerHookResult : StdLibBlock.HookEventResult {
+}
+public struct PlayerCheckAutoPlayHookResult : PlayerBlock.PlayerHookResult {
+  public let canAutoPlay: Swift.Bool
+  public let canAutoPlayMuted: Swift.Bool
+  public init(canAutoPlay: Swift.Bool, canAutoPlayMuted: Swift.Bool)
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.PlayerCheckAutoPlayHookResult?
+}
+public struct PlayerCheckConsentHookResult : PlayerBlock.PlayerHookResult {
+  public let consentString: Swift.String?
+  public let subjectToGDPR: Swift.String?
+  public let error: Swift.String?
+  public init(consentString: Swift.String?, subjectToGDPR: Swift.String?, error: Swift.String?)
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.PlayerCheckConsentHookResult?
+}
+public struct PlayerAddPlatformMetadataHookResult : PlayerBlock.PlayerHookResult {
+  public let metadata: [Swift.String : Any]
+  public init(metadata: [Swift.String : Any])
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.PlayerAddPlatformMetadataHookResult?
+}
+public struct PlayerAuthRefreshHookResult : PlayerBlock.PlayerHookResult {
+  public let accessTokenType: Swift.String
+  public let accessToken: Swift.String
+  public init(accessTokenType: Swift.String, accessToken: Swift.String)
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.PlayerAuthRefreshHookResult?
+}
+public struct PlayerValidateContentResolutionHookResult : PlayerBlock.PlayerHookResult {
+  public let data: PlayerBlock.ContentEntryData
+  public init(data: PlayerBlock.ContentEntryData)
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.PlayerValidateContentResolutionHookResult?
+}
+public struct PlayerValidateDRMTokenRequestHookResult : PlayerBlock.PlayerHookResult {
+  public let assetId: Swift.String
+  public let companyId: Swift.String
+  public init(assetId: Swift.String, companyId: Swift.String)
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.PlayerValidateDRMTokenRequestHookResult?
+}
+public struct PlayerValidateDRMTokenResponseHookData : PlayerBlock.PlayerHookResult {
+  public var jwt: Swift.String
+  public var ttl: Swift.Double
+  public var timestamp: Swift.Double
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.PlayerValidateDRMTokenResponseHookData?
+}
+public struct PlayerValidateDRMTokenResponseHookResult : PlayerBlock.PlayerHookResult {
+  public let error: PlayerBlock.PlayerError?
+  public let data: PlayerBlock.PlayerValidateDRMTokenResponseHookData
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.PlayerValidateDRMTokenResponseHookResult?
+}
+@frozen public enum AnalyticsMeasureName : Swift.String, Swift.Codable {
+  case cmsResolution
+  case transactionSetup
+  case transactionInitialized
+  case contentResolution
+  case totalTimeToFirstFrame
+  case timeWaitingForUser
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+@_hasMissingDesignatedInitializers public class PlayerHookCollection : StdLibBlock.HookCollection {
+  final public let addPlatformMetadata: PlayerBlock.PlayerHook<PlayerBlock.BridgeHook<PlayerBlock.PlayerHookName, PlayerBlock.PlayerAddPlatformMetadataHookResult, StdLibBlock.HookEventError>>
+  final public let authRefresh: PlayerBlock.PlayerHook<PlayerBlock.BridgeHook<PlayerBlock.PlayerHookName, PlayerBlock.PlayerAuthRefreshHookResult, StdLibBlock.HookEventError>>
+  final public let checkAutoPlay: PlayerBlock.PlayerHook<PlayerBlock.BridgeHook<PlayerBlock.PlayerHookName, PlayerBlock.PlayerCheckAutoPlayHookResult, StdLibBlock.HookEventError>>
+  final public let checkGDPRConsent: PlayerBlock.PlayerHook<PlayerBlock.BridgeHook<PlayerBlock.PlayerHookName, PlayerBlock.PlayerCheckConsentHookResult, StdLibBlock.HookEventError>>
+  final public let validateContentResolution: PlayerBlock.PlayerHook<PlayerBlock.BridgeHook<PlayerBlock.PlayerHookName, PlayerBlock.PlayerValidateContentResolutionHookResult, StdLibBlock.HookEventError>>
+  final public let validateDRMTokenRequest: PlayerBlock.PlayerHook<PlayerBlock.BridgeHook<PlayerBlock.PlayerHookName, PlayerBlock.PlayerValidateDRMTokenRequestHookResult, StdLibBlock.HookEventError>>
+  final public let validateDRMTokenResponse: PlayerBlock.PlayerHook<PlayerBlock.BridgeHook<PlayerBlock.PlayerHookName, PlayerBlock.PlayerValidateDRMTokenResponseHookResult, StdLibBlock.HookEventError>>
+  public func close()
+  @objc deinit
+}
+@frozen public enum UIControlSet : Swift.String, Swift.Codable {
+  case live
+  case vod
+  case liveNoDvr
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class TubCCHelpers {
+  public static func isOffPlaceholderTrack(track: SubtitleTrack?) -> Swift.Bool
+  public static func getSourceFromTubSubtitleTrack(track: SubtitleTrack) -> PlayerBlock.CCSource
+  public static func getChannelFromTubSubtitleTrack(track: SubtitleTrack) -> PlayerBlock.CCChannel
+  public static func getLangFromTubSubtitleTrack(track: SubtitleTrack) -> PlayerBlock.CCLang
+  public static func normalizeTubSubtitleTrack(track: SubtitleTrack, forceActive: Swift.Bool?) -> PlayerBlock.CCTrack
+  public static func normalizeTubSubtitleCue(trackId: Swift.String, cue: Cue) -> PlayerBlock.CCAnonymousCue
+  @objc deinit
+}
+public struct UIStyleConfig {
+  public let paddingBottom: Swift.Double
+  public init(paddingBottom: Swift.Double)
+}
+@frozen public struct UIConfig {
+  public var enabled: Swift.Bool
+  public var activeControlSet: Swift.String?
+  public var components: PlayerBlock.UIComponentConfig?
+  public var inactivityThreshold: Swift.Int?
+  public var liveThreshold: Swift.Int?
+  public var posterImage: Swift.String?
+  public var sets: PlayerBlock.UIControlSetConfig?
+  public var theme: PlayerBlock.UIThemeConfig?
+  public var metadata: [Swift.String : Any]?
+  public var debug: PlayerBlock.UIDebugConfig?
+  public var resourcePaths: PlayerBlock.UIResourcePaths?
+  public var style: PlayerBlock.UIStyleConfig?
+  public init(enabled: Swift.Bool = true, activeControlSet: Swift.String? = nil, components: PlayerBlock.UIComponentConfig? = nil, inactivityThreshold: Swift.Int? = nil, liveThreshold: Swift.Int? = nil, posterImage: Swift.String? = nil, sets: PlayerBlock.UIControlSetConfig? = nil, theme: PlayerBlock.UIThemeConfig? = nil, metadata: [Swift.String : Any]? = nil, debug: PlayerBlock.UIDebugConfig? = nil, resourcePaths: PlayerBlock.UIResourcePaths? = nil, style: PlayerBlock.UIStyleConfig? = nil)
+}
+@frozen public struct UIComponentConfig {
+  public var disable: [Swift.String]?
+  public var active: [Swift.String]?
+  public var controls: [Swift.String : [Swift.String : Any]]?
+  public var slates: [Swift.String : [Swift.String : Any]]?
+  public var containers: [Swift.String : [Swift.String : Any]]?
+  public init(disable: [Swift.String]? = nil, active: [Swift.String]? = nil, controls: [Swift.String : [Swift.String : Any]]? = nil, slates: [Swift.String : [Swift.String : Any]]? = nil, containers: [Swift.String : [Swift.String : Any]]? = nil)
+}
+@frozen public struct UIResourcePaths {
+  public var css: Swift.String?
+  public var js: Swift.String?
+  public var cssOverride: Swift.String?
+  public init(css: Swift.String? = nil, js: Swift.String? = nil, cssOverride: Swift.String? = nil)
+}
+@frozen public struct UIControlConfig {
+  public var progressBar: PlayerBlock.UIControlProgressBarConfig?
+  public init(progressBar: PlayerBlock.UIControlProgressBarConfig? = nil)
+}
+@frozen public struct UIControlProgressBarConfig {
+  public var markerColor: Swift.String?
+  public init(markerColor: Swift.String? = nil)
+}
+@frozen public struct UISetConfig {
+  public var controls: [Swift.String]?
+  public var slates: [Swift.String]?
+  public var order: PlayerBlock.UIControlOrderConfig?
+  public init(controls: [Swift.String]? = nil, slates: [Swift.String]? = nil, order: PlayerBlock.UIControlOrderConfig? = nil)
+}
+@frozen public struct UIControlSetConfig {
+  public var `default`: PlayerBlock.UISetConfig?
+  public var vod: PlayerBlock.UISetConfig?
+  public var live: PlayerBlock.UISetConfig?
+  public var liveNoDvr: PlayerBlock.UISetConfig?
+  public var customSets: [Swift.String : PlayerBlock.UISetConfig]?
+  public init(default: PlayerBlock.UISetConfig? = nil, vod: PlayerBlock.UISetConfig? = nil, live: PlayerBlock.UISetConfig? = nil, liveNoDvr: PlayerBlock.UISetConfig? = nil, customSets: [Swift.String : PlayerBlock.UISetConfig]? = nil)
+}
+@frozen public struct UIControlOrderConfig {
+  public var left: [Swift.String]?
+  public var right: [Swift.String]?
+  public var center: [Swift.String]?
+  public var topLeft: [Swift.String]?
+  public var topRight: [Swift.String]?
+  public init(left: [Swift.String]? = nil, right: [Swift.String]? = nil, center: [Swift.String]? = nil, topLeft: [Swift.String]? = nil, topRight: [Swift.String]? = nil)
+}
+@frozen public struct UIThemeConfig {
+  internal var accentColor: Swift.String?
+  public init(accentColor: Swift.String? = nil)
+}
+@frozen public struct UIDebugConfig {
+  public var disableControlBarHiding: Swift.Bool?
+  public init(disableControlBarHiding: Swift.Bool? = nil)
+}
+@frozen public struct DetachOptions : StdLibBlock.BlockCodable {
+  public let exitFullscreenOnDetach: Swift.Bool
+  public init(exitFullscreenOnDetach: Swift.Bool = false)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@frozen public struct AnalyticsMark {
+  private let entry: PlayerBlock.AnalyticsEntry
+  public let name: PlayerBlock.AnalyticsMarkName
+  public let startTime: Foundation.TimeInterval
+  public let duration: Foundation.TimeInterval
+  public init(name: PlayerBlock.AnalyticsMarkName, startTime: Foundation.TimeInterval, duration: Foundation.TimeInterval)
+}
+@frozen public enum RemoteTargetType : Swift.String, Swift.CodingKey {
+  case airplay
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+  public var stringValue: Swift.String {
+    get
+  }
+  public init?(stringValue: Swift.String)
+  public var intValue: Swift.Int? {
+    get
+  }
+  public init?(intValue: Swift.Int)
+}
+@_hasMissingDesignatedInitializers public class CuesModel {
+  public func all() -> [PlayerBlock.MetadataCue]
+  public func active() -> [PlayerBlock.MetadataCue]
+  public func completed() -> [PlayerBlock.MetadataCue]
+  public func cueOut() -> [PlayerBlock.MetadataCue]
+  public func cueIn() -> [PlayerBlock.MetadataCue]
+  public func asset() -> [PlayerBlock.MetadataCue]
+  public func id3() -> [PlayerBlock.MetadataCue]
+  public func scte() -> [PlayerBlock.MetadataCue]
+  @objc deinit
+}
+@frozen public enum CCLang : Swift.String, Swift.Codable {
+  case english
+  case spanish
+  case french
+  case deutsch
+  case unknown
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+  public init?(rawValue: Swift.String)
+}
+@frozen public enum ComscoreMediaType : Swift.Int {
+  case longFormOnDemand, shortFormOnDemand, live, userGeneratedLongFormOnDemand, userGeneratedShortFormOnDemand, userGeneratedLive, bumper, other
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@frozen public struct ComscoreConfig {
+  public var applicationName: Swift.String
+  public var applicationVersion: Swift.String
+  public var isOTT: Swift.Bool
+  public var publisherId: Swift.String
+  public var mediaType: PlayerBlock.ComscoreMediaType
+  public var childDirectedAppMode: Swift.Bool
+  public var debug: Swift.Bool
+  public var enabled: Swift.Bool?
+  public var advertisementLoad: Swift.Bool?
+  public var c3: Swift.String?
+  public var c4: Swift.String?
+  public var c6: Swift.String?
+  public var completeEpisode: Swift.Bool?
+  public var contentGenre: Swift.String?
+  public var digitalAirdate: Swift.String?
+  public var episodeId: Swift.String?
+  public var episodeNumber: Swift.String?
+  public var episodeSeasonNumber: Swift.String?
+  public var episodeTitle: Swift.String?
+  public var feedType: Swift.String?
+  public var programId: Swift.String?
+  public var programTitle: Swift.String?
+  public var publisherBrandName: Swift.String?
+  public var stationTitle: Swift.String?
+  public var tvAirdate: Swift.String?
+  public var uniqueContentId: Swift.String?
+  public init(disable: Swift.Bool)
+  public init(applicationName: Swift.String, applicationVersion: Swift.String, isOTT: Swift.Bool, publisherId: Swift.String, mediaType: PlayerBlock.ComscoreMediaType, debug: Swift.Bool = false, advertisementLoad: Swift.Bool? = nil, c3: Swift.String? = nil, c4: Swift.String? = nil, c6: Swift.String? = nil, completeEpisode: Swift.Bool? = nil, contentGenre: Swift.String? = nil, digitalAirdate: Swift.String? = nil, episodeId: Swift.String? = nil, episodeNumber: Swift.String? = nil, episodeSeasonNumber: Swift.String? = nil, episodeTitle: Swift.String? = nil, feedType: Swift.String? = nil, programId: Swift.String? = nil, programTitle: Swift.String? = nil, publisherBrandName: Swift.String? = nil, stationTitle: Swift.String? = nil, tvAirdate: Swift.String? = nil, uniqueContentId: Swift.String? = nil, childDirectedAppMode: Swift.Bool)
+}
+@frozen public struct CaptionsConfig {
+  internal var maxCues: Swift.Int?
+  internal var nativeRendering: Swift.Bool?
+  public init(maxCues: Swift.Int? = nil, nativeRendering: Swift.Bool? = nil)
+  public func toDictionary() -> [Swift.String : Any]?
+  public static func from(dictionary: [Swift.String : Any]?) -> PlayerBlock.CaptionsConfig?
+}
+@_hasMissingDesignatedInitializers public class TimelineModel {
+  public var currentTime: Swift.Double {
+    get
+  }
+  public func getMarkersForType(type: PlayerBlock.MarkerType) -> [PlayerBlock.Marker]
+  public func getMarkersForAdBreaks() -> [PlayerBlock.Marker]
+  public func getMarkersForMedia() -> [PlayerBlock.Marker]
+  public func adMidrollStartTimes() -> [Swift.Double]
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class AudioManager {
+  @objc deinit
+}
+@frozen public struct MediaConfig {
+  public var minBitrate: Swift.Double?
+  public var maxBitrate: Swift.Double?
+  public var offset: Swift.Double?
+  public var startBitrate: Swift.Double?
+  public init(minBitrate: Swift.Double? = nil, maxBitrate: Swift.Double? = nil, offset: Swift.Double? = nil, startBitrate: Swift.Double? = nil)
+}
+public protocol Player : NexusCore.Closeable {
+  func setup(config: PlayerBlock.PlayerConfig)
+  func setup(config: [Swift.String : Any])
+  func setPlayerMode(lifecycleEvent: PlayerBlock.PlayerLifecycleEvent, sync: Swift.Bool)
+  func sendMessageToUI(name: Swift.String, payload: [Swift.String : Any])
+  func play(data: PlayerBlock.ContentEntryData, options: PlayerBlock.ContentEntryOptionalData)
+  func play(byMediaJson data: PlayerBlock.MediaJSONPlayData, options: PlayerBlock.ContentEntryOptionalData)
+  func play(byData data: [Swift.String : Any], options: [Swift.String : Any])
+  func enterFullscreen()
+  func exitFullscreen()
+  func willRotate()
+  func didRotate()
+  func processCommand(_ commandMap: [Swift.String : Any?])
+  func updateConfig(config: PlayerBlock.PlayConfig)
+  func updateConfig(config: [Swift.String : Any])
+  func pause()
+  func resume()
+  func seek(time: Swift.Double)
+  func seekToLive()
+  func setVolume(volume: Swift.Float)
+  func mute()
+  func unmute()
+  func selectCaptionTrack(track: PlayerBlock.CCTrack)
+  func selectCaptionTrackByLang(lang: PlayerBlock.CCLang)
+  func setCaptionsEnabled(enabled: Swift.Bool)
+  func updateCaptionSettings(settings: PlayerBlock.CCSettings)
+  func detach(options: PlayerBlock.DetachOptions)
+  func attach(container: UIKit.UIView)
+  func stop()
+  func destroy()
+  var fullscreenDelegate: PlayerBlock.PlayerFullscreenDelegate? { get set }
+  var model: PlayerBlock.PlayerModel { get }
+  var playerState: PlayerBlock.PlayerState { get }
+  var viewState: PlayerBlock.ViewState { get }
+  var contentState: PlayerBlock.ContentState { get }
+  var playlistItem: PlayerBlock.PlaylistItem? { get }
+  var config: PlayerBlock.PlayConfig { get }
+  var volume: Swift.Double { get }
+  var muted: Swift.Bool { get }
+  var analytics: PlayerBlock.AnalyticsModel { get }
+  var captions: PlayerBlock.CaptionsModel { get }
+  var timeline: PlayerBlock.TimelineModel { get }
+  var cues: PlayerBlock.CuesModel? { get }
+  var mediaTime: Swift.Double { get }
+  var mediaState: PlayerBlock.MediaState { get }
+  var mediaDuration: Swift.Double { get }
+  var contentSeekableRange: PlayerBlock.TimeRange? { get }
+  var contentIsLive: Swift.Bool { get }
+  var contentBufferedRange: PlayerBlock.TimeRange? { get }
+  var currentAdBreak: PlayerBlock.AdBreak? { get }
+  var currentAdCreative: PlayerBlock.AdCreative? { get }
+  var adBreaks: [PlayerBlock.AdBreakMetadata] { get }
+  var events: PlayerBlock.PlayerEvents { get }
+  var hooks: PlayerBlock.PlayerHookCollection { get }
+  var isFullscreen: Swift.Bool { get }
+}
+public protocol PlayerFullscreenDelegate : AnyObject {
+  func onFullscreenRequested() -> Swift.Bool
+  func onFullscreenExitRequested() -> Swift.Bool
+}
+extension Player {
+  public func play(data: PlayerBlock.ContentEntryData, options: PlayerBlock.ContentEntryOptionalData = ContentEntryOptionalData())
+  public func play(byMediaJson data: PlayerBlock.MediaJSONPlayData, options: PlayerBlock.ContentEntryOptionalData = ContentEntryOptionalData())
+  public func play(url: Swift.String, options: PlayerBlock.ContentEntryOptionalData = ContentEntryOptionalData())
+  public func play(byData data: [Swift.String : Any], options: [Swift.String : Any])
+  public func setPlayerMode(lifecycleEvent: PlayerBlock.PlayerLifecycleEvent, sync: Swift.Bool = false)
+  public func detach(options: PlayerBlock.DetachOptions = DetachOptions())
+}
+@_hasMissingDesignatedInitializers public class PlayerKit {
+  public static func version() -> Swift.String
+  public static func make(config: Any? = nil) -> PlayerBlock.Player
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class CueHelpers {
+  public static func beforeTime(cue: PlayerBlock.MetadataCue, time: Swift.Float) -> Swift.Bool
+  public static func beforeTime(result: PlayerBlock.CueDataEventResult, time: Swift.Float) -> Swift.Bool
+  public static func findNextChapterStart(cues: [PlayerBlock.MetadataCue], fromTime: Swift.Float = 0.0) -> PlayerBlock.MetadataCue?
+  public static func findPreviousChapterStart(cues: [PlayerBlock.MetadataCue], fromTime: Swift.Float = 0.0) -> PlayerBlock.MetadataCue?
+  public static func findNextChapterEnd(cues: [PlayerBlock.MetadataCue], fromTime: Swift.Float = 0.0) -> PlayerBlock.MetadataCue?
+  public static func findPreviousChapterEnd(cues: [PlayerBlock.MetadataCue], fromTime: Swift.Float = 0.0) -> PlayerBlock.MetadataCue?
+  public static func findChaptersInProgramBoundary(cues: [PlayerBlock.MetadataCue], programStart: PlayerBlock.MetadataCue, programEnd: PlayerBlock.MetadataCue) -> [PlayerBlock.MetadataCue]
+  public static func findChaptersInActiveProgramBoundary(cues: [PlayerBlock.MetadataCue], fromTime: Swift.Float = 0.0) -> [PlayerBlock.MetadataCue]
+  public static func findNextProgramStart(cues: [PlayerBlock.MetadataCue], fromTime: Swift.Float = 0.0) -> PlayerBlock.MetadataCue?
+  public static func findPreviousProgramStart(cues: [PlayerBlock.MetadataCue], fromTime: Swift.Float = 0.0) -> PlayerBlock.MetadataCue?
+  public static func findNextProgramEnd(cues: [PlayerBlock.MetadataCue], fromTime: Swift.Float = 0.0) -> PlayerBlock.MetadataCue?
+  public static func findPreviousProgramEnd(cues: [PlayerBlock.MetadataCue], fromTime: Swift.Float = 0.0) -> PlayerBlock.MetadataCue?
+  public static func isChapterStart(cue: PlayerBlock.MetadataCue) -> Swift.Bool
+  public static func isChapterStart(result: PlayerBlock.CueDataEventResult) -> Swift.Bool
+  public static func isChapterEnd(cue: PlayerBlock.MetadataCue) -> Swift.Bool
+  public static func isChapterEnd(result: PlayerBlock.CueDataEventResult) -> Swift.Bool
+  public static func isProgramStart(cue: PlayerBlock.MetadataCue) -> Swift.Bool
+  public static func isProgramStart(result: PlayerBlock.CueDataEventResult) -> Swift.Bool
+  public static func isProgramEnd(cue: PlayerBlock.MetadataCue) -> Swift.Bool
+  public static func isProgramEnd(result: PlayerBlock.CueDataEventResult) -> Swift.Bool
+  public static func isProgramOverlapStart(cue: PlayerBlock.MetadataCue) -> Swift.Bool
+  public static func isProgramOverlapStart(result: PlayerBlock.CueDataEventResult) -> Swift.Bool
+  public static func getRangeStart(cue: PlayerBlock.MetadataCue) -> Swift.Double
+  public static func getRangeEnd(cue: PlayerBlock.MetadataCue) -> Swift.Double
+  public static func containsSegmentationType(cue: PlayerBlock.MetadataCue, type: PlayerBlock.SCTESegmentationType) -> Swift.Bool
+  @objc deinit
+}
+@frozen public struct CueData {
+  public let timeReceived: Swift.Int
+  public let content: PlayerBlock.CueDataContent?
+  public let range: PlayerBlock.TimeRange?
+  public init(timeReceived: Swift.Int, content: PlayerBlock.CueDataContent?, range: PlayerBlock.TimeRange?)
+}
+public class CueDataContent {
+  final public let subType: Swift.String
+  final public let attributes: [Swift.String : Any?]
+  final public let payload: [Swift.String : Any?]
+  public init(subType: Swift.String, attributes: [Swift.String : Any?], payload: [Swift.String : Any?])
+  @objc deinit
+}
+@frozen public struct ID3CueMetadata {
+  public let id: Swift.String
+  public let message: Swift.String
+  public init(id: Swift.String, message: Swift.String)
+}
+public class ID3CueDataContent : PlayerBlock.CueDataContent {
+  public init(subType: Swift.String, attributes: [Swift.String : Any?], payload: [Swift.String : Any?], metadata: PlayerBlock.ID3CueMetadata?)
+  @objc deinit
+  override public init(subType: Swift.String, attributes: [Swift.String : Any?], payload: [Swift.String : Any?])
+}
+public class SCTECueDataContent : PlayerBlock.CueDataContent {
+  public init(subType: Swift.String, attributes: [Swift.String : Any?], payload: [Swift.String : Any?], metadata: PlayerBlock.SCTEMetadata?)
+  @objc deinit
+  override public init(subType: Swift.String, attributes: [Swift.String : Any?], payload: [Swift.String : Any?])
+}
+@frozen public enum CueType : Swift.String, Swift.Codable, Swift.CaseIterable {
+  case extOut
+  case extOutCont
+  case extIn
+  case extDiscontinuity
+  case extAsset
+  case id3
+  case scte
+  case unknown
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+  public typealias AllCases = [PlayerBlock.CueType]
+  public static var allCases: [PlayerBlock.CueType] {
+    get
+  }
+}
+extension PlayerBlock.Edge : Swift.Equatable {}
+extension PlayerBlock.Edge : Swift.Hashable {}
+extension PlayerBlock.Edge : Swift.RawRepresentable {}
+extension PlayerBlock.FontType : Swift.Equatable {}
+extension PlayerBlock.FontType : Swift.Hashable {}
+extension PlayerBlock.FontType : Swift.RawRepresentable {}
+extension PlayerBlock.Opacity : Swift.Equatable {}
+extension PlayerBlock.Opacity : Swift.Hashable {}
+extension PlayerBlock.Opacity : Swift.RawRepresentable {}
+extension PlayerBlock.Size : Swift.Equatable {}
+extension PlayerBlock.Size : Swift.Hashable {}
+extension PlayerBlock.Size : Swift.RawRepresentable {}
+extension PlayerBlock.CCChannel : Swift.Equatable {}
+extension PlayerBlock.CCChannel : Swift.Hashable {}
+extension PlayerBlock.CCChannel : Swift.RawRepresentable {}
+extension PlayerBlock.AdBreakPosition : Swift.Equatable {}
+extension PlayerBlock.AdBreakPosition : Swift.Hashable {}
+extension PlayerBlock.AdBreakPosition : Swift.RawRepresentable {}
+extension PlayerBlock.CCState : Swift.Equatable {}
+extension PlayerBlock.CCState : Swift.Hashable {}
+extension PlayerBlock.CCState : Swift.RawRepresentable {}
+extension PlayerBlock.TCFKey : Swift.Equatable {}
+extension PlayerBlock.TCFKey : Swift.Hashable {}
+extension PlayerBlock.TCFKey : Swift.RawRepresentable {}
+extension PlayerBlock.ModelUpdateMode : Swift.Equatable {}
+extension PlayerBlock.ModelUpdateMode : Swift.Hashable {}
+extension PlayerBlock.ModelUpdateMode : Swift.RawRepresentable {}
+extension PlayerBlock.AuthCdnTokenType : Swift.Equatable {}
+extension PlayerBlock.AuthCdnTokenType : Swift.Hashable {}
+extension PlayerBlock.AuthCdnTokenType : Swift.RawRepresentable {}
+extension PlayerBlock.ViewState : Swift.Equatable {}
+extension PlayerBlock.ViewState : Swift.Hashable {}
+extension PlayerBlock.ViewState : Swift.RawRepresentable {}
+extension PlayerBlock.MockMessageType : Swift.Equatable {}
+extension PlayerBlock.MockMessageType : Swift.Hashable {}
+extension PlayerBlock.MockMessageType : Swift.RawRepresentable {}
+extension PlayerBlock.MarkerType : Swift.Equatable {}
+extension PlayerBlock.MarkerType : Swift.Hashable {}
+extension PlayerBlock.MarkerType : Swift.RawRepresentable {}
+extension PlayerBlock.UIControlName : Swift.Equatable {}
+extension PlayerBlock.UIControlName : Swift.Hashable {}
+extension PlayerBlock.UIControlName : Swift.RawRepresentable {}
+extension PlayerBlock.UIControlLocation : Swift.Equatable {}
+extension PlayerBlock.UIControlLocation : Swift.Hashable {}
+extension PlayerBlock.UIControlLocation : Swift.RawRepresentable {}
+extension PlayerBlock.PlayerEventType : Swift.Equatable {}
+extension PlayerBlock.PlayerEventType : Swift.Hashable {}
+extension PlayerBlock.PlayerEventType : Swift.RawRepresentable {}
+extension PlayerBlock.ContentState : Swift.Equatable {}
+extension PlayerBlock.ContentState : Swift.Hashable {}
+extension PlayerBlock.ContentState : Swift.RawRepresentable {}
+extension PlayerBlock.GDPRConsentKeys : Swift.Equatable {}
+extension PlayerBlock.GDPRConsentKeys : Swift.Hashable {}
+extension PlayerBlock.GDPRConsentKeys : Swift.RawRepresentable {}
+extension PlayerBlock.SubjectToGDPROptions : Swift.Equatable {}
+extension PlayerBlock.SubjectToGDPROptions : Swift.Hashable {}
+extension PlayerBlock.SubjectToGDPROptions : Swift.RawRepresentable {}
+extension PlayerBlock.TCFVersion : Swift.Equatable {}
+extension PlayerBlock.TCFVersion : Swift.Hashable {}
+extension PlayerBlock.TCFVersion : Swift.RawRepresentable {}
+extension PlayerBlock.PlayerState : Swift.Equatable {}
+extension PlayerBlock.PlayerState : Swift.Hashable {}
+extension PlayerBlock.PlayerState : Swift.RawRepresentable {}
+extension PlayerBlock.PlayerFriendlyObstructionPurpose : Swift.Equatable {}
+extension PlayerBlock.PlayerFriendlyObstructionPurpose : Swift.Hashable {}
+extension PlayerBlock.PlayerFriendlyObstructionPurpose : Swift.RawRepresentable {}
+extension PlayerBlock.PlayerLifecycleEvent : Swift.Equatable {}
+extension PlayerBlock.PlayerLifecycleEvent : Swift.Hashable {}
+extension PlayerBlock.PlayerLifecycleEvent : Swift.RawRepresentable {}
+extension PlayerBlock.PlayerLifecycleState : Swift.Equatable {}
+extension PlayerBlock.PlayerLifecycleState : Swift.Hashable {}
+extension PlayerBlock.PlayerLifecycleState : Swift.RawRepresentable {}
+extension PlayerBlock.ErrorSeverity : Swift.Equatable {}
+extension PlayerBlock.ErrorSeverity : Swift.Hashable {}
+extension PlayerBlock.ErrorSeverity : Swift.RawRepresentable {}
+extension PlayerBlock.Platform : Swift.Equatable {}
+extension PlayerBlock.Platform : Swift.Hashable {}
+extension PlayerBlock.Platform : Swift.RawRepresentable {}
+extension PlayerBlock.Domain : Swift.Equatable {}
+extension PlayerBlock.Domain : Swift.Hashable {}
+extension PlayerBlock.Domain : Swift.RawRepresentable {}
+extension PlayerBlock.CategoryType : Swift.Equatable {}
+extension PlayerBlock.CategoryType : Swift.Hashable {}
+extension PlayerBlock.CategoryType : Swift.RawRepresentable {}
+extension PlayerBlock.CategoryCode : Swift.Equatable {}
+extension PlayerBlock.CategoryCode : Swift.Hashable {}
+extension PlayerBlock.CategoryCode : Swift.RawRepresentable {}
+extension PlayerBlock.MediaDomain : Swift.Equatable {}
+extension PlayerBlock.MediaDomain : Swift.Hashable {}
+extension PlayerBlock.MediaDomain : Swift.RawRepresentable {}
+extension PlayerBlock.UISlate : Swift.Equatable {}
+extension PlayerBlock.UISlate : Swift.Hashable {}
+extension PlayerBlock.UISlate : Swift.RawRepresentable {}
+extension PlayerBlock.NowPlayingInfoConfig.CodingKeys : Swift.Equatable {}
+extension PlayerBlock.NowPlayingInfoConfig.CodingKeys : Swift.Hashable {}
+extension PlayerBlock.NowPlayingInfoConfig.CodingKeys : Swift.RawRepresentable {}
+extension PlayerBlock.VideoEngineMetadataSourceType : Swift.Equatable {}
+extension PlayerBlock.VideoEngineMetadataSourceType : Swift.Hashable {}
+extension PlayerBlock.VideoEngineMetadataSourceType : Swift.RawRepresentable {}
+extension PlayerBlock.VideoEngineMetadataType : Swift.Equatable {}
+extension PlayerBlock.VideoEngineMetadataType : Swift.Hashable {}
+extension PlayerBlock.VideoEngineMetadataType : Swift.RawRepresentable {}
+extension PlayerBlock.CueState : Swift.Equatable {}
+extension PlayerBlock.CueState : Swift.Hashable {}
+extension PlayerBlock.CueState : Swift.RawRepresentable {}
+extension PlayerBlock.CCSource : Swift.Equatable {}
+extension PlayerBlock.CCSource : Swift.Hashable {}
+extension PlayerBlock.CCSource : Swift.RawRepresentable {}
+extension PlayerBlock.UITheme : Swift.Equatable {}
+extension PlayerBlock.UITheme : Swift.Hashable {}
+extension PlayerBlock.UITheme : Swift.RawRepresentable {}
+extension PlayerBlock.MediaState : Swift.Equatable {}
+extension PlayerBlock.MediaState : Swift.Hashable {}
+extension PlayerBlock.MediaState : Swift.RawRepresentable {}
+extension PlayerBlock.UIComponentType : Swift.Equatable {}
+extension PlayerBlock.UIComponentType : Swift.Hashable {}
+extension PlayerBlock.UIComponentType : Swift.RawRepresentable {}
+extension PlayerBlock.UIContainer : Swift.Equatable {}
+extension PlayerBlock.UIContainer : Swift.Hashable {}
+extension PlayerBlock.UIContainer : Swift.RawRepresentable {}
+extension PlayerBlock.DRMDataSource : Swift.Equatable {}
+extension PlayerBlock.DRMDataSource : Swift.Hashable {}
+extension PlayerBlock.DRMDataSource : Swift.RawRepresentable {}
+extension PlayerBlock.AnalyticsMarkName : Swift.Equatable {}
+extension PlayerBlock.AnalyticsMarkName : Swift.Hashable {}
+extension PlayerBlock.AnalyticsMarkName : Swift.RawRepresentable {}
+extension PlayerBlock.PlayerHookName : Swift.Equatable {}
+extension PlayerBlock.PlayerHookName : Swift.Hashable {}
+extension PlayerBlock.AuthDrmTokenType : Swift.Equatable {}
+extension PlayerBlock.AuthDrmTokenType : Swift.Hashable {}
+extension PlayerBlock.AuthDrmTokenType : Swift.RawRepresentable {}
+extension PlayerBlock.UIClickAction : Swift.Equatable {}
+extension PlayerBlock.UIClickAction : Swift.Hashable {}
+extension PlayerBlock.UIClickAction : Swift.RawRepresentable {}
+extension PlayerBlock.SCTESpliceCommandType : Swift.Equatable {}
+extension PlayerBlock.SCTESpliceCommandType : Swift.Hashable {}
+extension PlayerBlock.SCTESpliceCommandType : Swift.RawRepresentable {}
+extension PlayerBlock.SCTESegmentationType : Swift.Equatable {}
+extension PlayerBlock.SCTESegmentationType : Swift.Hashable {}
+extension PlayerBlock.SCTESegmentationType : Swift.RawRepresentable {}
+extension PlayerBlock.SCTEDescriptorType : Swift.Equatable {}
+extension PlayerBlock.SCTEDescriptorType : Swift.Hashable {}
+extension PlayerBlock.SCTEDescriptorType : Swift.RawRepresentable {}
+extension PlayerBlock.SCTESegmentationProperties : Swift.Equatable {}
+extension PlayerBlock.SCTESegmentationProperties : Swift.Hashable {}
+extension PlayerBlock.SCTESegmentationProperties : Swift.RawRepresentable {}
+extension PlayerBlock.CueSource : Swift.Equatable {}
+extension PlayerBlock.CueSource : Swift.Hashable {}
+extension PlayerBlock.CueSource : Swift.RawRepresentable {}
+extension PlayerBlock.AutoPlayPreloadBehavior : Swift.Equatable {}
+extension PlayerBlock.AutoPlayPreloadBehavior : Swift.Hashable {}
+extension PlayerBlock.AutoPlayPreloadBehavior : Swift.RawRepresentable {}
+extension PlayerBlock.ContentEntryFileData.MediaDeliveryType : Swift.Equatable {}
+extension PlayerBlock.ContentEntryFileData.MediaDeliveryType : Swift.Hashable {}
+extension PlayerBlock.ContentEntryFileData.MediaDeliveryType : Swift.RawRepresentable {}
+extension PlayerBlock.ContentEntryFileData.MediaFileType : Swift.Equatable {}
+extension PlayerBlock.ContentEntryFileData.MediaFileType : Swift.Hashable {}
+extension PlayerBlock.ContentEntryFileData.MediaFileType : Swift.RawRepresentable {}
+extension PlayerBlock.ContentEntryFileData.ContentProtection : Swift.Equatable {}
+extension PlayerBlock.ContentEntryFileData.ContentProtection : Swift.Hashable {}
+extension PlayerBlock.ContentEntryFileData.ContentProtection : Swift.RawRepresentable {}
+extension PlayerBlock.ContentEntryFileData.EncryptionMode : Swift.Equatable {}
+extension PlayerBlock.ContentEntryFileData.EncryptionMode : Swift.Hashable {}
+extension PlayerBlock.ContentEntryFileData.EncryptionMode : Swift.RawRepresentable {}
+extension PlayerBlock.MediaJSONPlayData.PlatformType : Swift.Equatable {}
+extension PlayerBlock.MediaJSONPlayData.PlatformType : Swift.Hashable {}
+extension PlayerBlock.MediaJSONPlayData.PlatformType : Swift.RawRepresentable {}
+extension PlayerBlock.MediaJSONPlayData.AuthType : Swift.Equatable {}
+extension PlayerBlock.MediaJSONPlayData.AuthType : Swift.Hashable {}
+extension PlayerBlock.MediaJSONPlayData.AuthType : Swift.RawRepresentable {}
+extension PlayerBlock.CaptionTrackAction : Swift.Equatable {}
+extension PlayerBlock.CaptionTrackAction : Swift.Hashable {}
+extension PlayerBlock.CaptionTrackAction : Swift.RawRepresentable {}
+extension PlayerBlock.CaptionCueAction : Swift.Equatable {}
+extension PlayerBlock.CaptionCueAction : Swift.Hashable {}
+extension PlayerBlock.CaptionCueAction : Swift.RawRepresentable {}
+extension PlayerBlock.AdState : Swift.Equatable {}
+extension PlayerBlock.AdState : Swift.Hashable {}
+extension PlayerBlock.AdState : Swift.RawRepresentable {}
+extension PlayerBlock.MockMessageTriggerName : Swift.Equatable {}
+extension PlayerBlock.MockMessageTriggerName : Swift.Hashable {}
+extension PlayerBlock.MockMessageTriggerName : Swift.RawRepresentable {}
+extension PlayerBlock.AnalyticsMeasureName : Swift.Equatable {}
+extension PlayerBlock.AnalyticsMeasureName : Swift.Hashable {}
+extension PlayerBlock.AnalyticsMeasureName : Swift.RawRepresentable {}
+extension PlayerBlock.UIControlSet : Swift.Equatable {}
+extension PlayerBlock.UIControlSet : Swift.Hashable {}
+extension PlayerBlock.UIControlSet : Swift.RawRepresentable {}
+extension PlayerBlock.RemoteTargetType : Swift.Equatable {}
+extension PlayerBlock.RemoteTargetType : Swift.Hashable {}
+extension PlayerBlock.RemoteTargetType : Swift.RawRepresentable {}
+extension PlayerBlock.CCLang : Swift.Equatable {}
+extension PlayerBlock.CCLang : Swift.Hashable {}
+extension PlayerBlock.CCLang : Swift.RawRepresentable {}
+extension PlayerBlock.ComscoreMediaType : Swift.Equatable {}
+extension PlayerBlock.ComscoreMediaType : Swift.Hashable {}
+extension PlayerBlock.ComscoreMediaType : Swift.RawRepresentable {}
+extension PlayerBlock.CueType : Swift.Equatable {}
+extension PlayerBlock.CueType : Swift.Hashable {}
+extension PlayerBlock.CueType : Swift.RawRepresentable {}
